@@ -11,7 +11,10 @@
 #import <CoreLocation/CoreLocation.h>
 
 @interface MapViewController : UIViewController <GMSMapViewDelegate, CLLocationManagerDelegate>
-
+{
+    NSMutableArray *pinArray;
+}
 @property (strong, nonatomic) IBOutlet GMSMapView *mapView_;
+
 
 @end
