@@ -42,7 +42,7 @@ GMSMapView *mapView_;
     
     //--- delegate Methoden
     self.locationManager.delegate = self;
-    self.locationManager.desiredAccuracy = kCLLocationAccuracyKilometer;
+    self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
  
     //iOS8 required, um location services nutzen zu können
     if ([self.locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
@@ -56,7 +56,7 @@ GMSMapView *mapView_;
     CLLocationCoordinate2D currentLocation = mapView_.myLocation.coordinate;
     
     //--- Cameraposition auf aktuelle Position
-    GMSCameraPosition *cam = [GMSCameraPosition cameraWithTarget:currentLocation zoom:14];
+    GMSCameraPosition *cam = [GMSCameraPosition cameraWithTarget:currentLocation zoom:16];
     mapView_ = [GMSMapView mapWithFrame:CGRectZero camera:cam];
     mapView_.camera = cam;
   
@@ -156,9 +156,11 @@ GMSMapView *mapView_;
     titleLabel.text = marker.title;
     
     UILabel *snippetLabel = [[UILabel alloc] init];
-    snippetLabel.frame = CGRectMake(64, 42, 175, 12);
+    snippetLabel.frame = CGRectMake(64, 32, 175, 12);
     [infoWindow addSubview:snippetLabel];
     snippetLabel.text = marker.snippet;
+    snippetLabel.textColor = [UIColor grayColor];
+    snippetLabel.font = [snippetLabel.font fontWithSize:12];
     
     //--- Image tbd
     UIImageView *locationImage = [[UIImageView alloc] init];
