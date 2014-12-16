@@ -29,6 +29,7 @@
 		45C91DCA1A3387B1000C2D4B /* RouteTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C91DC91A3387B1000C2D4B /* RouteTableView.swift */; };
 		45C91DD01A33AD4C000C2D4B /* Marker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C91DCF1A33AD4C000C2D4B /* Marker.swift */; };
 		45C91DD21A33B15F000C2D4B /* RouteModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C91DD11A33B15F000C2D4B /* RouteModel.swift */; };
+		8480A0371A3F10D2006C9BB1 /* MapViewVontroller.m in Sources */ = {isa = PBXBuildFile; fileRef = 8480A0361A3F10D2006C9BB1 /* MapViewVontroller.m */; };
 		84BC1F3F1A3C87F0005AC68A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84BC1F3D1A3C87F0005AC68A /* Main.storyboard */; };
 /* End PBXBuildFile section */
 
@@ -70,6 +71,8 @@
 		45C91DC91A3387B1000C2D4B /* RouteTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RouteTableView.swift; sourceTree = "<group>"; };
 		45C91DCF1A33AD4C000C2D4B /* Marker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Marker.swift; sourceTree = "<group>"; };
 		45C91DD11A33B15F000C2D4B /* RouteModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RouteModel.swift; sourceTree = "<group>"; };
+		8480A0351A3F10D2006C9BB1 /* MapViewVontroller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewVontroller.h; sourceTree = "<group>"; };
+		8480A0361A3F10D2006C9BB1 /* MapViewVontroller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapViewVontroller.m; sourceTree = "<group>"; };
 		84BC1F3E1A3C87F0005AC68A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = TravelApp/Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -131,6 +134,8 @@
 				45C91DC71A33829B000C2D4B /* RouteMapView.swift */,
 				45C91DC91A3387B1000C2D4B /* RouteTableView.swift */,
 				45C91DD11A33B15F000C2D4B /* RouteModel.swift */,
+				8480A0351A3F10D2006C9BB1 /* MapViewVontroller.h */,
+				8480A0361A3F10D2006C9BB1 /* MapViewVontroller.m */,
 				84BC1F3D1A3C87F0005AC68A /* Main.storyboard */,
 				45C91D8F1A337883000C2D4B /* Images.xcassets */,
 				45C91D911A337883000C2D4B /* LaunchScreen.xib */,
@@ -292,6 +297,7 @@
 				45C91DD01A33AD4C000C2D4B /* Marker.swift in Sources */,
 				45C91DCA1A3387B1000C2D4B /* RouteTableView.swift in Sources */,
 				45C91DD21A33B15F000C2D4B /* RouteModel.swift in Sources */,
+				8480A0371A3F10D2006C9BB1 /* MapViewVontroller.m in Sources */,
 				45C91D891A337883000C2D4B /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -418,7 +424,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/TravelApp",
@@ -436,7 +444,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/TravelApp",
