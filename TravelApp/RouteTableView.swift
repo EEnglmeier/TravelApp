@@ -10,15 +10,36 @@ import UIKit
 
 class RouteTableView : UIViewController,UITableViewDelegate,UITableViewDataSource{
     
-    @IBOutlet
-    var tableView:UITableView!
-    let routeModel : RouteModel = RouteModel()
+    var tableView:UITableView = UITableView()
+    var routeModel : RouteModel = RouteModel()
     var selectedItems :[Marker] = []
+    var textfieldInput : UITextField!
     
     override func viewDidLoad() {
+
+        //Add and Configure TableView
+        tableView.frame = CGRectMake(10, 75, 320, 400)
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.autoresizingMask = UIViewAutoresizing.FlexibleHeight
+        tableView.allowsMultipleSelection = true
+        tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        tableView.reloadData()
+        self.view.addSubview(tableView)
+        
+        //Add and Configure CreateRouteButton
+        var createRouteButton = UIButton.buttonWithType(UIButtonType.System) as UIButton
+        createRouteButton.frame = CGRectMake(225,20,150,50)
+        createRouteButton.setTitle("Create New Route", forState: UIControlState.Normal)
+        createRouteButton.addTarget(self, action: "createRouteAction:", forControlEvents: UIControlEvents.TouchUpInside)
+        
+        //Add and Configure NavigationBar
+        var navBar = UINavigationBar()
+        navBar.frame = CGRectMake(self.view.bounds.minX,self.view.bounds.minY,self.view.bounds.width,70)
+        navBar.backgroundColor = UIColor.grayColor()
+        self.view.addSubview(navBar)
+        navBar.addSubview(createRouteButton)
         super.viewDidLoad()
-        self.tableView.allowsMultipleSelection = true
-        self.tableView.registerClass(UITableViewCell.self,forCellReuseIdentifier:"cell")
     }
  
     override func didReceiveMemoryWarning() {
@@ -36,11 +57,6 @@ class RouteTableView : UIViewController,UITableViewDelegate,UITableViewDataSourc
     }
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
          self.selectedItems.append(routeModel.allLocs[indexPath.row])
-    /*
-        self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        var cell : UITableViewCell = self.tableView.cellForRowAtIndexPath(indexPath)!;
-        cell.accessoryType = UITableViewCellAccessoryType.Checkmark
-        */
     }
     func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
         self.selectedItems.removeObject(routeModel.allLocs[indexPath.row])
@@ -49,9 +65,44 @@ class RouteTableView : UIViewController,UITableViewDelegate,UITableViewDataSourc
         if(segue.identifier == "DataToMap"){
             var svc = segue.destinationViewController as RouteMapView
             svc.passedData = selectedItems
+            svc.routeName = routeModel.allRoutes.last?.name
+            svc.routeModel = self.routeModel
         }
     }
     
+    func createRouteAction(sender:UIButton){
+        if(self.selectedItems.count > 1){
+        var inputAlert = UIAlertController(title:"Enter Route Name", message:"" , preferredStyle: .Alert)
+        inputAlert.addAction(UIAlertAction(title: "Create", style: UIAlertActionStyle.Default, handler: { (action) -> Void in
+            self.textfieldInput = inputAlert.textFields![0] as UITextField
+            if(Array(arrayLiteral: self.textfieldInput.text)[0] != ""){
+            let route = Route(markers: self.selectedItems, name: self.textfieldInput.text)
+            self.routeModel.allRoutes.append(route)
+            self.performSegueWithIdentifier("DataToMap", sender: self)}
+            else{
+            var inputAlert = UIAlertController(title:"Please name your Route", message:"" , preferredStyle: .Alert)
+            inputAlert.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Default, handler: { (action) -> Void in
+                    self.selectedItems.removeAll(keepCapacity: false)
+                    self.tableView.reloadData()
+                }))
+                self.presentViewController(inputAlert, animated: true, completion: nil)
+            }
+        }))
+        inputAlert.addTextFieldWithConfigurationHandler({(textfield:UITextField!)
+        in textfield.placeholder = "Enter Route Name"
+        textfield.secureTextEntry = false
+        })
+        self.presentViewController(inputAlert, animated: true, completion:nil)
+    }
+        else{
+        var inputAlert = UIAlertController(title:"Select at least 2 places", message:"" , preferredStyle: .Alert)
+            inputAlert.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Default, handler: { (action) -> Void in
+                self.selectedItems.removeAll(keepCapacity: false)
+                self.tableView.reloadData()
+            }))
+            self.presentViewController(inputAlert, animated: true, completion: nil)
+        }
+    }
 }
 extension Array {
     mutating func removeObject<U: Equatable>(object: U) {
@@ -63,7 +114,6 @@ extension Array {
                 }
             }
         }
-        
         if((index) != nil) {
             self.removeAtIndex(index!)
         }

@@ -25,12 +25,14 @@
 		45C91DBF1A337F36000C2D4B /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45C91DBE1A337F36000C2D4B /* OpenGLES.framework */; };
 		45C91DC11A337F3B000C2D4B /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45C91DC01A337F3B000C2D4B /* QuartzCore.framework */; };
 		45C91DC31A337F43000C2D4B /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45C91DC21A337F43000C2D4B /* SystemConfiguration.framework */; };
-		45C91DC81A33829B000C2D4B /* RouteMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C91DC71A33829B000C2D4B /* RouteMapView.swift */; };
-		45C91DCA1A3387B1000C2D4B /* RouteTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C91DC91A3387B1000C2D4B /* RouteTableView.swift */; };
-		45C91DD01A33AD4C000C2D4B /* Marker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C91DCF1A33AD4C000C2D4B /* Marker.swift */; };
-		45C91DD21A33B15F000C2D4B /* RouteModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C91DD11A33B15F000C2D4B /* RouteModel.swift */; };
+		45CC96701A448918007E9C23 /* Marker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CC966C1A448918007E9C23 /* Marker.swift */; };
+		45CC96711A448918007E9C23 /* RouteMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CC966D1A448918007E9C23 /* RouteMapView.swift */; };
+		45CC96721A448918007E9C23 /* RouteTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CC966E1A448918007E9C23 /* RouteTableView.swift */; };
+		45CC96731A448918007E9C23 /* RouteModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CC966F1A448918007E9C23 /* RouteModel.swift */; };
+		45CC96771A448924007E9C23 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 45CC96741A448924007E9C23 /* Main.storyboard */; };
+		45CC96781A448924007E9C23 /* RouteOverview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CC96751A448924007E9C23 /* RouteOverview.swift */; };
+		45CC96791A448924007E9C23 /* Route.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CC96761A448924007E9C23 /* Route.swift */; };
 		8480A0371A3F10D2006C9BB1 /* MapViewVontroller.m in Sources */ = {isa = PBXBuildFile; fileRef = 8480A0361A3F10D2006C9BB1 /* MapViewVontroller.m */; };
-		84BC1F3F1A3C87F0005AC68A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84BC1F3D1A3C87F0005AC68A /* Main.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,13 +69,15 @@
 		45C91DC01A337F3B000C2D4B /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		45C91DC21A337F43000C2D4B /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		45C91DC41A338101000C2D4B /* TravelApp-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TravelApp-Bridging-Header.h"; sourceTree = "<group>"; };
-		45C91DC71A33829B000C2D4B /* RouteMapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RouteMapView.swift; sourceTree = "<group>"; };
-		45C91DC91A3387B1000C2D4B /* RouteTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RouteTableView.swift; sourceTree = "<group>"; };
-		45C91DCF1A33AD4C000C2D4B /* Marker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Marker.swift; sourceTree = "<group>"; };
-		45C91DD11A33B15F000C2D4B /* RouteModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RouteModel.swift; sourceTree = "<group>"; };
+		45CC966C1A448918007E9C23 /* Marker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Marker.swift; sourceTree = "<group>"; };
+		45CC966D1A448918007E9C23 /* RouteMapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RouteMapView.swift; sourceTree = "<group>"; };
+		45CC966E1A448918007E9C23 /* RouteTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RouteTableView.swift; sourceTree = "<group>"; };
+		45CC966F1A448918007E9C23 /* RouteModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RouteModel.swift; sourceTree = "<group>"; };
+		45CC96741A448924007E9C23 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		45CC96751A448924007E9C23 /* RouteOverview.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RouteOverview.swift; sourceTree = "<group>"; };
+		45CC96761A448924007E9C23 /* Route.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Route.swift; sourceTree = "<group>"; };
 		8480A0351A3F10D2006C9BB1 /* MapViewVontroller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewVontroller.h; sourceTree = "<group>"; };
 		8480A0361A3F10D2006C9BB1 /* MapViewVontroller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapViewVontroller.m; sourceTree = "<group>"; };
-		84BC1F3E1A3C87F0005AC68A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = TravelApp/Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -130,13 +134,15 @@
 			isa = PBXGroup;
 			children = (
 				45C91D881A337883000C2D4B /* AppDelegate.swift */,
-				45C91DCF1A33AD4C000C2D4B /* Marker.swift */,
-				45C91DC71A33829B000C2D4B /* RouteMapView.swift */,
-				45C91DC91A3387B1000C2D4B /* RouteTableView.swift */,
-				45C91DD11A33B15F000C2D4B /* RouteModel.swift */,
 				8480A0351A3F10D2006C9BB1 /* MapViewVontroller.h */,
 				8480A0361A3F10D2006C9BB1 /* MapViewVontroller.m */,
-				84BC1F3D1A3C87F0005AC68A /* Main.storyboard */,
+				45CC966C1A448918007E9C23 /* Marker.swift */,
+				45CC966D1A448918007E9C23 /* RouteMapView.swift */,
+				45CC966E1A448918007E9C23 /* RouteTableView.swift */,
+				45CC96741A448924007E9C23 /* Main.storyboard */,
+				45CC96751A448924007E9C23 /* RouteOverview.swift */,
+				45CC96761A448924007E9C23 /* Route.swift */,
+				45CC966F1A448918007E9C23 /* RouteModel.swift */,
 				45C91D8F1A337883000C2D4B /* Images.xcassets */,
 				45C91D911A337883000C2D4B /* LaunchScreen.xib */,
 				45C91D861A337883000C2D4B /* Supporting Files */,
@@ -275,7 +281,7 @@
 				45C91D931A337883000C2D4B /* LaunchScreen.xib in Resources */,
 				45C91D901A337883000C2D4B /* Images.xcassets in Resources */,
 				45C91DAB1A337E1D000C2D4B /* GoogleMaps.bundle in Resources */,
-				84BC1F3F1A3C87F0005AC68A /* Main.storyboard in Resources */,
+				45CC96771A448924007E9C23 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -293,12 +299,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				45C91DC81A33829B000C2D4B /* RouteMapView.swift in Sources */,
-				45C91DD01A33AD4C000C2D4B /* Marker.swift in Sources */,
-				45C91DCA1A3387B1000C2D4B /* RouteTableView.swift in Sources */,
-				45C91DD21A33B15F000C2D4B /* RouteModel.swift in Sources */,
 				8480A0371A3F10D2006C9BB1 /* MapViewVontroller.m in Sources */,
+				45CC96711A448918007E9C23 /* RouteMapView.swift in Sources */,
 				45C91D891A337883000C2D4B /* AppDelegate.swift in Sources */,
+				45CC96731A448918007E9C23 /* RouteModel.swift in Sources */,
+				45CC96721A448918007E9C23 /* RouteTableView.swift in Sources */,
+				45CC96791A448924007E9C23 /* Route.swift in Sources */,
+				45CC96701A448918007E9C23 /* Marker.swift in Sources */,
+				45CC96781A448924007E9C23 /* RouteOverview.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -327,15 +335,6 @@
 				45C91D921A337883000C2D4B /* Base */,
 			);
 			name = LaunchScreen.xib;
-			sourceTree = "<group>";
-		};
-		84BC1F3D1A3C87F0005AC68A /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				84BC1F3E1A3C87F0005AC68A /* Base */,
-			);
-			name = Main.storyboard;
-			path = ..;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

@@ -10,8 +10,11 @@ import Foundation
 
 struct Marker : Equatable{
     
-   private var longitude,latitude : Double
-   private var name:String
+    var longitude,latitude : Double
+    var name:String
+    //var categorie : String!
+    //var picture : String!
+    //var address : String!
     
     init(longitude:Double,latitude:Double,name:String){
         self.longitude = longitude
@@ -31,6 +34,5 @@ struct Marker : Equatable{
 }
 
 func == (lhs:Marker,rhs:Marker) -> Bool{
-    if(lhs.getName() == rhs.getName() && lhs.getLatitude() == rhs.getLatitude() && lhs.getLongitude() == rhs.getLongitude()){return true}
-    else {return false}
+    return lhs.getName() == rhs.getName() && lhs.getLatitude() == rhs.getLatitude() && lhs.getLongitude() == rhs.getLongitude()
 }
