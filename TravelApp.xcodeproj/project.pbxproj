@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		45C91D891A337883000C2D4B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C91D881A337883000C2D4B /* AppDelegate.swift */; };
-		45C91D901A337883000C2D4B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 45C91D8F1A337883000C2D4B /* Images.xcassets */; };
 		45C91D931A337883000C2D4B /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45C91D911A337883000C2D4B /* LaunchScreen.xib */; };
 		45C91D9F1A337883000C2D4B /* TravelAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C91D9E1A337883000C2D4B /* TravelAppTests.swift */; };
 		45C91DA91A337DF8000C2D4B /* GoogleMaps.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45C91DA81A337DF8000C2D4B /* GoogleMaps.framework */; };
@@ -33,6 +32,7 @@
 		45CC96781A448924007E9C23 /* RouteOverview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CC96751A448924007E9C23 /* RouteOverview.swift */; };
 		45CC96791A448924007E9C23 /* Route.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CC96761A448924007E9C23 /* Route.swift */; };
 		8480A0371A3F10D2006C9BB1 /* MapViewVontroller.m in Sources */ = {isa = PBXBuildFile; fileRef = 8480A0361A3F10D2006C9BB1 /* MapViewVontroller.m */; };
+		84FBDD071A485D2900CC3DC4 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84FBDD061A485D2900CC3DC4 /* Images.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,7 +49,6 @@
 		45C91D831A337883000C2D4B /* TravelApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TravelApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		45C91D871A337883000C2D4B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		45C91D881A337883000C2D4B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		45C91D8F1A337883000C2D4B /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		45C91D921A337883000C2D4B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		45C91D981A337883000C2D4B /* TravelAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TravelAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		45C91D9D1A337883000C2D4B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -78,6 +77,7 @@
 		45CC96761A448924007E9C23 /* Route.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Route.swift; sourceTree = "<group>"; };
 		8480A0351A3F10D2006C9BB1 /* MapViewVontroller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewVontroller.h; sourceTree = "<group>"; };
 		8480A0361A3F10D2006C9BB1 /* MapViewVontroller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapViewVontroller.m; sourceTree = "<group>"; };
+		84FBDD061A485D2900CC3DC4 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -139,11 +139,11 @@
 				45CC966C1A448918007E9C23 /* Marker.swift */,
 				45CC966D1A448918007E9C23 /* RouteMapView.swift */,
 				45CC966E1A448918007E9C23 /* RouteTableView.swift */,
-				45CC96741A448924007E9C23 /* Main.storyboard */,
 				45CC96751A448924007E9C23 /* RouteOverview.swift */,
 				45CC96761A448924007E9C23 /* Route.swift */,
 				45CC966F1A448918007E9C23 /* RouteModel.swift */,
-				45C91D8F1A337883000C2D4B /* Images.xcassets */,
+				45CC96741A448924007E9C23 /* Main.storyboard */,
+				84FBDD061A485D2900CC3DC4 /* Images.xcassets */,
 				45C91D911A337883000C2D4B /* LaunchScreen.xib */,
 				45C91D861A337883000C2D4B /* Supporting Files */,
 				45C91DC41A338101000C2D4B /* TravelApp-Bridging-Header.h */,
@@ -279,7 +279,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				45C91D931A337883000C2D4B /* LaunchScreen.xib in Resources */,
-				45C91D901A337883000C2D4B /* Images.xcassets in Resources */,
+				84FBDD071A485D2900CC3DC4 /* Images.xcassets in Resources */,
 				45C91DAB1A337E1D000C2D4B /* GoogleMaps.bundle in Resources */,
 				45CC96771A448924007E9C23 /* Main.storyboard in Resources */,
 			);
