@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		45C58F601A497782000BB6EB /* Marker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C58F581A497782000BB6EB /* Marker.swift */; };
+		45C58F611A497782000BB6EB /* RouteMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C58F591A497782000BB6EB /* RouteMapView.swift */; };
+		45C58F621A497782000BB6EB /* RouteTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C58F5A1A497782000BB6EB /* RouteTableView.swift */; };
+		45C58F631A497782000BB6EB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 45C58F5B1A497782000BB6EB /* Main.storyboard */; };
+		45C58F641A497782000BB6EB /* PlacesTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C58F5C1A497782000BB6EB /* PlacesTableView.swift */; };
+		45C58F651A497782000BB6EB /* RouteOverview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C58F5D1A497782000BB6EB /* RouteOverview.swift */; };
+		45C58F661A497782000BB6EB /* Route.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C58F5E1A497782000BB6EB /* Route.swift */; };
+		45C58F671A497782000BB6EB /* RouteModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C58F5F1A497782000BB6EB /* RouteModel.swift */; };
 		45C91D891A337883000C2D4B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C91D881A337883000C2D4B /* AppDelegate.swift */; };
 		45C91D931A337883000C2D4B /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45C91D911A337883000C2D4B /* LaunchScreen.xib */; };
 		45C91D9F1A337883000C2D4B /* TravelAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C91D9E1A337883000C2D4B /* TravelAppTests.swift */; };
@@ -24,13 +32,6 @@
 		45C91DBF1A337F36000C2D4B /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45C91DBE1A337F36000C2D4B /* OpenGLES.framework */; };
 		45C91DC11A337F3B000C2D4B /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45C91DC01A337F3B000C2D4B /* QuartzCore.framework */; };
 		45C91DC31A337F43000C2D4B /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45C91DC21A337F43000C2D4B /* SystemConfiguration.framework */; };
-		45CC96701A448918007E9C23 /* Marker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CC966C1A448918007E9C23 /* Marker.swift */; };
-		45CC96711A448918007E9C23 /* RouteMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CC966D1A448918007E9C23 /* RouteMapView.swift */; };
-		45CC96721A448918007E9C23 /* RouteTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CC966E1A448918007E9C23 /* RouteTableView.swift */; };
-		45CC96731A448918007E9C23 /* RouteModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CC966F1A448918007E9C23 /* RouteModel.swift */; };
-		45CC96771A448924007E9C23 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 45CC96741A448924007E9C23 /* Main.storyboard */; };
-		45CC96781A448924007E9C23 /* RouteOverview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CC96751A448924007E9C23 /* RouteOverview.swift */; };
-		45CC96791A448924007E9C23 /* Route.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CC96761A448924007E9C23 /* Route.swift */; };
 		8480A0371A3F10D2006C9BB1 /* MapViewVontroller.m in Sources */ = {isa = PBXBuildFile; fileRef = 8480A0361A3F10D2006C9BB1 /* MapViewVontroller.m */; };
 		84FBDD071A485D2900CC3DC4 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84FBDD061A485D2900CC3DC4 /* Images.xcassets */; };
 /* End PBXBuildFile section */
@@ -46,6 +47,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		45C58F581A497782000BB6EB /* Marker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Marker.swift; sourceTree = "<group>"; };
+		45C58F591A497782000BB6EB /* RouteMapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RouteMapView.swift; sourceTree = "<group>"; };
+		45C58F5A1A497782000BB6EB /* RouteTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RouteTableView.swift; sourceTree = "<group>"; };
+		45C58F5B1A497782000BB6EB /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		45C58F5C1A497782000BB6EB /* PlacesTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlacesTableView.swift; sourceTree = "<group>"; };
+		45C58F5D1A497782000BB6EB /* RouteOverview.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RouteOverview.swift; sourceTree = "<group>"; };
+		45C58F5E1A497782000BB6EB /* Route.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Route.swift; sourceTree = "<group>"; };
+		45C58F5F1A497782000BB6EB /* RouteModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RouteModel.swift; sourceTree = "<group>"; };
 		45C91D831A337883000C2D4B /* TravelApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TravelApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		45C91D871A337883000C2D4B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		45C91D881A337883000C2D4B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -68,13 +77,6 @@
 		45C91DC01A337F3B000C2D4B /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		45C91DC21A337F43000C2D4B /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		45C91DC41A338101000C2D4B /* TravelApp-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TravelApp-Bridging-Header.h"; sourceTree = "<group>"; };
-		45CC966C1A448918007E9C23 /* Marker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Marker.swift; sourceTree = "<group>"; };
-		45CC966D1A448918007E9C23 /* RouteMapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RouteMapView.swift; sourceTree = "<group>"; };
-		45CC966E1A448918007E9C23 /* RouteTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RouteTableView.swift; sourceTree = "<group>"; };
-		45CC966F1A448918007E9C23 /* RouteModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RouteModel.swift; sourceTree = "<group>"; };
-		45CC96741A448924007E9C23 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
-		45CC96751A448924007E9C23 /* RouteOverview.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RouteOverview.swift; sourceTree = "<group>"; };
-		45CC96761A448924007E9C23 /* Route.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Route.swift; sourceTree = "<group>"; };
 		8480A0351A3F10D2006C9BB1 /* MapViewVontroller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewVontroller.h; sourceTree = "<group>"; };
 		8480A0361A3F10D2006C9BB1 /* MapViewVontroller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapViewVontroller.m; sourceTree = "<group>"; };
 		84FBDD061A485D2900CC3DC4 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
@@ -136,13 +138,14 @@
 				45C91D881A337883000C2D4B /* AppDelegate.swift */,
 				8480A0351A3F10D2006C9BB1 /* MapViewVontroller.h */,
 				8480A0361A3F10D2006C9BB1 /* MapViewVontroller.m */,
-				45CC966C1A448918007E9C23 /* Marker.swift */,
-				45CC966D1A448918007E9C23 /* RouteMapView.swift */,
-				45CC966E1A448918007E9C23 /* RouteTableView.swift */,
-				45CC96751A448924007E9C23 /* RouteOverview.swift */,
-				45CC96761A448924007E9C23 /* Route.swift */,
-				45CC966F1A448918007E9C23 /* RouteModel.swift */,
-				45CC96741A448924007E9C23 /* Main.storyboard */,
+				45C58F581A497782000BB6EB /* Marker.swift */,
+				45C58F591A497782000BB6EB /* RouteMapView.swift */,
+				45C58F5A1A497782000BB6EB /* RouteTableView.swift */,
+				45C58F5B1A497782000BB6EB /* Main.storyboard */,
+				45C58F5C1A497782000BB6EB /* PlacesTableView.swift */,
+				45C58F5D1A497782000BB6EB /* RouteOverview.swift */,
+				45C58F5E1A497782000BB6EB /* Route.swift */,
+				45C58F5F1A497782000BB6EB /* RouteModel.swift */,
 				84FBDD061A485D2900CC3DC4 /* Images.xcassets */,
 				45C91D911A337883000C2D4B /* LaunchScreen.xib */,
 				45C91D861A337883000C2D4B /* Supporting Files */,
@@ -281,7 +284,7 @@
 				45C91D931A337883000C2D4B /* LaunchScreen.xib in Resources */,
 				84FBDD071A485D2900CC3DC4 /* Images.xcassets in Resources */,
 				45C91DAB1A337E1D000C2D4B /* GoogleMaps.bundle in Resources */,
-				45CC96771A448924007E9C23 /* Main.storyboard in Resources */,
+				45C58F631A497782000BB6EB /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -300,13 +303,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				8480A0371A3F10D2006C9BB1 /* MapViewVontroller.m in Sources */,
-				45CC96711A448918007E9C23 /* RouteMapView.swift in Sources */,
+				45C58F641A497782000BB6EB /* PlacesTableView.swift in Sources */,
+				45C58F611A497782000BB6EB /* RouteMapView.swift in Sources */,
+				45C58F671A497782000BB6EB /* RouteModel.swift in Sources */,
 				45C91D891A337883000C2D4B /* AppDelegate.swift in Sources */,
-				45CC96731A448918007E9C23 /* RouteModel.swift in Sources */,
-				45CC96721A448918007E9C23 /* RouteTableView.swift in Sources */,
-				45CC96791A448924007E9C23 /* Route.swift in Sources */,
-				45CC96701A448918007E9C23 /* Marker.swift in Sources */,
-				45CC96781A448924007E9C23 /* RouteOverview.swift in Sources */,
+				45C58F621A497782000BB6EB /* RouteTableView.swift in Sources */,
+				45C58F661A497782000BB6EB /* Route.swift in Sources */,
+				45C58F601A497782000BB6EB /* Marker.swift in Sources */,
+				45C58F651A497782000BB6EB /* RouteOverview.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

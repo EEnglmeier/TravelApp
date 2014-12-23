@@ -11,7 +11,6 @@ import UIKit
 class RouteOverview : UIViewController,UITableViewDelegate,UITableViewDataSource{
     
     var tableView:UITableView = UITableView()
-    var routeModel : RouteModel = RouteModel()
     var selectedItems :[Marker] = []
     var selectedRow = 0
 
@@ -19,7 +18,7 @@ class RouteOverview : UIViewController,UITableViewDelegate,UITableViewDataSource
     override func viewDidLoad() {
         
         //Add and Configure TableView
-        tableView.frame = CGRectMake(10, 75, 320, 400)
+        tableView.frame = CGRectMake(10, 75, 300, 400)
         tableView.dataSource = self
         tableView.delegate = self
         tableView.autoresizingMask = UIViewAutoresizing.FlexibleHeight
@@ -27,24 +26,24 @@ class RouteOverview : UIViewController,UITableViewDelegate,UITableViewDataSource
         tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "cell")
         tableView.reloadData()
         self.view.addSubview(tableView)
+        
     
         var navBar = UINavigationBar()
         navBar.frame = CGRectMake(self.view.bounds.minX,self.view.bounds.minY,self.view.bounds.width,70)
         navBar.backgroundColor = UIColor.grayColor()
         var newRouteButton = UIButton.buttonWithType(UIButtonType.System) as UIButton
-        newRouteButton.frame = CGRectMake(225,20,150,50)
+        newRouteButton.frame = CGRectMake(175,20,150,50)
         newRouteButton.setTitle("Add new Route", forState: UIControlState.Normal)
         newRouteButton.addTarget(self, action: "showRoutesAction:", forControlEvents: UIControlEvents.TouchUpInside)
         navBar.addSubview(newRouteButton)
         self.view.addSubview(navBar)
-        println(routeModel.allRoutes.count)
         super.viewDidLoad()
     }
 
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if(!routeModel.allRoutes.isEmpty){
+        if(!RouteModel.sharedInstance.allRoutes.isEmpty){
             tableView.allowsSelection = true
-            return self.routeModel.allRoutes.count}
+            return RouteModel.sharedInstance.allRoutes.count}
         else{
             tableView.allowsSelection = false;
             return 1;
@@ -53,24 +52,19 @@ class RouteOverview : UIViewController,UITableViewDelegate,UITableViewDataSource
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cell:UITableViewCell = self.tableView.dequeueReusableCellWithIdentifier("cell") as UITableViewCell
-        if(!routeModel.allRoutes.isEmpty){
-            cell.textLabel.text = self.routeModel.allRoutes[indexPath.item].name}
+        if(!RouteModel.sharedInstance.allRoutes.isEmpty){
+            cell.textLabel.text = RouteModel.sharedInstance.allRoutes[indexPath.item].name}
         else{
         cell.textLabel.text = "No Routes found"
         }
         return cell
     }
     func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        if(routeModel.allRoutes.isEmpty){
-            return false
-        }
-        else {
-            return true
-        }
+           return !RouteModel.sharedInstance.allRoutes.isEmpty
     }
     func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if(editingStyle == UITableViewCellEditingStyle.Delete && !routeModel.allRoutes.isEmpty){
-            self.routeModel.allRoutes.removeAtIndex(indexPath.row)
+        if(editingStyle == UITableViewCellEditingStyle.Delete && !RouteModel.sharedInstance.allRoutes.isEmpty){
+            RouteModel.sharedInstance.allRoutes.removeAtIndex(indexPath.row)
             tableView.reloadData()
         }
     }
@@ -82,12 +76,11 @@ class RouteOverview : UIViewController,UITableViewDelegate,UITableViewDataSource
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if(segue.identifier == "RouteToRouteMapView"){
             var svc = segue.destinationViewController as RouteMapView
-            svc.passedData = routeModel.allRoutes[selectedRow].orderderdMarkers
-            svc.routeModel = self.routeModel
+            svc.passedData = RouteModel.sharedInstance.allRoutes[selectedRow].orderderdMarkers
         }
         if(segue.identifier == "RouteOverViewToRouteTableView"){
             var svc = segue.destinationViewController as RouteTableView
-            svc.routeModel = self.routeModel
+            //removed
         }
     }
     func showRoutesAction(sender:UIButton){
@@ -99,7 +92,11 @@ class RouteOverview : UIViewController,UITableViewDelegate,UITableViewDataSource
         if(segue.identifier == "RouteMapViewToRoute" && svc.passedData != nil && svc.routeName != nil){
             let route = Route(markers: svc.passedData, name: svc.routeName)
         }
-        svc.routeModel = self.routeModel
+        tableView.reloadData()
+    }
+    
+    @IBAction
+    func unwindFromTableView(segue:UIStoryboardSegue){
         tableView.reloadData()
     }
 }

@@ -11,14 +11,13 @@ import UIKit
 class RouteTableView : UIViewController,UITableViewDelegate,UITableViewDataSource{
     
     var tableView:UITableView = UITableView()
-    var routeModel : RouteModel = RouteModel()
     var selectedItems :[Marker] = []
     var textfieldInput : UITextField!
     
     override func viewDidLoad() {
 
         //Add and Configure TableView
-        tableView.frame = CGRectMake(10, 75, 320, 400)
+        tableView.frame = CGRectMake(10, 75, 300, 400)
         tableView.dataSource = self
         tableView.delegate = self
         tableView.autoresizingMask = UIViewAutoresizing.FlexibleHeight
@@ -29,7 +28,7 @@ class RouteTableView : UIViewController,UITableViewDelegate,UITableViewDataSourc
         
         //Add and Configure CreateRouteButton
         var createRouteButton = UIButton.buttonWithType(UIButtonType.System) as UIButton
-        createRouteButton.frame = CGRectMake(225,20,150,50)
+        createRouteButton.frame = CGRectMake(175,20,150,50)
         createRouteButton.setTitle("Create New Route", forState: UIControlState.Normal)
         createRouteButton.addTarget(self, action: "createRouteAction:", forControlEvents: UIControlEvents.TouchUpInside)
         
@@ -39,6 +38,11 @@ class RouteTableView : UIViewController,UITableViewDelegate,UITableViewDataSourc
         navBar.backgroundColor = UIColor.grayColor()
         self.view.addSubview(navBar)
         navBar.addSubview(createRouteButton)
+        var backButton = UIButton.buttonWithType(UIButtonType.System) as UIButton
+        backButton.frame = CGRectMake(20,20,50,50)
+        backButton.setTitle("Cancel", forState: UIControlState.Normal)
+        backButton.addTarget(self, action: "backAction:", forControlEvents: UIControlEvents.TouchUpInside)
+        navBar.addSubview(backButton)
         super.viewDidLoad()
     }
  
@@ -47,27 +51,31 @@ class RouteTableView : UIViewController,UITableViewDelegate,UITableViewDataSourc
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.routeModel.allLocs.count
+        return RouteModel.sharedInstance.allLocs.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell:UITableViewCell = self.tableView.dequeueReusableCellWithIdentifier("cell") as UITableViewCell
-        cell.textLabel.text = self.routeModel.allLocs[indexPath.item].getName()
+        var cell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "cell")
+        cell.textLabel.text = RouteModel.sharedInstance.allLocs[indexPath.item].name
+        cell.detailTextLabel?.text =  RouteModel.sharedInstance.allLocs[indexPath.item].address
         return cell
     }
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-         self.selectedItems.append(routeModel.allLocs[indexPath.row])
+         self.selectedItems.append(RouteModel.sharedInstance.allLocs[indexPath.row])
     }
     func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
-        self.selectedItems.removeObject(routeModel.allLocs[indexPath.row])
+        self.selectedItems.removeObject(RouteModel.sharedInstance.allLocs[indexPath.row])
     }
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if(segue.identifier == "DataToMap"){
             var svc = segue.destinationViewController as RouteMapView
             svc.passedData = selectedItems
-            svc.routeName = routeModel.allRoutes.last?.name
-            svc.routeModel = self.routeModel
+            svc.routeName = RouteModel.sharedInstance.allRoutes.last?.name
         }
+    }
+    
+    func backAction(sender:UIButton){
+        self.performSegueWithIdentifier("RouteTableViewToRoute", sender: self)
     }
     
     func createRouteAction(sender:UIButton){
@@ -77,7 +85,7 @@ class RouteTableView : UIViewController,UITableViewDelegate,UITableViewDataSourc
             self.textfieldInput = inputAlert.textFields![0] as UITextField
             if(Array(arrayLiteral: self.textfieldInput.text)[0] != ""){
             let route = Route(markers: self.selectedItems, name: self.textfieldInput.text)
-            self.routeModel.allRoutes.append(route)
+            RouteModel.sharedInstance.allRoutes.append(route)
             self.performSegueWithIdentifier("DataToMap", sender: self)}
             else{
             var inputAlert = UIAlertController(title:"Please name your Route", message:"" , preferredStyle: .Alert)

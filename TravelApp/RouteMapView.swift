@@ -12,8 +12,6 @@ class RouteMapView : UIViewController{
     
     var passedData : [Marker]!
     var routeName : String!
-    var routeModel = RouteModel()
-
 
     override func viewDidLoad() {
         
@@ -24,21 +22,21 @@ class RouteMapView : UIViewController{
         navBar.backgroundColor = UIColor.grayColor()
         self.view.addSubview(navBar)
         var backButton = UIButton.buttonWithType(UIButtonType.System) as UIButton
-        backButton.frame = CGRectMake(20,20,150,50)
+        backButton.frame = CGRectMake(0,20,150,50)
         backButton.setTitle("Back to Overview", forState: UIControlState.Normal)
         backButton.addTarget(self, action: "backAction:", forControlEvents: UIControlEvents.TouchUpInside)
         navBar.addSubview(backButton)
 
         
-        var camera = GMSCameraPosition.cameraWithLatitude(passedData[0].getLatitude(), longitude:passedData[0].getLongitude(), zoom:1)
+        var camera = GMSCameraPosition.cameraWithLatitude(passedData[0].latitude, longitude:passedData[0].longitude, zoom:1)
         var mapView = GMSMapView.mapWithFrame(mapFrame, camera:camera)
         mapView.mapType = kGMSTypeTerrain
         var path = GMSMutablePath()
         for marker in passedData{
-            path.addLatitude(marker.getLatitude(), longitude: marker.getLongitude())
+            path.addLatitude(marker.latitude, longitude: marker.longitude)
             var pin = GMSMarker()
-            pin.position = CLLocationCoordinate2DMake(marker.getLatitude(), marker.getLongitude())
-            pin.snippet = marker.getName()
+            pin.position = CLLocationCoordinate2DMake(marker.latitude, marker.longitude)
+            pin.snippet = marker.name
             pin.appearAnimation = kGMSMarkerAnimationPop
             pin.map = mapView
         }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="49e-Tb-3d3">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="49e-Tb-3d3">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
     </dependencies>
@@ -7,7 +7,7 @@
         <!--Map-->
         <scene sceneID="yiy-d8-G09">
             <objects>
-                <viewController id="27c-jk-6k3" customClass="MapViewController" sceneMemberID="viewController">
+                <viewController id="27c-jk-6k3" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="ox2-iA-jqq"/>
                         <viewControllerLayoutGuide type="bottom" id="yoX-tO-bME"/>
@@ -23,10 +23,10 @@
             </objects>
             <point key="canvasLocation" x="-992" y="600"/>
         </scene>
-        <!--List-->
+        <!--Places-->
         <scene sceneID="wg7-f3-ORb">
             <objects>
-                <viewController id="8rJ-Kc-sve" sceneMemberID="viewController">
+                <viewController id="8rJ-Kc-sve" customClass="PlacesTableView" customModule="TravelApp" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="L7p-HK-0SC"/>
                         <viewControllerLayoutGuide type="bottom" id="Djb-ko-YwX"/>
@@ -34,30 +34,9 @@
                     <view key="view" contentMode="scaleToFill" id="QS5-Rx-YEW">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" text="Second View" textAlignment="center" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="zEq-FU-wV5">
-                                <rect key="frame" x="195" y="279" width="209.5" height="41.5"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="36"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loaded by SecondViewController" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NDk-cv-Gan">
-                                <rect key="frame" x="192" y="329" width="215.5" height="17"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="NDk-cv-Gan" firstAttribute="top" secondItem="zEq-FU-wV5" secondAttribute="bottom" constant="8" symbolic="YES" id="Day-4N-Vmt"/>
-                            <constraint firstItem="NDk-cv-Gan" firstAttribute="centerX" secondItem="zEq-FU-wV5" secondAttribute="centerX" id="JgO-Fn-dHn"/>
-                            <constraint firstAttribute="centerX" secondItem="zEq-FU-wV5" secondAttribute="centerX" id="qqM-NS-xev"/>
-                            <constraint firstAttribute="centerY" secondItem="zEq-FU-wV5" secondAttribute="centerY" id="qzY-Ky-pLD"/>
-                        </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="List" image="Liste" id="cPa-gy-q4n"/>
+                    <tabBarItem key="tabBarItem" title="Places" image="Liste" id="cPa-gy-q4n"/>
                     <navigationItem key="navigationItem" id="9sW-eY-0mo"/>
                     <connections>
                         <segue destination="fEl-nF-RPu" kind="show" identifier="ListeToDetailView" id="FgG-45-DHr"/>
@@ -127,9 +106,11 @@
                     </view>
                     <connections>
                         <segue destination="Uo0-Rh-Ad7" kind="show" identifier="DataToMap" id="UE5-be-UHn"/>
+                        <segue destination="Z2z-uH-f7c" kind="unwind" identifier="RouteTableViewToRoute" unwindAction="unwindFromTableView:" id="ZXa-EG-9VR"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6bu-IR-veS" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="Z2z-uH-f7c" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="1102" y="1384"/>
         </scene>
@@ -155,7 +136,7 @@
             </objects>
             <point key="canvasLocation" x="1816" y="1384"/>
         </scene>
-        <!--Add new Place-->
+        <!--Add New Place-->
         <scene sceneID="Qy2-Ox-6Zk">
             <objects>
                 <viewController id="nFh-BY-cGy" sceneMemberID="viewController">
@@ -168,7 +149,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Add new Place" image="Hinzufügen" id="0rS-wS-UML"/>
+                    <tabBarItem key="tabBarItem" title="Add New Place" image="Hinzufügen" id="0rS-wS-UML"/>
                     <connections>
                         <segue destination="g4h-CM-ssJ" kind="show" identifier="OrtToShowPicture" id="Nze-ei-slr"/>
                     </connections>
