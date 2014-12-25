@@ -31,9 +31,9 @@ class RouteOverview : UIViewController,UITableViewDelegate,UITableViewDataSource
         var navBar = UINavigationBar()
         navBar.frame = CGRectMake(self.view.bounds.minX,self.view.bounds.minY,self.view.bounds.width,70)
         navBar.backgroundColor = UIColor.grayColor()
-        var newRouteButton = UIButton.buttonWithType(UIButtonType.System) as UIButton
-        newRouteButton.frame = CGRectMake(175,20,150,50)
-        newRouteButton.setTitle("Add new Route", forState: UIControlState.Normal)
+        var newRouteButton = UIButton.buttonWithType(UIButtonType.ContactAdd) as UIButton
+        newRouteButton.frame = CGRectMake(200,20,150,50)
+       // newRouteButton.setTitle("Add new Route", forState: UIControlState.Normal)
         newRouteButton.addTarget(self, action: "showRoutesAction:", forControlEvents: UIControlEvents.TouchUpInside)
         navBar.addSubview(newRouteButton)
         self.view.addSubview(navBar)
@@ -77,10 +77,6 @@ class RouteOverview : UIViewController,UITableViewDelegate,UITableViewDataSource
         if(segue.identifier == "RouteToRouteMapView"){
             var svc = segue.destinationViewController as RouteMapView
             svc.passedData = RouteModel.sharedInstance.allRoutes[selectedRow].orderderdMarkers
-        }
-        if(segue.identifier == "RouteOverViewToRouteTableView"){
-            var svc = segue.destinationViewController as RouteTableView
-            //removed
         }
     }
     func showRoutesAction(sender:UIButton){

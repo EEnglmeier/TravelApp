@@ -16,11 +16,11 @@ struct Marker : Equatable{
     //var picture : String!
     var address : String
     
-    init(longitude:Double,latitude:Double,name:String){
+    init(longitude:Double,latitude:Double,name:String,address:String){
         self.longitude = longitude
         self.latitude = latitude
         self.name = name
-        self.address = "Some Random Address"
+        self.address = address
     }
 }
 
