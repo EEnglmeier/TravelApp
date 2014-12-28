@@ -203,10 +203,9 @@
 		B95390571A50217C0017E98D /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9538FAC1A5021790017E98D /* AdSupport.framework */; };
 		B95390581A50217C0017E98D /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9538FAD1A50217A0017E98D /* AssetsLibrary.framework */; };
 		B95390591A50217C0017E98D /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9538FAE1A50217A0017E98D /* AudioToolbox.framework */; };
-		B953905A1A50217C0017E98D /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9538FAF1A50217A0017E98D /* Parse.framework */; };
-		B953905B1A50217C0017E98D /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9538FB01A50217A0017E98D /* Bolts.framework */; };
 		B95390641A5027290017E98D /* OrtHinzuefugen.m in Sources */ = {isa = PBXBuildFile; fileRef = B95390631A5027290017E98D /* OrtHinzuefugen.m */; };
 		B95390671A5027790017E98D /* ShowPicture.m in Sources */ = {isa = PBXBuildFile; fileRef = B95390661A5027790017E98D /* ShowPicture.m */; };
+		B95F73961A5054A5007E2F19 /* ParseOSX.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B95F73951A5054A5007E2F19 /* ParseOSX.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -422,12 +421,11 @@
 		B9538FAC1A5021790017E98D /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		B9538FAD1A50217A0017E98D /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		B9538FAE1A50217A0017E98D /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
-		B9538FAF1A50217A0017E98D /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Parse.framework; path = "../../../Downloads/parse-library-1/Parse.framework"; sourceTree = "<group>"; };
-		B9538FB01A50217A0017E98D /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Bolts.framework; path = ../../TravelApp/Bolts.framework; sourceTree = "<group>"; };
 		B95390621A5027290017E98D /* OrtHinzuefugen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrtHinzuefugen.h; sourceTree = "<group>"; };
 		B95390631A5027290017E98D /* OrtHinzuefugen.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrtHinzuefugen.m; sourceTree = "<group>"; };
 		B95390651A5027790017E98D /* ShowPicture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShowPicture.h; sourceTree = "<group>"; };
 		B95390661A5027790017E98D /* ShowPicture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShowPicture.m; sourceTree = "<group>"; };
+		B95F73951A5054A5007E2F19 /* ParseOSX.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseOSX.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -450,7 +448,6 @@
 				B9538FE01A50217A0017E98D /* libcmph.dylib in Frameworks */,
 				B953903A1A50217B0017E98D /* QuickLook.framework in Frameworks */,
 				B95390301A50217B0017E98D /* MobileCoreServices.framework in Frameworks */,
-				B953905B1A50217C0017E98D /* Bolts.framework in Frameworks */,
 				B9538FD41A50217A0017E98D /* libAXSafeCategoryBundle.dylib in Frameworks */,
 				B9538FEA1A50217A0017E98D /* libexslt.0.dylib in Frameworks */,
 				B953903E1A50217B0017E98D /* Social.framework in Frameworks */,
@@ -489,6 +486,7 @@
 				B953901B1A50217B0017E98D /* libz.1.1.3.dylib in Frameworks */,
 				B95390201A50217B0017E98D /* ExternalAccessory.framework in Frameworks */,
 				B95390131A50217B0017E98D /* libtidy.dylib in Frameworks */,
+				B95F73961A5054A5007E2F19 /* ParseOSX.framework in Frameworks */,
 				B953901D1A50217B0017E98D /* libz.1.dylib in Frameworks */,
 				B9538FCC1A50217A0017E98D /* libAWDProtobufVPN.dylib in Frameworks */,
 				B95390491A50217C0017E98D /* CoreAudio.framework in Frameworks */,
@@ -554,7 +552,6 @@
 				B9538FFA1A50217B0017E98D /* libm.dylib in Frameworks */,
 				B9538FDE1A50217A0017E98D /* libcharset.1.dylib in Frameworks */,
 				B9538FD81A50217A0017E98D /* libbz2.1.0.dylib in Frameworks */,
-				B953905A1A50217C0017E98D /* Parse.framework in Frameworks */,
 				B95390441A50217B0017E98D /* WebKit.framework in Frameworks */,
 				B9538FBE1A50217A0017E98D /* libAWDProtobufEasyConfig.dylib in Frameworks */,
 				B9538FCA1A50217A0017E98D /* libAWDProtobufSiri.dylib in Frameworks */,
@@ -705,6 +702,7 @@
 		8440FB601A3C874400D17C2B /* Framework */ = {
 			isa = PBXGroup;
 			children = (
+				B95F73951A5054A5007E2F19 /* ParseOSX.framework */,
 				B9538F061A5021770017E98D /* libAppPatch.dylib */,
 				B9538F071A5021770017E98D /* libarchive.2.dylib */,
 				B9538F081A5021770017E98D /* libarchive.dylib */,
@@ -874,8 +872,6 @@
 				B9538FAC1A5021790017E98D /* AdSupport.framework */,
 				B9538FAD1A50217A0017E98D /* AssetsLibrary.framework */,
 				B9538FAE1A50217A0017E98D /* AudioToolbox.framework */,
-				B9538FAF1A50217A0017E98D /* Parse.framework */,
-				B9538FB01A50217A0017E98D /* Bolts.framework */,
 				45C91DAA1A337E1D000C2D4B /* GoogleMaps.bundle */,
 				45C91DA81A337DF8000C2D4B /* GoogleMaps.framework */,
 				45C91DC21A337F43000C2D4B /* SystemConfiguration.framework */,
@@ -1131,6 +1127,8 @@
 					"$(PROJECT_DIR)/TravelApp",
 					"/Users/zenib/Downloads/parse-library-1",
 					/Users/zenib/Desktop/TravelApp,
+					"$(PROJECT_DIR)",
+					"/Users/zenib/Downloads/parse-osx-library-1-2",
 				);
 				INFOPLIST_FILE = TravelApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1153,6 +1151,8 @@
 					"$(PROJECT_DIR)/TravelApp",
 					"/Users/zenib/Downloads/parse-library-1",
 					/Users/zenib/Desktop/TravelApp,
+					"$(PROJECT_DIR)",
+					"/Users/zenib/Downloads/parse-osx-library-1-2",
 				);
 				INFOPLIST_FILE = TravelApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
