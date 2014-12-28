@@ -206,6 +206,7 @@
 		B95390641A5027290017E98D /* OrtHinzuefugen.m in Sources */ = {isa = PBXBuildFile; fileRef = B95390631A5027290017E98D /* OrtHinzuefugen.m */; };
 		B95390671A5027790017E98D /* ShowPicture.m in Sources */ = {isa = PBXBuildFile; fileRef = B95390661A5027790017E98D /* ShowPicture.m */; };
 		B95F73961A5054A5007E2F19 /* ParseOSX.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B95F73951A5054A5007E2F19 /* ParseOSX.framework */; };
+		B95F73981A505523007E2F19 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B95F73971A505523007E2F19 /* Bolts.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -426,6 +427,7 @@
 		B95390651A5027790017E98D /* ShowPicture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShowPicture.h; sourceTree = "<group>"; };
 		B95390661A5027790017E98D /* ShowPicture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShowPicture.m; sourceTree = "<group>"; };
 		B95F73951A5054A5007E2F19 /* ParseOSX.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseOSX.framework; sourceTree = "<group>"; };
+		B95F73971A505523007E2F19 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -448,6 +450,7 @@
 				B9538FE01A50217A0017E98D /* libcmph.dylib in Frameworks */,
 				B953903A1A50217B0017E98D /* QuickLook.framework in Frameworks */,
 				B95390301A50217B0017E98D /* MobileCoreServices.framework in Frameworks */,
+				B95F73981A505523007E2F19 /* Bolts.framework in Frameworks */,
 				B9538FD41A50217A0017E98D /* libAXSafeCategoryBundle.dylib in Frameworks */,
 				B9538FEA1A50217A0017E98D /* libexslt.0.dylib in Frameworks */,
 				B953903E1A50217B0017E98D /* Social.framework in Frameworks */,
@@ -702,6 +705,7 @@
 		8440FB601A3C874400D17C2B /* Framework */ = {
 			isa = PBXGroup;
 			children = (
+				B95F73971A505523007E2F19 /* Bolts.framework */,
 				B95F73951A5054A5007E2F19 /* ParseOSX.framework */,
 				B9538F061A5021770017E98D /* libAppPatch.dylib */,
 				B9538F071A5021770017E98D /* libarchive.2.dylib */,
