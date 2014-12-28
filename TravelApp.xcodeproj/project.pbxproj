@@ -205,8 +205,8 @@
 		B95390591A50217C0017E98D /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9538FAE1A50217A0017E98D /* AudioToolbox.framework */; };
 		B953905A1A50217C0017E98D /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9538FAF1A50217A0017E98D /* Parse.framework */; };
 		B953905B1A50217C0017E98D /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9538FB01A50217A0017E98D /* Bolts.framework */; };
-		B95390601A5021A80017E98D /* OrtHinzuefugen.m in Sources */ = {isa = PBXBuildFile; fileRef = B953905D1A5021A80017E98D /* OrtHinzuefugen.m */; };
-		B95390611A5021A80017E98D /* ShowPicture.m in Sources */ = {isa = PBXBuildFile; fileRef = B953905F1A5021A80017E98D /* ShowPicture.m */; };
+		B95390641A5027290017E98D /* OrtHinzuefugen.m in Sources */ = {isa = PBXBuildFile; fileRef = B95390631A5027290017E98D /* OrtHinzuefugen.m */; };
+		B95390671A5027790017E98D /* ShowPicture.m in Sources */ = {isa = PBXBuildFile; fileRef = B95390661A5027790017E98D /* ShowPicture.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -424,10 +424,10 @@
 		B9538FAE1A50217A0017E98D /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		B9538FAF1A50217A0017E98D /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Parse.framework; path = "../../../Downloads/parse-library-1/Parse.framework"; sourceTree = "<group>"; };
 		B9538FB01A50217A0017E98D /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Bolts.framework; path = ../../TravelApp/Bolts.framework; sourceTree = "<group>"; };
-		B953905C1A5021A80017E98D /* OrtHinzuefugen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OrtHinzuefugen.h; path = ../../../TravelApp/TravelApp/OrtHinzuefugen.h; sourceTree = "<group>"; };
-		B953905D1A5021A80017E98D /* OrtHinzuefugen.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OrtHinzuefugen.m; path = ../../../TravelApp/TravelApp/OrtHinzuefugen.m; sourceTree = "<group>"; };
-		B953905E1A5021A80017E98D /* ShowPicture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ShowPicture.h; path = ../../../TravelApp/TravelApp/ShowPicture.h; sourceTree = "<group>"; };
-		B953905F1A5021A80017E98D /* ShowPicture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ShowPicture.m; path = ../../../TravelApp/TravelApp/ShowPicture.m; sourceTree = "<group>"; };
+		B95390621A5027290017E98D /* OrtHinzuefugen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrtHinzuefugen.h; sourceTree = "<group>"; };
+		B95390631A5027290017E98D /* OrtHinzuefugen.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrtHinzuefugen.m; sourceTree = "<group>"; };
+		B95390651A5027790017E98D /* ShowPicture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShowPicture.h; sourceTree = "<group>"; };
+		B95390661A5027790017E98D /* ShowPicture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShowPicture.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -654,10 +654,10 @@
 		45C91D851A337883000C2D4B /* TravelApp */ = {
 			isa = PBXGroup;
 			children = (
-				B953905C1A5021A80017E98D /* OrtHinzuefugen.h */,
-				B953905D1A5021A80017E98D /* OrtHinzuefugen.m */,
-				B953905E1A5021A80017E98D /* ShowPicture.h */,
-				B953905F1A5021A80017E98D /* ShowPicture.m */,
+				B95390621A5027290017E98D /* OrtHinzuefugen.h */,
+				B95390631A5027290017E98D /* OrtHinzuefugen.m */,
+				B95390651A5027790017E98D /* ShowPicture.h */,
+				B95390661A5027790017E98D /* ShowPicture.m */,
 				45C91D881A337883000C2D4B /* AppDelegate.swift */,
 				8480A0351A3F10D2006C9BB1 /* MapViewVontroller.h */,
 				8480A0361A3F10D2006C9BB1 /* MapViewVontroller.m */,
@@ -996,7 +996,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B95390601A5021A80017E98D /* OrtHinzuefugen.m in Sources */,
+				B95390641A5027290017E98D /* OrtHinzuefugen.m in Sources */,
 				8480A0371A3F10D2006C9BB1 /* MapViewVontroller.m in Sources */,
 				45C58F641A497782000BB6EB /* PlacesTableView.swift in Sources */,
 				45C58F611A497782000BB6EB /* RouteMapView.swift in Sources */,
@@ -1004,7 +1004,7 @@
 				45C91D891A337883000C2D4B /* AppDelegate.swift in Sources */,
 				45C58F621A497782000BB6EB /* RouteTableView.swift in Sources */,
 				45C58F661A497782000BB6EB /* Route.swift in Sources */,
-				B95390611A5021A80017E98D /* ShowPicture.m in Sources */,
+				B95390671A5027790017E98D /* ShowPicture.m in Sources */,
 				45C58F601A497782000BB6EB /* Marker.swift in Sources */,
 				45C58F651A497782000BB6EB /* RouteOverview.swift in Sources */,
 			);
