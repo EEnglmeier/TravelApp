@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Eli. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 class PlacesTableView: UIViewController,UITableViewDelegate,UITableViewDataSource{
     
