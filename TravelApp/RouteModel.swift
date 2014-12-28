@@ -21,8 +21,23 @@ class RouteModel{
         let oet = Marker(longitude:11.593287, latitude:48.146113 , name: "Oettingenstrasse", address: "Oettingenstarsse xx")
         allLocs = [munich,tokyo,newYork,lmu,oet]
         let route = Route(markers: allLocs, name: "Route1")
-        allRoutes = [route]
+        let route2 = Route(markers: allLocs, name: "Route2")
+        let route3 = Route(markers: allLocs, name: "Route3")
+        let route4 = Route(markers: allLocs, name: "Route4")
+        let route5 = Route(markers: allLocs, name: "Route5")
+        allRoutes = [route,route2,route3,route4,route5]
     }
+    
+    func removeLocation(pos:Int) {
+        var res : [Marker] = []
+        allLocs.removeAtIndex(pos)
+        for m in allLocs{
+            res.append(m)
+        }
+        allLocs = res;
+        
+    }
+    
     struct Static{
         static var onceToken : dispatch_once_t = 0
         static var instance : RouteModel? = nil

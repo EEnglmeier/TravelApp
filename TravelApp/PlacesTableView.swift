@@ -47,9 +47,8 @@ class PlacesTableView: UIViewController,UITableViewDelegate,UITableViewDataSourc
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "cell")
+        var cell:UITableViewCell = self.tableView.dequeueReusableCellWithIdentifier("cell") as UITableViewCell
         if(!RouteModel.sharedInstance.allLocs.isEmpty){
-            cell.textLabel.numberOfLines = 0
             cell.textLabel.text = RouteModel.sharedInstance.allLocs[indexPath.item].name
             cell.detailTextLabel?.text =  RouteModel.sharedInstance.allLocs[indexPath.item].address
         }
@@ -70,7 +69,7 @@ class PlacesTableView: UIViewController,UITableViewDelegate,UITableViewDataSourc
     func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if(editingStyle == UITableViewCellEditingStyle.Delete && !RouteModel.sharedInstance.allLocs.isEmpty){
             RouteModel.sharedInstance.allLocs.removeAtIndex(indexPath.row)
-            tableView.reloadData()
         }
+        tableView.reloadData()
     }
 }
