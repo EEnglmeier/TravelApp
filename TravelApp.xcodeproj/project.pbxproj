@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		45977A791A506A8F00242E07 /* ShowPicture.m in Sources */ = {isa = PBXBuildFile; fileRef = B95390661A5027790017E98D /* ShowPicture.m */; };
+		45977AAF1A506D4F00242E07 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45977AAE1A506D4F00242E07 /* Bolts.framework */; };
 		45C58F601A497782000BB6EB /* Marker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C58F581A497782000BB6EB /* Marker.swift */; };
 		45C58F611A497782000BB6EB /* RouteMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C58F591A497782000BB6EB /* RouteMapView.swift */; };
 		45C58F621A497782000BB6EB /* RouteTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C58F5A1A497782000BB6EB /* RouteTableView.swift */; };
@@ -204,8 +206,6 @@
 		B95390581A50217C0017E98D /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9538FAD1A50217A0017E98D /* AssetsLibrary.framework */; };
 		B95390591A50217C0017E98D /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9538FAE1A50217A0017E98D /* AudioToolbox.framework */; };
 		B95390641A5027290017E98D /* OrtHinzuefugen.m in Sources */ = {isa = PBXBuildFile; fileRef = B95390631A5027290017E98D /* OrtHinzuefugen.m */; };
-		B95390671A5027790017E98D /* ShowPicture.m in Sources */ = {isa = PBXBuildFile; fileRef = B95390661A5027790017E98D /* ShowPicture.m */; };
-		B95F73981A505523007E2F19 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B95F73971A505523007E2F19 /* Bolts.framework */; };
 		B95F739A1A505C66007E2F19 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B95F73991A505C66007E2F19 /* Parse.framework */; };
 /* End PBXBuildFile section */
 
@@ -220,6 +220,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		45977AAE1A506D4F00242E07 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
 		45C58F581A497782000BB6EB /* Marker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Marker.swift; sourceTree = "<group>"; };
 		45C58F591A497782000BB6EB /* RouteMapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RouteMapView.swift; sourceTree = "<group>"; };
 		45C58F5A1A497782000BB6EB /* RouteTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RouteTableView.swift; sourceTree = "<group>"; };
@@ -426,7 +427,6 @@
 		B95390631A5027290017E98D /* OrtHinzuefugen.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrtHinzuefugen.m; sourceTree = "<group>"; };
 		B95390651A5027790017E98D /* ShowPicture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShowPicture.h; sourceTree = "<group>"; };
 		B95390661A5027790017E98D /* ShowPicture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShowPicture.m; sourceTree = "<group>"; };
-		B95F73971A505523007E2F19 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
 		B95F73991A505C66007E2F19 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -450,7 +450,7 @@
 				B9538FE01A50217A0017E98D /* libcmph.dylib in Frameworks */,
 				B953903A1A50217B0017E98D /* QuickLook.framework in Frameworks */,
 				B95390301A50217B0017E98D /* MobileCoreServices.framework in Frameworks */,
-				B95F73981A505523007E2F19 /* Bolts.framework in Frameworks */,
+				45977AAF1A506D4F00242E07 /* Bolts.framework in Frameworks */,
 				B9538FD41A50217A0017E98D /* libAXSafeCategoryBundle.dylib in Frameworks */,
 				B9538FEA1A50217A0017E98D /* libexslt.0.dylib in Frameworks */,
 				B953903E1A50217B0017E98D /* Social.framework in Frameworks */,
@@ -705,8 +705,8 @@
 		8440FB601A3C874400D17C2B /* Framework */ = {
 			isa = PBXGroup;
 			children = (
+				45977AAE1A506D4F00242E07 /* Bolts.framework */,
 				B95F73991A505C66007E2F19 /* Parse.framework */,
-				B95F73971A505523007E2F19 /* Bolts.framework */,
 				B9538F061A5021770017E98D /* libAppPatch.dylib */,
 				B9538F071A5021770017E98D /* libarchive.2.dylib */,
 				B9538F081A5021770017E98D /* libarchive.dylib */,
@@ -996,6 +996,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				45977A791A506A8F00242E07 /* ShowPicture.m in Sources */,
 				B95390641A5027290017E98D /* OrtHinzuefugen.m in Sources */,
 				8480A0371A3F10D2006C9BB1 /* MapViewVontroller.m in Sources */,
 				45C58F641A497782000BB6EB /* PlacesTableView.swift in Sources */,
@@ -1004,7 +1005,6 @@
 				45C91D891A337883000C2D4B /* AppDelegate.swift in Sources */,
 				45C58F621A497782000BB6EB /* RouteTableView.swift in Sources */,
 				45C58F661A497782000BB6EB /* Route.swift in Sources */,
-				B95390671A5027790017E98D /* ShowPicture.m in Sources */,
 				45C58F601A497782000BB6EB /* Marker.swift in Sources */,
 				45C58F651A497782000BB6EB /* RouteOverview.swift in Sources */,
 			);
@@ -1129,10 +1129,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/TravelApp",
-					"/Users/zenib/Downloads/parse-library-1",
-					/Users/zenib/Desktop/TravelApp,
 					"$(PROJECT_DIR)",
-					"/Users/zenib/Downloads/parse-osx-library-1-2",
 				);
 				INFOPLIST_FILE = TravelApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1153,10 +1150,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/TravelApp",
-					"/Users/zenib/Downloads/parse-library-1",
-					/Users/zenib/Desktop/TravelApp,
 					"$(PROJECT_DIR)",
-					"/Users/zenib/Downloads/parse-osx-library-1-2",
 				);
 				INFOPLIST_FILE = TravelApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
