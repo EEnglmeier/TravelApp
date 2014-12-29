@@ -12,9 +12,10 @@ class RouteMapView : UIViewController{
     
     var passedData : [Marker]!
     var routeName : String!
-    var navUrl : NSURL = NSURL(string: "https://www.google.de/maps/?saddr=Google+Inc,+8th+Avenue,+New+York,+NY&daddr=John+F.+Kennedy+International+Airport,+Van+Wyck+Expressway,+Jamaica,+New+York&directionsmode=transit")!
-    
-    var testUrl : NSURL = NSURL(string: "https://www.google.de/maps/?saddr=51.84,-8.30&daddr=51.84,-8.30&directionsmode=transit")!
+    var session: NSURLSession {
+        return NSURLSession.sharedSession()
+    }
+    var mapView = GMSMapView()
 
     override func viewDidLoad() {
         var viewFrame = self.view.frame
@@ -32,44 +33,76 @@ class RouteMapView : UIViewController{
         startNavButton.setTitle("Start Navigation", forState: UIControlState.Normal)
         startNavButton.addTarget(self, action: "navAction:", forControlEvents: UIControlEvents.TouchUpInside)
         navBar.addSubview(backButton)
-
-        
-        var camera = GMSCameraPosition.cameraWithLatitude(passedData[0].latitude, longitude:passedData[0].longitude, zoom:1)
-        var mapView = GMSMapView.mapWithFrame(mapFrame, camera:camera)
+        var camera = GMSCameraPosition.cameraWithLatitude(48.151043, longitude: 11.581076, zoom: 17.5)
+        mapView = GMSMapView.mapWithFrame(mapFrame, camera:camera)
         mapView.mapType = kGMSTypeTerrain
         var path = GMSMutablePath()
-        for marker in passedData{
-            path.addLatitude(marker.latitude, longitude: marker.longitude)
+        
+        for var index = 0; index < passedData.count; ++index {
             var pin = GMSMarker()
-            pin.position = CLLocationCoordinate2DMake(marker.latitude, marker.longitude)
-            pin.snippet = marker.name
+            pin.position = CLLocationCoordinate2DMake(passedData[index].latitude, passedData[index].longitude)
+            pin.snippet = passedData[index].name
             pin.appearAnimation = kGMSMarkerAnimationPop
             pin.map = mapView
+            if(index < passedData.count-1){
+            var loc1 : CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: passedData[index].latitude, longitude: passedData[index].longitude)
+            var loc2 : CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: passedData[index+1].latitude, longitude: passedData[index+1].longitude)
+            self.fetchDirectionsFrom(loc1, to: loc2){optionalRoute in
+                if let encodedRoute = optionalRoute
+                {
+                    let path = GMSPath(fromEncodedPath: encodedRoute)
+                    let line = GMSPolyline(path: path)
+                    line.strokeWidth = 4.0
+                    line.map = self.mapView
+                }
+            }
         }
-        var polyline = GMSPolyline(path:path)
-        polyline.strokeColor = UIColor.yellowColor()
-        polyline.strokeWidth = 4.0
-        polyline.map = mapView
+    }
+        
+        
         self.view.addSubview(mapView)
-        self.view.addSubview(startNavButton)
         super.viewDidLoad()
     }
     func backAction(sender:UIButton){
         self.performSegueWithIdentifier("RouteMapViewToRoute", sender: self)
     }
+    
     func navAction(sender:UIButton){
-        let app = UIApplication.sharedApplication()
-        if(app.canOpenURL(navUrl)){
-           app.openURL(NSURL(string: makeNavString(passedData[0].longitude, lat_1: passedData[0].latitude, long_2: passedData[1].longitude, lat_2: passedData[1].latitude))!)
-        }
+       
     }
     
-    func makeNavString(long_1:Double,lat_1:Double,long_2:Double,lat_2:Double) -> String{
-        var longitude_1 : String = String(format:"%f", long_1)
-        var latitude_1 : String = String(format:"%f", lat_1)
-        var longitude_2 : String = String(format:"%f", long_2)
-        var latitude_2 : String = String(format:"%f", lat_2)
-        var res = "https://www.google.de/maps/?saddr="+latitude_1+","+longitude_1+"&daddr="+latitude_2+","+longitude_2+"&directionsmode=transit"
-        return res
+    func fetchDirectionsFrom(from: CLLocationCoordinate2D, to: CLLocationCoordinate2D, completion: ((String?) -> Void)) -> ()
+    {
+        let rUrl1 = "http://maps.googleapis.com/maps/api/directions/json?origin="+String(format:"%f", from.latitude)+","+String(format:"%f", from.longitude)
+        let rUrl2 = "&destination="+String(format:"%f", to.latitude)+","+String(format:"%f", to.longitude)+"&sensor=false&mode=walking"
+        let urlString = rUrl1+rUrl2
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+        session.dataTaskWithURL(NSURL(string: urlString)!) {data, response, error in
+            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+            var encodedRoute: String?
+            if let json = NSJSONSerialization.JSONObjectWithData(data, options:nil, error:nil) as? [String:AnyObject] {
+                if let routes = json["routes"] as AnyObject? as? [AnyObject] {
+                    if let route = routes.first as? [String : AnyObject] {
+                        if let polyline = route["overview_polyline"] as AnyObject? as? [String : String] {
+                            if let points = polyline["points"] as AnyObject? as? String {
+                                encodedRoute = points
+                                
+                            }
+                        }
+                    }
+                }
+            }
+            
+            dispatch_async(dispatch_get_main_queue()) {
+                completion(encodedRoute)
+            }
+            }.resume()
+    }
+    
+    func sortByDist(locs : [Marker]) -> [Marker]{
+        
+        
+        
+    return locs
     }
 }

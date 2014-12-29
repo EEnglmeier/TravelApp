@@ -32,10 +32,13 @@ class RouteOverview : UIViewController,UITableViewDelegate,UITableViewDataSource
         navBar.frame = CGRectMake(self.view.bounds.minX,self.view.bounds.minY,self.view.bounds.width,70)
         navBar.backgroundColor = UIColor.grayColor()
         var newRouteButton = UIButton.buttonWithType(UIButtonType.ContactAdd) as UIButton
-        newRouteButton.frame = CGRectMake(200,20,150,50)
+        newRouteButton.frame = CGRectMake(190,20,150,50)
        // newRouteButton.setTitle("Add new Route", forState: UIControlState.Normal)
         newRouteButton.addTarget(self, action: "showRoutesAction:", forControlEvents: UIControlEvents.TouchUpInside)
         navBar.addSubview(newRouteButton)
+        var label = UILabel()
+        label.frame = CGRectMake(190,20,150,50)
+        label.text = "Test"
         self.view.addSubview(navBar)
         super.viewDidLoad()
     }
