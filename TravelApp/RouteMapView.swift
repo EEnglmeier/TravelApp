@@ -16,7 +16,9 @@ class RouteMapView : UIViewController{
         return NSURLSession.sharedSession()
     }
     var mapView = GMSMapView()
-
+    var longPath = GMSMutablePath()
+    var camera = GMSCameraPosition()
+    
     override func viewDidLoad() {
         var viewFrame = self.view.frame
         var mapFrame = CGRectMake(viewFrame.origin.x, 70, viewFrame.size.width, viewFrame.size.height)
@@ -33,17 +35,17 @@ class RouteMapView : UIViewController{
         startNavButton.setTitle("Start Navigation", forState: UIControlState.Normal)
         startNavButton.addTarget(self, action: "navAction:", forControlEvents: UIControlEvents.TouchUpInside)
         navBar.addSubview(backButton)
-        var camera = GMSCameraPosition.cameraWithLatitude(48.151043, longitude: 11.581076, zoom: 17.5)
+        var camera = GMSCameraPosition.cameraWithLatitude(passedData[0].latitude, longitude:passedData[0].longitude, zoom: 13.5)
         mapView = GMSMapView.mapWithFrame(mapFrame, camera:camera)
         mapView.mapType = kGMSTypeTerrain
         var path = GMSMutablePath()
-        
         for var index = 0; index < passedData.count; ++index {
             var pin = GMSMarker()
             pin.position = CLLocationCoordinate2DMake(passedData[index].latitude, passedData[index].longitude)
             pin.snippet = passedData[index].name
             pin.appearAnimation = kGMSMarkerAnimationPop
             pin.map = mapView
+        if(getTotalDist(passedData) < 50000.0){
             if(index < passedData.count-1){
             var loc1 : CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: passedData[index].latitude, longitude: passedData[index].longitude)
             var loc2 : CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: passedData[index+1].latitude, longitude: passedData[index+1].longitude)
@@ -58,9 +60,16 @@ class RouteMapView : UIViewController{
             }
         }
     }
-        
-        
+        else{
+            longPath.addLatitude(passedData[index].latitude, longitude: passedData[index].longitude)
+            }
+}
+        var polyline = GMSPolyline(path:longPath)
+        polyline.strokeColor = UIColor.yellowColor()
+        polyline.strokeWidth = 4.0
+        polyline.map = self.mapView
         self.view.addSubview(mapView)
+        self.view.addSubview(startNavButton)
         super.viewDidLoad()
     }
     func backAction(sender:UIButton){
@@ -68,7 +77,6 @@ class RouteMapView : UIViewController{
     }
     
     func navAction(sender:UIButton){
-       
     }
     
     func fetchDirectionsFrom(from: CLLocationCoordinate2D, to: CLLocationCoordinate2D, completion: ((String?) -> Void)) -> ()
@@ -99,10 +107,13 @@ class RouteMapView : UIViewController{
             }.resume()
     }
     
-    func sortByDist(locs : [Marker]) -> [Marker]{
-        
-        
-        
-    return locs
+    func getTotalDist(locs : [Marker]) -> Double{
+        var dist : Double = 0.0
+        for var index = 0; index < locs.count; ++index {
+             if(index < locs.count-1){
+              dist = dist + GMSGeometryDistance(CLLocationCoordinate2DMake(locs[index].latitude, locs[index].longitude), CLLocationCoordinate2DMake(locs[index+1].latitude, locs[index+1].longitude))
+            }
+        }
+    return dist
     }
 }

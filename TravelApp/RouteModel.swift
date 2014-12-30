@@ -22,8 +22,8 @@ class RouteModel{
         let fkirche = Marker(longitude: 11.573984, latitude: 48.138515, name: "Frauenkirche", address: "Frauenplatz12")
         let iTor = Marker(longitude: 11.581934, latitude: 48.135014, name: "Isartor", address: "Isartorplatz")
         allLocs = [munich,tokyo,newYork,lmu,oet,fkirche,iTor]
-        let route = Route(markers: allLocs,name: "Route1")
-        let route2 = Route(markers: allLocs, name: "Route2")
+        let route = Route(markers: [munich,tokyo,newYork],name: "Route1")
+        let route2 = Route(markers: [munich], name: "Route2")
         let route3 = Route(markers: allLocs, name: "Route3")
         let route4 = Route(markers: allLocs, name: "Route4")
         let route5 = Route(markers: [lmu,oet,fkirche,iTor], name: "LMU-OET-FKirche-Isartor")
