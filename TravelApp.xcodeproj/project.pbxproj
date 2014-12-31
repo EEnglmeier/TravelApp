@@ -207,6 +207,9 @@
 		B95390591A50217C0017E98D /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9538FAE1A50217A0017E98D /* AudioToolbox.framework */; };
 		B95390641A5027290017E98D /* OrtHinzuefugen.m in Sources */ = {isa = PBXBuildFile; fileRef = B95390631A5027290017E98D /* OrtHinzuefugen.m */; };
 		B95F739A1A505C66007E2F19 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B95F73991A505C66007E2F19 /* Parse.framework */; };
+		B9E5B1731A5494D700074C0C /* BuildDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = B9E5B1721A5494D700074C0C /* BuildDetailView.m */; };
+		B9E5B1761A54959D00074C0C /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = B9E5B1751A54959D00074C0C /* MBProgressHUD.m */; };
+		B9E5B1791A5495EF00074C0C /* DetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = B9E5B1781A5495EF00074C0C /* DetailView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -428,6 +431,12 @@
 		B95390651A5027790017E98D /* ShowPicture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShowPicture.h; sourceTree = "<group>"; };
 		B95390661A5027790017E98D /* ShowPicture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShowPicture.m; sourceTree = "<group>"; };
 		B95F73991A505C66007E2F19 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
+		B9E5B1711A5494D700074C0C /* BuildDetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BuildDetailView.h; sourceTree = "<group>"; };
+		B9E5B1721A5494D700074C0C /* BuildDetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BuildDetailView.m; sourceTree = "<group>"; };
+		B9E5B1741A54959D00074C0C /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
+		B9E5B1751A54959D00074C0C /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
+		B9E5B1771A5495EF00074C0C /* DetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailView.h; sourceTree = "<group>"; };
+		B9E5B1781A5495EF00074C0C /* DetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -654,6 +663,12 @@
 		45C91D851A337883000C2D4B /* TravelApp */ = {
 			isa = PBXGroup;
 			children = (
+				B9E5B1711A5494D700074C0C /* BuildDetailView.h */,
+				B9E5B1721A5494D700074C0C /* BuildDetailView.m */,
+				B9E5B1741A54959D00074C0C /* MBProgressHUD.h */,
+				B9E5B1751A54959D00074C0C /* MBProgressHUD.m */,
+				B9E5B1771A5495EF00074C0C /* DetailView.h */,
+				B9E5B1781A5495EF00074C0C /* DetailView.m */,
 				B95390621A5027290017E98D /* OrtHinzuefugen.h */,
 				B95390631A5027290017E98D /* OrtHinzuefugen.m */,
 				B95390651A5027790017E98D /* ShowPicture.h */,
@@ -1001,11 +1016,14 @@
 				8480A0371A3F10D2006C9BB1 /* MapViewVontroller.m in Sources */,
 				45C58F641A497782000BB6EB /* PlacesTableView.swift in Sources */,
 				45C58F611A497782000BB6EB /* RouteMapView.swift in Sources */,
+				B9E5B1791A5495EF00074C0C /* DetailView.m in Sources */,
 				45C58F671A497782000BB6EB /* RouteModel.swift in Sources */,
 				45C91D891A337883000C2D4B /* AppDelegate.swift in Sources */,
 				45C58F621A497782000BB6EB /* RouteTableView.swift in Sources */,
 				45C58F661A497782000BB6EB /* Route.swift in Sources */,
+				B9E5B1761A54959D00074C0C /* MBProgressHUD.m in Sources */,
 				45C58F601A497782000BB6EB /* Marker.swift in Sources */,
+				B9E5B1731A5494D700074C0C /* BuildDetailView.m in Sources */,
 				45C58F651A497782000BB6EB /* RouteOverview.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
