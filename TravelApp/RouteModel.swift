@@ -24,9 +24,9 @@ class RouteModel{
         allLocs = [munich,tokyo,newYork,lmu,oet,fkirche,iTor]
         let route = Route(markers: [munich,tokyo,newYork],name: "Route1")
         let route2 = Route(markers: [munich], name: "Route2")
-        let route3 = Route(markers: allLocs, name: "Route3")
-        let route4 = Route(markers: allLocs, name: "Route4")
-        let route5 = Route(markers: [lmu,oet,fkirche,iTor], name: "LMU-OET-FKirche-Isartor")
+        let route3 = Route(markers: [lmu,oet,fkirche,iTor], name: "LMU-OET-FKirche-Isartor")
+        let route4 = Route(markers: [oet,lmu,fkirche,iTor], name: "Oet-lmu-FKirche-Isartor")
+        let route5 = Route(markers: [iTor,lmu,fkirche,oet], name: "Isartor-LMU-FKirche-Oet")
         allRoutes = [route,route2,route3,route4,route5]
     }
     

@@ -20,6 +20,7 @@ class RouteMapView : UIViewController{
     var camera = GMSCameraPosition()
     
     override func viewDidLoad() {
+        passedData = sortPlacesByMinDist(passedData)
         var viewFrame = self.view.frame
         var mapFrame = CGRectMake(viewFrame.origin.x, 70, viewFrame.size.width, viewFrame.size.height)
         var navBar = UINavigationBar()
@@ -30,10 +31,12 @@ class RouteMapView : UIViewController{
         backButton.frame = CGRectMake(0,20,150,50)
         backButton.setTitle("Back to Overview", forState: UIControlState.Normal)
         backButton.addTarget(self, action: "backAction:", forControlEvents: UIControlEvents.TouchUpInside)
+        /*
         var startNavButton = UIButton.buttonWithType(UIButtonType.System) as UIButton
         startNavButton.frame = CGRectMake(100,500,150,50)
         startNavButton.setTitle("Start Navigation", forState: UIControlState.Normal)
         startNavButton.addTarget(self, action: "navAction:", forControlEvents: UIControlEvents.TouchUpInside)
+        */
         navBar.addSubview(backButton)
         var camera = GMSCameraPosition.cameraWithLatitude(passedData[0].latitude, longitude:passedData[0].longitude, zoom: 13.5)
         mapView = GMSMapView.mapWithFrame(mapFrame, camera:camera)
@@ -63,13 +66,13 @@ class RouteMapView : UIViewController{
         else{
             longPath.addLatitude(passedData[index].latitude, longitude: passedData[index].longitude)
             }
-}
+        }
         var polyline = GMSPolyline(path:longPath)
         polyline.strokeColor = UIColor.yellowColor()
         polyline.strokeWidth = 4.0
         polyline.map = self.mapView
         self.view.addSubview(mapView)
-        self.view.addSubview(startNavButton)
+        //self.view.addSubview(startNavButton)
         super.viewDidLoad()
     }
     func backAction(sender:UIButton){
@@ -116,4 +119,28 @@ class RouteMapView : UIViewController{
         }
     return dist
     }
-}
+    
+    func sortPlacesByMinDist(var locs : [Marker])->[Marker]{
+        var result : [Marker] = [locs[0]]
+        var current : Marker! = locs[0]
+        var minDist : Double = Double.infinity
+        var currentDist : Double = 0.0
+        while(!locs.isEmpty){
+            var source : Marker = current
+            locs.removeObject(current)
+            minDist = Double.infinity
+            currentDist = 0.0
+            for var index = 0; index < locs.count; ++index{
+                currentDist = GMSGeometryDistance(CLLocationCoordinate2DMake(source.latitude, source.longitude), CLLocationCoordinate2DMake(locs[index].latitude,locs[index].longitude))
+                
+                if(currentDist < minDist){
+                    minDist = currentDist
+                    current = locs[index]
+                }
+            }
+        result.append(current)
+        }
+        
+    return result
+    }
+    }

@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Marker : Equatable{
+ struct Marker : Equatable{
     
     var longitude,latitude : Double
     var name:String
@@ -22,8 +22,8 @@ struct Marker : Equatable{
         self.name = name
         self.address = address
     }
+    
 }
 
 func == (lhs:Marker,rhs:Marker) -> Bool{
-    return lhs.name == rhs.name && lhs.latitude == rhs.latitude && lhs.longitude == rhs.longitude
-}
+    return lhs.name == rhs.name && lhs.latitude == rhs.latitude && lhs.longitude == rhs.longitude && lhs.address == rhs.address}
