@@ -64,7 +64,7 @@ GMSMarker *currentLocMarker;
     
     
     //--- einmaliges Laden der aktuellen Position
-    NSLog(@"updatedLocation%@", self.locationManager.location);
+    NSLog(@"initialised Location at: %@", self.locationManager.location);
     CLLocationCoordinate2D currentLocation = self.locationManager.location.coordinate;
     GMSCameraPosition *cam = [GMSCameraPosition cameraWithTarget:currentLocation zoom:16];
     mapView_ = [GMSMapView mapWithFrame:CGRectZero camera:cam];
@@ -73,6 +73,8 @@ GMSMarker *currentLocMarker;
     mapView_.settings.zoomGestures = YES;
     mapView_.settings.compassButton = YES;
     mapView_.delegate = self;
+    self.view = mapView_;
+    NSLog(@"%@",mapView_.camera);
     
     
     

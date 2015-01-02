@@ -13,9 +13,9 @@
 
 
 @implementation ShowPicture
-int buttonsize1 = 60;
-int aPlaceLabelY = 455;
-float buttonBorderwidth1 = 1.7f;
+int buttonsize1_ = 60;
+int aPlaceLabelY_ = 455;
+float buttonBorderwidth1_ = 1.7f;
 NSString *name, *category, *geoName, *adress;
 
 -(void)viewDidLoad{
@@ -64,10 +64,10 @@ NSString *name, *category, *geoName, *adress;
     
     
     UIButton *locationButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    locationButton.frame = CGRectMake(125, 405, buttonsize1, buttonsize1);
+    locationButton.frame = CGRectMake(125, 405, buttonsize1_, buttonsize1_);
     locationButton.clipsToBounds = YES;
-    locationButton.layer.cornerRadius = buttonsize1/2.0f;
-    locationButton.layer.borderWidth=buttonBorderwidth1;
+    locationButton.layer.cornerRadius = buttonsize1_/2.0f;
+    locationButton.layer.borderWidth=buttonBorderwidth1_;
     
     if([category isEqual: @"shopping"]){
         
@@ -75,7 +75,7 @@ NSString *name, *category, *geoName, *adress;
         locationButton.layer.borderColor = [[UIColor colorWithRed:95/255.f green:180/255.f blue:228/255.f alpha:1.0f] CGColor];
         [locationButton setImageEdgeInsets:UIEdgeInsetsMake(12, 12, 12, 12)];
         [[self view] addSubview:locationButton];
-        UILabel  *locationLabel = [[UILabel alloc] initWithFrame:CGRectMake(125, aPlaceLabelY, 90, 50)];
+        UILabel  *locationLabel = [[UILabel alloc] initWithFrame:CGRectMake(125, aPlaceLabelY_, 90, 50)];
         locationLabel.text = @"Shopping";
         locationLabel.font = [UIFont systemFontOfSize:14];
         [self.view addSubview:locationLabel];
@@ -87,7 +87,7 @@ NSString *name, *category, *geoName, *adress;
         locationButton.layer.borderColor = [[UIColor colorWithRed:236/255.f green:233/255.f blue:68/255.f alpha:1.0f] CGColor];
         [locationButton setImageEdgeInsets:UIEdgeInsetsMake(11, 11, 11, 11)];
         [[self view] addSubview:locationButton];
-        UILabel  *locationLabel = [[UILabel alloc] initWithFrame:CGRectMake(132, aPlaceLabelY, 90, 50)];
+        UILabel  *locationLabel = [[UILabel alloc] initWithFrame:CGRectMake(132, aPlaceLabelY_, 90, 50)];
         locationLabel.text = @"Activity";
         locationLabel.font = [UIFont systemFontOfSize:14];
         [self.view addSubview:locationLabel];
@@ -99,7 +99,7 @@ NSString *name, *category, *geoName, *adress;
         locationButton.layer.borderColor = [[UIColor colorWithRed:109/255.f green:95/255.f blue:213/255.f alpha:1.0f] CGColor];
         [locationButton setImageEdgeInsets:UIEdgeInsetsMake(12, 13, 13, 12)];
         [[self view] addSubview:locationButton];
-        UILabel  *locationLabel = [[UILabel alloc] initWithFrame:CGRectMake(139, aPlaceLabelY, 90, 50)];
+        UILabel  *locationLabel = [[UILabel alloc] initWithFrame:CGRectMake(139, aPlaceLabelY_, 90, 50)];
         locationLabel.text = @"Cafe";
         locationLabel.font = [UIFont systemFontOfSize:14];
         [self.view addSubview:locationLabel];
@@ -112,7 +112,7 @@ NSString *name, *category, *geoName, *adress;
         locationButton.layer.borderColor = [[UIColor colorWithRed:244/255.f green:93/255.f blue:191/255.f alpha:1.0f] CGColor];
         [locationButton setImageEdgeInsets:UIEdgeInsetsMake(13, 12, 12, 12)];
         [[self view] addSubview:locationButton];
-        UILabel  *locationLabel = [[UILabel alloc] initWithFrame:CGRectMake(132, aPlaceLabelY, 90, 50)];
+        UILabel  *locationLabel = [[UILabel alloc] initWithFrame:CGRectMake(132, aPlaceLabelY_, 90, 50)];
         locationLabel.text = @"Culture";
         locationLabel.font = [UIFont systemFontOfSize:14];
         [self.view addSubview:locationLabel];
@@ -124,7 +124,7 @@ NSString *name, *category, *geoName, *adress;
         locationButton.layer.borderColor = [[UIColor colorWithRed:255/255.f green:0/255.f blue:0/255.f alpha:1.0f] CGColor];
         [locationButton setImageEdgeInsets:UIEdgeInsetsMake(12, 12, 12, 12)];
         [[self view] addSubview:locationButton];
-        UILabel  *locationLabel = [[UILabel alloc] initWithFrame:CGRectMake(140, aPlaceLabelY, 90, 50)];
+        UILabel  *locationLabel = [[UILabel alloc] initWithFrame:CGRectMake(140, aPlaceLabelY_, 90, 50)];
         locationLabel.text = @"Food";
         locationLabel.font = [UIFont systemFontOfSize:14];
         [self.view addSubview:locationLabel];
@@ -136,7 +136,7 @@ NSString *name, *category, *geoName, *adress;
         locationButton.layer.borderColor = [[UIColor colorWithRed:0/255.f green:186/255.f blue:130/255.f alpha:1.0f] CGColor];
         [locationButton setImageEdgeInsets:UIEdgeInsetsMake(9, 9, 9, 9)];
         [[self view] addSubview:locationButton];
-        UILabel  *locationLabel = [[UILabel alloc] initWithFrame:CGRectMake(138, aPlaceLabelY, 90, 50)];
+        UILabel  *locationLabel = [[UILabel alloc] initWithFrame:CGRectMake(138, aPlaceLabelY_, 90, 50)];
         locationLabel.text = @"Hotel";
         locationLabel.font = [UIFont systemFontOfSize:14];
         [self.view addSubview:locationLabel];
@@ -148,7 +148,7 @@ NSString *name, *category, *geoName, *adress;
         locationButton.layer.borderColor = [[UIColor colorWithRed:255/255.f green:130/255.f blue:0/255.f alpha:1.0f] CGColor];
         [locationButton setImageEdgeInsets:UIEdgeInsetsMake(11, 12, 11, 11)];
         [[self view] addSubview:locationButton];
-        UILabel  *locationLabel = [[UILabel alloc] initWithFrame:CGRectMake(137, aPlaceLabelY, 90, 50)];
+        UILabel  *locationLabel = [[UILabel alloc] initWithFrame:CGRectMake(137, aPlaceLabelY_, 90, 50)];
         locationLabel.text = @"Icons";
         locationLabel.font = [UIFont systemFontOfSize:14];
         [self.view addSubview:locationLabel];
@@ -160,7 +160,7 @@ NSString *name, *category, *geoName, *adress;
         locationButton.layer.borderColor = [[UIColor colorWithRed:85/255.f green:85/255.f blue:85/255.f alpha:1.0f] CGColor];
         [locationButton setImageEdgeInsets:UIEdgeInsetsMake(13, 13, 13, 13)];
         [[self view] addSubview:locationButton];
-        UILabel  *locationLabel = [[UILabel alloc] initWithFrame:CGRectMake(130, aPlaceLabelY, 90, 50)];
+        UILabel  *locationLabel = [[UILabel alloc] initWithFrame:CGRectMake(130, aPlaceLabelY_, 90, 50)];
         locationLabel.text = @"Nightlife";
         locationLabel.font = [UIFont systemFontOfSize:14];
         [self.view addSubview:locationLabel];
@@ -172,7 +172,7 @@ NSString *name, *category, *geoName, *adress;
         locationButton.layer.borderColor = [[UIColor colorWithRed:0/255.f green:0/255.f blue:0/255.f alpha:1.0f] CGColor];
         [locationButton setImageEdgeInsets:UIEdgeInsetsMake(11, 9, 9, 9)];
         [[self view] addSubview:locationButton];
-        UILabel  *locationLabel = [[UILabel alloc] initWithFrame:CGRectMake(137, aPlaceLabelY, 90, 50)];
+        UILabel  *locationLabel = [[UILabel alloc] initWithFrame:CGRectMake(137, aPlaceLabelY_, 90, 50)];
         locationLabel.text = @"Other";
         locationLabel.font = [UIFont systemFontOfSize:14];
         [self.view addSubview:locationLabel];
