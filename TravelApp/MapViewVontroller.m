@@ -7,7 +7,7 @@
 //
 
 #import "MapViewVontroller.h"
-#import <CoreLocation/CoreLocation.h>
+//#import <CoreLocation/CoreLocation.h>
 @import CoreLocation;
 
 
@@ -21,7 +21,6 @@
 @property (strong, nonatomic) UIButton *currentLocationButton;
 @property (strong, nonatomic) IBOutlet UIButton *locationButton;
 
-
 - (IBAction)touchDown:(id)sender;
 
 @end
@@ -30,6 +29,11 @@
 
 //--- Map
 GMSMapView *mapView_;
+
+
+//--- Marker für die aktuelle Position
+GMSMarker *currentLocMarker;
+
 
 //--- initialisieren des location manager
 - (CLLocationManager *)locationManager{
@@ -42,13 +46,13 @@ GMSMapView *mapView_;
     [super viewDidLoad];
     
     
-//    //--- pinArray: um Duplikate zu löschen (pin für currentLocation wird 3-4 mal angezeigt
-//    pinArray = [[NSMutableArray alloc] init];
+    //    //--- pinArray: um Duplikate zu löschen (pin für currentLocation wird 3-4 mal angezeigt
+    //    pinArray = [[NSMutableArray alloc] init];
     
     //--- delegate Methoden
     self.locationManager.delegate = self;
     self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
- 
+    
     //iOS8 required, um location services nutzen zu können
     if ([self.locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
         [self.locationManager requestWhenInUseAuthorization];
@@ -57,34 +61,35 @@ GMSMapView *mapView_;
     [self.locationManager startMonitoringSignificantLocationChanges];
     [self.locationManager startUpdatingLocation];
     
+    
+    
     //--- einmaliges Laden der aktuellen Position
     NSLog(@"updatedLocation%@", self.locationManager.location);
-    CLLocation *location = (CLLocation *) self.locationManager.location;
-    CLLocationCoordinate2D currentLocation = [location coordinate];
+    CLLocationCoordinate2D currentLocation = self.locationManager.location.coordinate;
     GMSCameraPosition *cam = [GMSCameraPosition cameraWithTarget:currentLocation zoom:16];
     mapView_ = [GMSMapView mapWithFrame:CGRectZero camera:cam];
     mapView_.camera = cam;
+    //--- mapView settings
+    mapView_.settings.zoomGestures = YES;
+    mapView_.settings.compassButton = YES;
+    mapView_.delegate = self;
+    
+    
     
     //--- Marker für die aktuelle Position
     GMSGeocoder *geocoder = [GMSGeocoder geocoder];
     [geocoder reverseGeocodeCoordinate:currentLocation completionHandler:^(GMSReverseGeocodeResponse *response, NSError *error) {
-        GMSMarker *currentPosition = [GMSMarker markerWithPosition:currentLocation];
-        currentPosition.title = @"Current Location";
-        currentPosition.snippet = response.firstResult.addressLine1;
-        currentPosition.icon = [UIImage imageNamed:@"current_location"];
-        currentPosition.map = mapView_;
+        currentLocMarker = [GMSMarker markerWithPosition:currentLocation];
+        currentLocMarker.title = @"Current Location";
+        currentLocMarker.snippet = response.firstResult.addressLine1;
+        currentLocMarker.icon = [UIImage imageNamed:@"current_location"];
+        currentLocMarker.map = mapView_;
     }];
     
     
     //--- Abstand von unten und oben, um compassButton und myLocationButton sichtbar zu machen
     UIEdgeInsets mapInsets = UIEdgeInsetsMake(50.0, 0.0, 50.0, 0.0);
     mapView_.padding = mapInsets;
-    
-    //--- mapView settings
-    mapView_.settings.zoomGestures = YES;
-    mapView_.settings.compassButton = YES;
-    self.view = mapView_;
-    mapView_.delegate = self;
     
     
     //--- Bild für locationButton
@@ -93,8 +98,8 @@ GMSMapView *mapView_;
     //--- locationButton
     UIButton *locationButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [locationButton addTarget:self
-               action:@selector(touchDown:)
-     forControlEvents:UIControlEventTouchUpInside];
+                       action:@selector(touchDown:)
+             forControlEvents:UIControlEventTouchUpInside];
     [locationButton setImage:buttonImage forState:UIControlStateNormal];
     locationButton.frame = CGRectMake(250.0, 440.0, 60.0, 60.0);
     [mapView_ addSubview:locationButton];
@@ -104,41 +109,22 @@ GMSMapView *mapView_;
     [self pinsOnMap];
 }
 
+
 - (void)showCurrentLocation{
     mapView_.myLocationEnabled = YES;
     [self.locationManager startUpdatingLocation];
 }
 
-//- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations{
-//    NSLog(@"updatedLocation%@", [locations lastObject]);
-//    CLLocation *location =  (CLLocation *)[locations lastObject];
-//    CLLocationCoordinate2D currentLocation = [location coordinate];
-//    
-//
-//    GMSCameraUpdate *currentcam = [GMSCameraUpdate setTarget:currentLocation];
-//    [mapView_ animateWithCameraUpdate:currentcam];
-//
-//    GMSMarker *currentPosition = [GMSMarker markerWithPosition:currentLocation];
-//    currentPosition.title = @"Aktueller Ort";
-//    //currentPosition.snippet = response.firstResult.locality;
-//    currentPosition.icon = [UIImage imageNamed:@"current_location"];
-//    currentPosition.map = mapView_;
-//
-//    [pinArray addObject:currentPosition];
-//    
-//    while (pinArray.count > 1) {
-//        GMSMarker *lastPos = (GMSMarker *)[pinArray objectAtIndex:0];
-//        lastPos.map = nil;
-//        [pinArray removeObject:lastPos];
-//    }
-//
-//}
+//--- updated regelmäßig die aktuelle Position
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations{
+    currentLocMarker.position = self.locationManager.location.coordinate;
+}
 
 //--- Fehlerbehandlung, wenn die aktuelle Position nicht bestimmt werden kann
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error{
-    UIAlertView *errorAlert = [[UIAlertView alloc]initWithTitle:@"Fehler" message:@"Die aktuelle Position konnte nicht bestimmt werden. \nMobile Daten oder WLAN aktivieren." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+    UIAlertView *errorAlert = [[UIAlertView alloc]initWithTitle:@"Location Services is disabled." message:@"Place my Memories needs access to your location. Please turn on Location Services in your device settings." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
     [errorAlert show];
-    NSLog(@"Fehler: %@",error.description);
+    NSLog(@"Error: %@",error.description);
 }
 
 - (void)didReceiveMemoryWarning {
@@ -158,7 +144,6 @@ GMSMapView *mapView_;
     //gnw.appearAnimation = kGMSMarkerAnimationPop;
     gnw.icon = [UIImage imageNamed:@"pin_food"];
     gnw.map = mapView_;
-    //[self.marker insertObject:gnw atIndex:0];
     
     //--- Pinakothek
     GMSMarker *np = [[GMSMarker alloc] init];
@@ -166,8 +151,9 @@ GMSMapView *mapView_;
     np.title = @"Neue Pinakothek";
     np.icon = [UIImage imageNamed:@"pin_culture"];
     np.map = mapView_;
-    //[self.marker insertObject:np atIndex:0];
+    
 }
+
 
 //--- InfoWindow der Pins
 - (UIView *)mapView:(GMSMapView *)mapView markerInfoWindow:(GMSMarker *)marker{
@@ -188,7 +174,7 @@ GMSMapView *mapView_;
     snippetLabel.text = marker.snippet;
     snippetLabel.textColor = [UIColor grayColor];
     snippetLabel.font = [snippetLabel.font fontWithSize:12];
-
+    
     
     //--- Image tbd
     UILabel *imageLabel = [[UILabel alloc] init];
@@ -196,34 +182,27 @@ GMSMapView *mapView_;
     [infoWindow addSubview:imageLabel];
     imageLabel.backgroundColor = [UIColor grayColor];
     
-
+    
     //--- address tbd
     
     return infoWindow;
 }
 
+- (void)mapView:(GMSMapView *)mapView didLongPressAtCoordinate:(CLLocationCoordinate2D)coordinate{
+    
+    //--- Hinzufügen eines Ortes !currentLocation
+}
 
-////--- Navigation zum locationProfile, wenn das infoWindow getouched wurde
-//- (void)mapView:(GMSMapView *)mapView didTapInfoWindowOfMarker:(GMSMarker *)marker{
-//    
-//    NSString *message = [NSString stringWithFormat:@"You tabbed the info window for the %@ marker", marker.title];
-//    
-//    //--- View des locationProfiles statt UIAlertView
-//    UIAlertView *windowTapped = [[UIAlertView alloc]
-//                                 initWithTitle:@"Info Window Tapped!"
-//                                 message:message delegate:nil
-//                                 cancelButtonTitle:@"Alright!"
-//                                 otherButtonTitles:nil];
-//    [windowTapped show];
-//}
+- (void)mapView:(GMSMapView *)mapView didTapInfoWindowOfMarker:(GMSMarker *)marker{
+    
+    //--- Tap auf Info Window -> Detail View
+}
 
 
 - (IBAction)touchDown:(id)sender {
-    NSLog(@"updatedLocation%@", self.locationManager.location);
-    CLLocation *location = (CLLocation *) self.locationManager.location;
-    CLLocationCoordinate2D currentLocation = [location coordinate];
-    GMSCameraUpdate *currentcam = [GMSCameraUpdate setTarget:currentLocation zoom:16];
-    [mapView_ animateWithCameraUpdate:currentcam];
-
+    GMSCameraUpdate *cu = [GMSCameraUpdate setTarget:self.locationManager.location.coordinate zoom:16];
+    [mapView_ animateWithCameraUpdate:cu];
+    //    NSLog(@"touchedLocation %@", self.locationManager.location);
+    //    NSLog(@"touchedLocation %@", mapView_.camera);
 }
 @end
