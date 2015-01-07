@@ -40,7 +40,9 @@ UIImageView *imageView;
     UINavigationItem *navItemLocation = [[UINavigationItem alloc] init];
     navItemLocation.title = name;
     UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStylePlain target:self action:@selector(done)];
+    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:@"Back to Map" style:UIBarButtonItemStylePlain target:self action:@selector(backToMap)];
     navItemLocation.rightBarButtonItem = doneButton;
+    navItemLocation.leftBarButtonItem = backButton;
     navBarLocation.items = @[navItemLocation];
     [[self view] addSubview: navBarLocation];
     
@@ -191,8 +193,12 @@ UIImageView *imageView;
     }
 }
 
+- (void)backToMap{
+    [self performSegueWithIdentifier:@"DetailViewUnwindToMapView" sender:self];
+}
+
 -(void)done{
-    [self performSegueWithIdentifier:@"DetailViewToList" sender:self];
+    [self performSegueWithIdentifier:@"DetailViewUndwindToList" sender:self];
     UITabBar *tabBar = [[UITabBar alloc] init];
     [tabBar setSelectedItem:[tabBar.items objectAtIndex:1]];
 }

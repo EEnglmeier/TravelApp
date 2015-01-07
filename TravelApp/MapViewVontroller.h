@@ -9,6 +9,13 @@
 #import <UIKit/UIKit.h>
 #import <GoogleMaps/GoogleMaps.h>
 #import <CoreLocation/CoreLocation.h>
+#import <UIKit/UIKit.h>
+#import <GoogleMaps/GoogleMaps.h>
+#import <CoreLocation/CoreLocation.h>
+#import "ShowPicture.h"
+#import <Parse/Parse.h>
+#import "DetailView.h"
+#import "CustomInfoWindow.h"
 
 @interface MapViewController : UIViewController <GMSMapViewDelegate, CLLocationManagerDelegate>
 {
