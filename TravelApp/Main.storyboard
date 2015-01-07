@@ -236,9 +236,9 @@
     </scenes>
     <resources>
         <image name="Add" width="25" height="25"/>
-        <image name="Map" width="30" height="30"/>
+        <image name="Map" width="25" height="25"/>
         <image name="Places" width="25" height="25"/>
-        <image name="Route" width="30" height="30"/>
+        <image name="Route" width="25" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="UE5-be-UHn"/>
