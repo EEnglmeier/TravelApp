@@ -34,7 +34,8 @@
 		45C91DBF1A337F36000C2D4B /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45C91DBE1A337F36000C2D4B /* OpenGLES.framework */; };
 		45C91DC11A337F3B000C2D4B /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45C91DC01A337F3B000C2D4B /* QuartzCore.framework */; };
 		45C91DC31A337F43000C2D4B /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45C91DC21A337F43000C2D4B /* SystemConfiguration.framework */; };
-		8480A0371A3F10D2006C9BB1 /* MapViewVontroller.m in Sources */ = {isa = PBXBuildFile; fileRef = 8480A0361A3F10D2006C9BB1 /* MapViewVontroller.m */; };
+		84429C551A5ECEA700006323 /* InfoWindowCurrentLoc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84429C541A5ECEA700006323 /* InfoWindowCurrentLoc.xib */; };
+		8480A0371A3F10D2006C9BB1 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8480A0361A3F10D2006C9BB1 /* MapViewController.m */; };
 		84F240201A5DB10600DB2BBC /* InfoWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84F2401F1A5DB10600DB2BBC /* InfoWindow.xib */; };
 		84F240231A5DB1BD00DB2BBC /* CustomInfoWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 84F240221A5DB1BD00DB2BBC /* CustomInfoWindow.m */; };
 		84FBDD071A485D2900CC3DC4 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84FBDD061A485D2900CC3DC4 /* Images.xcassets */; };
@@ -256,8 +257,9 @@
 		45C91DC01A337F3B000C2D4B /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		45C91DC21A337F43000C2D4B /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		45C91DC41A338101000C2D4B /* TravelApp-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TravelApp-Bridging-Header.h"; sourceTree = "<group>"; };
-		8480A0351A3F10D2006C9BB1 /* MapViewVontroller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewVontroller.h; sourceTree = "<group>"; };
-		8480A0361A3F10D2006C9BB1 /* MapViewVontroller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapViewVontroller.m; sourceTree = "<group>"; };
+		84429C541A5ECEA700006323 /* InfoWindowCurrentLoc.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InfoWindowCurrentLoc.xib; sourceTree = "<group>"; };
+		8480A0351A3F10D2006C9BB1 /* MapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
+		8480A0361A3F10D2006C9BB1 /* MapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapViewController.m; sourceTree = "<group>"; };
 		84F2401F1A5DB10600DB2BBC /* InfoWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InfoWindow.xib; sourceTree = "<group>"; };
 		84F240211A5DB1BD00DB2BBC /* CustomInfoWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomInfoWindow.h; sourceTree = "<group>"; };
 		84F240221A5DB1BD00DB2BBC /* CustomInfoWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomInfoWindow.m; sourceTree = "<group>"; };
@@ -681,12 +683,13 @@
 				84F240211A5DB1BD00DB2BBC /* CustomInfoWindow.h */,
 				84F240221A5DB1BD00DB2BBC /* CustomInfoWindow.m */,
 				45C91D881A337883000C2D4B /* AppDelegate.swift */,
-				8480A0351A3F10D2006C9BB1 /* MapViewVontroller.h */,
-				8480A0361A3F10D2006C9BB1 /* MapViewVontroller.m */,
+				8480A0351A3F10D2006C9BB1 /* MapViewController.h */,
+				8480A0361A3F10D2006C9BB1 /* MapViewController.m */,
 				45C58F581A497782000BB6EB /* Marker.swift */,
 				45C58F591A497782000BB6EB /* RouteMapView.swift */,
 				45C58F5A1A497782000BB6EB /* RouteTableView.swift */,
 				84F2401F1A5DB10600DB2BBC /* InfoWindow.xib */,
+				84429C541A5ECEA700006323 /* InfoWindowCurrentLoc.xib */,
 				45C58F5B1A497782000BB6EB /* Main.storyboard */,
 				45C58F5C1A497782000BB6EB /* PlacesTableView.swift */,
 				45C58F5D1A497782000BB6EB /* RouteOverview.swift */,
@@ -998,6 +1001,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				84429C551A5ECEA700006323 /* InfoWindowCurrentLoc.xib in Resources */,
 				45C91D931A337883000C2D4B /* LaunchScreen.xib in Resources */,
 				84F240201A5DB10600DB2BBC /* InfoWindow.xib in Resources */,
 				84FBDD071A485D2900CC3DC4 /* Images.xcassets in Resources */,
@@ -1022,7 +1026,7 @@
 			files = (
 				45977A791A506A8F00242E07 /* ShowPicture.m in Sources */,
 				B95390641A5027290017E98D /* OrtHinzuefugen.m in Sources */,
-				8480A0371A3F10D2006C9BB1 /* MapViewVontroller.m in Sources */,
+				8480A0371A3F10D2006C9BB1 /* MapViewController.m in Sources */,
 				84F240231A5DB1BD00DB2BBC /* CustomInfoWindow.m in Sources */,
 				45C58F641A497782000BB6EB /* PlacesTableView.swift in Sources */,
 				45C58F611A497782000BB6EB /* RouteMapView.swift in Sources */,

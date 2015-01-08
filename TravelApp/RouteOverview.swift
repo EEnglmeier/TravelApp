@@ -76,12 +76,12 @@ class RouteOverview : UIViewController,UITableViewDelegate,UITableViewDataSource
         self.selectedRow = indexPath.row
         self.performSegueWithIdentifier("RouteToRouteMapView", sender: self)
     }
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    /*override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if(segue.identifier == "RouteToRouteMapView"){
             var svc = segue.destinationViewController as RouteMapView
             svc.passedData = RouteModel.sharedInstance.allRoutes[selectedRow].orderderdMarkers
         }
-    }
+    }*/
     func showRoutesAction(sender:UIButton){
         self.performSegueWithIdentifier("RouteOverViewToRouteTableView", sender: self)
     }

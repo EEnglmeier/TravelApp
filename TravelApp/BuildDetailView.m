@@ -13,6 +13,7 @@
 #import <Parse/Parse.h>
 #import <CoreLocation/CoreLocation.h>
 #import "MBProgressHUD.h"
+#import "MapViewController.h"
 
 @interface BuildDetailView ()
 @property (strong, nonatomic) CLLocationManager *locationManager;
@@ -37,6 +38,8 @@ NSString *locationCategory, *addressString;
 UIButton *buttonHotel, *buttonFood, *buttonCafe, *buttonNightlife, *buttonShopping, *buttonActivity, *buttonIcons, *buttonCulture, *buttonOther;
 NSString *locationCategory = @"";
 float longitude, latitude;
+
+CLLocationCoordinate2D longpressed;
 
 //--- initialisieren des location manager
 - (CLLocationManager *)locationManager{
@@ -64,6 +67,9 @@ float longitude, latitude;
     double latitude = _locationManager.location.coordinate.latitude;
     double longitude = _locationManager.location.coordinate.longitude;
     [self getGeoInformations:latitude :longitude];
+    
+    longpressed.latitude = -1;
+    longpressed.longitude = -1;
     
     
     // NavBar
@@ -438,7 +444,12 @@ float longitude, latitude;
         [hud show:YES];
         
         [object setObject:textField.text forKey:@"name"];
-        PFGeoPoint *geoPoint = [PFGeoPoint geoPointWithLatitude:_returnLatitude longitude:_returnLongitude];
+        PFGeoPoint *geoPoint;
+        if(longpressed.longitude == -1 && longpressed.latitude == -1){
+             geoPoint = [PFGeoPoint geoPointWithLatitude:_returnLatitude longitude:_returnLongitude];
+        }else{
+            geoPoint = [PFGeoPoint geoPointWithLatitude:longpressed.latitude longitude:longpressed.longitude];
+        }
         [object setObject:locationCategory forKey:@"category"];
         [object setObject:_address forKey:@"adress"];
         [object setObject:geoPoint forKey:@"geoData"];
@@ -454,6 +465,7 @@ float longitude, latitude;
                 
                 // Notify table view to reload the recipes from Parse cloud
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshTable" object:self];
+            
                 
                 // Dismiss the controller
                 //[self dismissViewControllerAnimated:YES completion:nil];
@@ -466,7 +478,7 @@ float longitude, latitude;
 }
 
 -(void)cancel{
-    [self performSegueWithIdentifier:@"BuildDetailToList" sender:self];
+    [self performSegueWithIdentifier:@"BuildDetailViewUnwindToList" sender:self];
 }
 
 
@@ -475,6 +487,10 @@ float longitude, latitude;
     UIAlertView *errorAlert = [[UIAlertView alloc]initWithTitle:@"Fehler" message:@"Die aktuelle Position konnte nicht bestimmt werden. \nMobile Daten oder WLAN aktivieren." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
     [errorAlert show];
     NSLog(@"Fehler: %@",error.description);
+}
+
+- (void)setPlaceLocation:(CLLocationCoordinate2D) _longpress{
+    longpressed= _longpress;
 }
 
 - (void)getGeoInformations:(double)placeLatitude:(double)placeLongitude {
@@ -510,5 +526,6 @@ float longitude, latitude;
         }
     }
 }
+
 
 @end

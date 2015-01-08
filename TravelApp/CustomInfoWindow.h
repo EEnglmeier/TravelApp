@@ -15,4 +15,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *photo;
 @property (weak, nonatomic) IBOutlet UIImageView *category;
 
+@property (weak, nonatomic) IBOutlet UILabel *nameCurrentLoc;
+@property (weak, nonatomic) IBOutlet UILabel *addressCurrentLoc;
+
 @end

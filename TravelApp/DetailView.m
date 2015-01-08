@@ -10,6 +10,7 @@
 #import <UIKit/UIKit.h>
 #import <Parse/Parse.h>
 #import <QuartzCore/QuartzCore.h>
+#import "MapViewController.h"
 
 
 @implementation DetailView
@@ -193,12 +194,19 @@ UIImageView *imageView;
     }
 }
 
+/*- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    if ([segue.identifier isEqualToString:@"DetailViewUnwindToMapView"] || [segue.identifier isEqualToString:@"DetailViewUnwindToList"]) {
+        [segue.destinationViewController fetchPlaces];
+    }
+}*/
+
 - (void)backToMap{
-    [self performSegueWithIdentifier:@"DetailViewUnwindToMapView" sender:self];
+    [self performSegueWithIdentifier:@"DetailViewToMapView" sender:self];
+    
 }
 
 -(void)done{
-    [self performSegueWithIdentifier:@"DetailViewUndwindToList" sender:self];
+    [self performSegueWithIdentifier:@"DetailViewUnwindToList" sender:self];
     UITabBar *tabBar = [[UITabBar alloc] init];
     [tabBar setSelectedItem:[tabBar.items objectAtIndex:1]];
 }

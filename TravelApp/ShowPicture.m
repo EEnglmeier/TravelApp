@@ -180,7 +180,7 @@ NSString *name, *category, *geoName, *adress;
 }
 
 -(void)done{
-    [self performSegueWithIdentifier:@"DetailViewToList" sender:self];
+    [self performSegueWithIdentifier:@"DetailViewUnwindToList" sender:self];
 }
 
 @end

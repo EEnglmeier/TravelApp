@@ -11,10 +11,13 @@
 
 @interface BuildDetailView: UIViewController <UITextFieldDelegate,UINavigationControllerDelegate,UITabBarControllerDelegate,CLLocationManagerDelegate,UIAlertViewDelegate>{
     NSString *_textfieldString;
+    
 }
 @property (nonatomic, retain) UIImageView *imageView;
 @property (nonatomic, strong) UIImage *myImage;
 @property float longitude, latitude;
 @property (nonatomic, strong) NSString *geoPlace;
+
+- (void)setPlaceLocation:(CLLocationCoordinate2D) _longpress;
 
 @end

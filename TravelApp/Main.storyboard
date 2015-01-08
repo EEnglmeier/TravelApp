@@ -12,15 +12,15 @@
                         <viewControllerLayoutGuide type="top" id="ox2-iA-jqq"/>
                         <viewControllerLayoutGuide type="bottom" id="yoX-tO-bME"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="p0C-6a-V1B" customClass="GMSMapView">
+                    <view key="view" multipleTouchEnabled="YES" contentMode="scaleToFill" id="p0C-6a-V1B" customClass="GMSMapView">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Map" image="Map" id="R33-36-fvm"/>
                     <connections>
-                        <segue destination="fEl-nF-RPu" kind="show" identifier="MapViewToDetailView" id="bjG-za-WZb"/>
-                        <segue destination="RPn-uX-DOW" kind="show" identifier="MapViewToBuildDetailView" id="BNq-9D-RjR"/>
+                        <segue destination="fEl-nF-RPu" kind="showDetail" identifier="MapViewToDetailView" id="kow-mJ-7qC"/>
+                        <segue destination="nFh-BY-cGy" kind="show" identifier="MapViewToOrt" id="qyM-rX-mwV"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3fT-dy-kMz" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -43,9 +43,6 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="Places" image="Places" id="cPa-gy-q4n"/>
                     <navigationItem key="navigationItem" id="9sW-eY-0mo"/>
-                    <connections>
-                        <segue destination="fEl-nF-RPu" kind="show" identifier="ListeToDetailView" id="FgG-45-DHr"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Nw-L8-lE0" sceneMemberID="firstResponder"/>
                 <exit id="5US-DV-kPT" userLabel="Exit" sceneMemberID="exit"/>
@@ -160,7 +157,7 @@
                     <nil key="simulatedTopBarMetrics"/>
                     <connections>
                         <segue destination="RPn-uX-DOW" kind="show" identifier="OrtToBulldDetail" id="c5Z-Rq-IoE"/>
-                        <segue destination="8rJ-Kc-sve" kind="show" identifier="OrtToPlaces" id="Fwb-Gq-ahs"/>
+                        <segue destination="8rJ-Kc-sve" kind="show" identifier="OrtToPlaces" id="Aq0-14-MKR"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Amf-9A-cve" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -182,7 +179,7 @@
                     </view>
                     <connections>
                         <segue destination="fEl-nF-RPu" kind="show" identifier="BuildDetailViewToDetailView" id="nfK-3l-fAm"/>
-                        <segue destination="8rJ-Kc-sve" kind="show" identifier="BuildDetailToList" id="Nge-zr-qKS"/>
+                        <segue destination="5US-DV-kPT" kind="unwind" identifier="BuildDetailViewUnwindToList" unwindAction="unwindFromTableView:" id="R6I-oO-37E"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RGi-dH-pOF" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -203,12 +200,12 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <connections>
-                        <segue destination="8rJ-Kc-sve" kind="show" identifier="DetailViewToList" id="dzl-CP-Cef"/>
-                        <segue destination="LrF-0E-H2L" kind="unwind" identifier="DetailViewUnwindToMapView" unwindAction="unwindFromTableView:" id="3hf-Yh-SUJ"/>
-                        <segue destination="5US-DV-kPT" kind="unwind" identifier="DetailViewUnwindToList" unwindAction="unwindFromTableView:" id="wsV-GI-cYi"/>
+                        <segue destination="LrF-0E-H2L" kind="unwind" identifier="DetailViewUnwindToList" unwindAction="unwindFromTableView:" id="neL-RZ-jOd"/>
+                        <segue destination="daq-b4-8Xy" kind="unwind" identifier="DetailViewToMapView" unwindAction="unwindToMapView:" id="oxs-wl-z0q"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oUb-lO-D49" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="daq-b4-8Xy" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="-725" y="1846"/>
         </scene>
@@ -241,9 +238,9 @@
         <image name="Route" width="25" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="UE5-be-UHn"/>
-        <segue reference="BNq-9D-RjR"/>
-        <segue reference="nfK-3l-fAm"/>
-        <segue reference="Nge-zr-qKS"/>
+        <segue reference="kow-mJ-7qC"/>
+        <segue reference="qyM-rX-mwV"/>
+        <segue reference="Aq0-14-MKR"/>
+        <segue reference="miQ-FJ-Nbk"/>
     </inferredMetricsTieBreakers>
 </document>
