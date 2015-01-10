@@ -8,8 +8,17 @@
 
 #import <UIKit/UIKit.h>
 #import "ShowPicture.h"
+#import <GoogleMaps/GoogleMaps.h>
+#import "BuildDetailView.h"
+#import "MapViewController.h"
 
 @interface OrtHinzuefugen : UIViewController <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITabBarControllerDelegate>
+
+//@property (strong, nonatomic) IBOutlet UIImageView *imageView;
 //@property (nonatomic, strong) UIImage *takenImage;
+
+- (void)setPlaceLocation:(CLLocationCoordinate2D) _longpress;
+- (void)takePhoto;
+
 
 @end

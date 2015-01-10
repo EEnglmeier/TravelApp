@@ -15,12 +15,12 @@
 
 @interface MapViewController ()
 
-@property (strong, nonatomic) NSMutableArray *marker;
-@property (strong, nonatomic) NSMutableArray *places;
+//@property (strong, nonatomic) NSMutableArray *marker;
+//@property (strong, nonatomic) NSMutableArray *places;
 @property (strong, nonatomic) CLLocationManager *locationManager;
 @property (strong, nonatomic) UIButton *currentLocationButton;
 @property (strong, nonatomic) IBOutlet UIButton *locationButton;
-@property (strong, nonatomic) NSMutableArray *allPlaces;
+//@property (strong, nonatomic) NSMutableArray *allPlaces;
 
 - (IBAction)touchDown:(id)sender;
 
@@ -34,9 +34,11 @@ GMSMapView *mapView_;
 
 CLLocationCoordinate2D longpressCoordinate;
 
+CLLocationCoordinate2D currentLocation;
 
 //--- Marker für die aktuelle Position
 GMSMarker *currentLocMarker;
+GMSMarker *pin;
 
 //--- Variablen für Parse
 NSString *name, *category, *geoName, *adress;
@@ -48,17 +50,30 @@ PFGeoPoint *geoPoint;
     return _locationManager;
 }
 
+
+//--- Marker für die aktuelle Position
+- (void)loadCurrentLocationWithImage{
+    GMSGeocoder *geocoder = [GMSGeocoder geocoder];
+    [geocoder reverseGeocodeCoordinate:currentLocation completionHandler:^(GMSReverseGeocodeResponse *response, NSError *error) {
+        currentLocMarker = [GMSMarker markerWithPosition:currentLocation];
+        currentLocMarker.title = @"Current Location";
+        currentLocMarker.snippet = response.firstResult.addressLine1;
+        currentLocMarker.icon = [UIImage imageNamed:@"current_location"];
+        currentLocMarker.map = mapView_;
+    }];
+}
+
+
 //--- lädt alle bisher gespeicherten Orte in *allPlaces
 - (void)fetchPlaces{
-
+    
+    [mapView_ clear];
     PFQuery *query = [PFQuery queryWithClassName:@"Place"];
     [query findObjectsInBackgroundWithBlock:^(NSArray *allPlaces, NSError *error) {
         if (!error) {
             //--- erfolgreich %lu Places geladen
             NSLog(@"Successfully retrieved %lu places.", (unsigned long)allPlaces.count);
-            //--- Speichert die gefundenen Orte in einem Array *allPlaces
             [self pinsOnMap:allPlaces];
-            
         } else {
             //--- Details zu Fehlern
             NSLog(@"Error: %@ %@", error, [error userInfo]);
@@ -72,7 +87,7 @@ PFGeoPoint *geoPoint;
     
     for (PFObject *place in places) {
         //NSLog(@"%@", place.objectId);
-        GMSMarker *pin = [[GMSMarker alloc] init];
+        pin = [[GMSMarker alloc] init];
         pin.userData = place;
         PFGeoPoint *geo = place[@"geoData"];
         CLLocationCoordinate2D loc = CLLocationCoordinate2DMake(geo.latitude, geo.longitude);
@@ -105,6 +120,10 @@ PFGeoPoint *geoPoint;
             pin.icon = [UIImage imageNamed:@"pin_hotel"];
         }
         
+        if([place[@"category"] isEqual: @"icons"]){
+            pin.icon = [UIImage imageNamed:@"pin_icons"];
+        }
+        
         if([place[@"category"] isEqual: @"other"]){
             pin.icon = [UIImage imageNamed:@"pin_other"];
         }
@@ -131,11 +150,10 @@ PFGeoPoint *geoPoint;
     [self.locationManager startUpdatingLocation];
     
     
-    
     //--- einmaliges Laden der aktuellen Position
     NSLog(@"initialised Location at: %@", self.locationManager.location);
-    CLLocationCoordinate2D currentLocation = self.locationManager.location.coordinate;
-    GMSCameraPosition *cam = [GMSCameraPosition cameraWithTarget:currentLocation zoom:16];
+    currentLocation = self.locationManager.location.coordinate;
+    GMSCameraPosition *cam = [GMSCameraPosition cameraWithTarget:currentLocation zoom:18];
     mapView_ = [GMSMapView mapWithFrame:CGRectZero camera:cam];
     mapView_.camera = cam;
     //--- mapView settings
@@ -146,21 +164,7 @@ PFGeoPoint *geoPoint;
     mapView_.delegate = self;
     self.view = mapView_;
     NSLog(@"%@",mapView_.camera);
-    
-    
-    
-    //--- Marker für die aktuelle Position
-    GMSGeocoder *geocoder = [GMSGeocoder geocoder];
-    [geocoder reverseGeocodeCoordinate:currentLocation completionHandler:^(GMSReverseGeocodeResponse *response, NSError *error) {
-        currentLocMarker = [GMSMarker markerWithPosition:currentLocation];
-        currentLocMarker.title = @"Current Location";
-        currentLocMarker.snippet = response.firstResult.addressLine1;
-        currentLocMarker.icon = [UIImage imageNamed:@"current_location"];
-        currentLocMarker.map = mapView_;
-        
-    }];
-    
-    
+
     //--- Abstand von unten und oben, um compassButton und myLocationButton sichtbar zu machen
     UIEdgeInsets mapInsets = UIEdgeInsetsMake(50.0, 0.0, 50.0, 0.0);
     mapView_.padding = mapInsets;
@@ -178,9 +182,12 @@ PFGeoPoint *geoPoint;
     locationButton.frame = CGRectMake(10.0, 430.0, 60.0, 60.0);
     [mapView_ addSubview:locationButton];
     
-    //--- lädt alle gespeicherten Orte
+    //--- lädt den aktuellen Ort inkl. Marker
+    [self loadCurrentLocationWithImage];
+    //--- lädt alle gespeicherten Orte inkl. Marker
     [self fetchPlaces];
 }
+
 
 - (void)showCurrentLocation{
     mapView_.myLocationEnabled = YES;
@@ -207,7 +214,6 @@ PFGeoPoint *geoPoint;
 //--- InfoWindow der Pins
 - (UIView *)mapView:(GMSMapView *)mapView markerInfoWindow:(GMSMarker *)marker{
 
-    
     if (marker == currentLocMarker) {
         CustomInfoWindow *infoWindowCurrentLoc = [[[NSBundle mainBundle] loadNibNamed:@"InfoWindowCurrentLoc" owner:self options:nil] objectAtIndex:0];
         infoWindowCurrentLoc.nameCurrentLoc.text = currentLocMarker.title;
@@ -235,7 +241,6 @@ PFGeoPoint *geoPoint;
 - (void)mapView:(GMSMapView *)mapView didTapInfoWindowOfMarker:(GMSMarker *)marker{
     
     if (marker == currentLocMarker) return;
-    
     //--- Tap auf Info Window -> Unwind Segue zu DetailView
     [self performSegueWithIdentifier:@"MapViewToDetailView" sender:self];
     //NSLog(@"YES");
@@ -246,13 +251,17 @@ PFGeoPoint *geoPoint;
     [self fetchPlaces];
 }
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
-    if([segue.identifier isEqual: @"MapViewToOrt"]){
-        BuildDetailView *bdv = segue.destinationViewController;
-        NSLog(@"%@",longpressCoordinate);
-        [bdv setPlaceLocation:longpressCoordinate];
-    }
-}
+//- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+//    if([segue.identifier isEqualToString:@"MapViewToOrt"]){
+//        OrtHinzuefugen *oh = segue.destinationViewController;
+//        NSString *lat = [[NSString alloc] initWithFormat:@"%g", longpressCoordinate.latitude];
+//        NSString *lon = [[NSString alloc] initWithFormat:@"%g", longpressCoordinate.longitude];
+//        NSLog(@"Latitude is: %@", lat);
+//        NSLog(@"Longitude is: %@", lon);
+//        //NSLog(@"%@",longpressCoordinate);
+//        [oh setPlaceLocation:longpressCoordinate];
+//    }
+//}
 
 
 - (IBAction)touchDown:(id)sender {

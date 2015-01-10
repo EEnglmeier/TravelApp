@@ -39,7 +39,8 @@ UIButton *buttonHotel, *buttonFood, *buttonCafe, *buttonNightlife, *buttonShoppi
 NSString *locationCategory = @"";
 float longitude, latitude;
 
-CLLocationCoordinate2D longpressed;
+//--- Variable, um die übergebene Koordinate von OrtHinzufuegen entegegen zunehmen
+CLLocationCoordinate2D _longpressed;
 
 //--- initialisieren des location manager
 - (CLLocationManager *)locationManager{
@@ -68,8 +69,8 @@ CLLocationCoordinate2D longpressed;
     double longitude = _locationManager.location.coordinate.longitude;
     [self getGeoInformations:latitude :longitude];
     
-    longpressed.latitude = -1;
-    longpressed.longitude = -1;
+    _longpressed.latitude = -1;
+    _longpressed.longitude = -1;
     
     
     // NavBar
@@ -203,7 +204,7 @@ CLLocationCoordinate2D longpressed;
     
     //Activity
     buttonActivity = [UIButton buttonWithType:UIButtonTypeCustom];
-    [buttonActivity setImage:[UIImage imageNamed:@"avtivity.jpg"] forState:UIControlStateNormal];
+    [buttonActivity setImage:[UIImage imageNamed:@"activity.jpg"] forState:UIControlStateNormal];
     [buttonActivity setImageEdgeInsets:UIEdgeInsetsMake(7, 7, 7, 7)];
     [buttonActivity addTarget:self action:@selector(whichButtonIsClicked:) forControlEvents:UIControlEventTouchUpInside];
     buttonActivity.frame = CGRectMake(buttonrowX2 + dist2Button, buttonrowY2, buttonsize, buttonsize);
@@ -445,10 +446,14 @@ CLLocationCoordinate2D longpressed;
         
         [object setObject:textField.text forKey:@"name"];
         PFGeoPoint *geoPoint;
-        if(longpressed.longitude == -1 && longpressed.latitude == -1){
+        
+        //--- prüft, ob eine Koordinate via longpressed übergeben wurde
+        //--- wenn keine übergeben wurde, wird die currentLocation verwendet
+        //--- wenn eine Koordinate via longpressed übergeben wurde, wird diese verwendet
+        if(_longpressed.longitude == -1 && _longpressed.latitude == -1){
              geoPoint = [PFGeoPoint geoPointWithLatitude:_returnLatitude longitude:_returnLongitude];
         }else{
-            geoPoint = [PFGeoPoint geoPointWithLatitude:longpressed.latitude longitude:longpressed.longitude];
+            geoPoint = [PFGeoPoint geoPointWithLatitude:_longpressed.latitude longitude:_longpressed.longitude];
         }
         [object setObject:locationCategory forKey:@"category"];
         [object setObject:_address forKey:@"adress"];
@@ -484,13 +489,15 @@ CLLocationCoordinate2D longpressed;
 
 //--- Fehlerbehandlung, wenn die aktuelle Position nicht bestimmt werden kann
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error{
-    UIAlertView *errorAlert = [[UIAlertView alloc]initWithTitle:@"Fehler" message:@"Die aktuelle Position konnte nicht bestimmt werden. \nMobile Daten oder WLAN aktivieren." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+    UIAlertView *errorAlert = [[UIAlertView alloc]initWithTitle:@"Location Services is disabled." message:@"Place my Memories needs access to your location. Please turn on Location Services in your device settings." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
     [errorAlert show];
     NSLog(@"Fehler: %@",error.description);
 }
 
-- (void)setPlaceLocation:(CLLocationCoordinate2D) _longpress{
-    longpressed= _longpress;
+//--- nimmt die von OrtHinzufuegen übergebene Koordinate von der Map durch longPressAtCoordinate entgegen und weist sie _longpressed zu
+- (void)setPlaceLocation_:(CLLocationCoordinate2D) __longpress{
+    _longpressed = __longpress;
+    NSLog(@"_longpressed in BuildDetailView arrived!");
 }
 
 - (void)getGeoInformations:(double)placeLatitude:(double)placeLongitude {
@@ -526,6 +533,4 @@ CLLocationCoordinate2D longpressed;
         }
     }
 }
-
-
 @end

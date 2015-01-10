@@ -26,6 +26,9 @@ UIImageView *imageView;
     
     PFQuery *query = [PFQuery queryWithClassName:@"Place"];
     [query orderByDescending:@"updatedAt"];
+    
+    
+    //--- hier muss statt query getFirstObject eine Funktion stehen, die userData durch tapAtInfoWindow annimmt und dadurch die richtigen Inhalte für die DetailView anzeigt!
     PFObject *aPlace = [query getFirstObject];
     name = [aPlace objectForKey:@"name"];
     category = [aPlace objectForKey:@"category"];
@@ -98,7 +101,7 @@ UIImageView *imageView;
     
     if([category isEqual: @"activity"]){
         
-        [locationButton setImage:[UIImage imageNamed:@"avtivity.jpg"] forState:UIControlStateNormal];
+        [locationButton setImage:[UIImage imageNamed:@"activity.jpg"] forState:UIControlStateNormal];
         locationButton.layer.borderColor = [[UIColor colorWithRed:236/255.f green:233/255.f blue:68/255.f alpha:1.0f] CGColor];
         [locationButton setImageEdgeInsets:UIEdgeInsetsMake(11, 11, 11, 11)];
         [[self view] addSubview:locationButton];
@@ -194,16 +197,18 @@ UIImageView *imageView;
     }
 }
 
-/*- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     if ([segue.identifier isEqualToString:@"DetailViewUnwindToMapView"] || [segue.identifier isEqualToString:@"DetailViewUnwindToList"]) {
         [segue.destinationViewController fetchPlaces];
+        [segue.destinationViewController loadCurrentLocationWithImage];
     }
-}*/
+}
 
 - (void)backToMap{
-    [self performSegueWithIdentifier:@"DetailViewToMapView" sender:self];
+    [self performSegueWithIdentifier:@"DetailViewUnwindToMapView" sender:self];
     
 }
+
 
 -(void)done{
     [self performSegueWithIdentifier:@"DetailViewUnwindToList" sender:self];

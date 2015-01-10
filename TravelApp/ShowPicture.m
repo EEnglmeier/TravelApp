@@ -83,7 +83,7 @@ NSString *name, *category, *geoName, *adress;
     
     if([category isEqual: @"activity"]){
         
-        [locationButton setImage:[UIImage imageNamed:@"avtivity.jpg"] forState:UIControlStateNormal];
+        [locationButton setImage:[UIImage imageNamed:@"activity.jpg"] forState:UIControlStateNormal];
         locationButton.layer.borderColor = [[UIColor colorWithRed:236/255.f green:233/255.f blue:68/255.f alpha:1.0f] CGColor];
         [locationButton setImageEdgeInsets:UIEdgeInsetsMake(11, 11, 11, 11)];
         [[self view] addSubview:locationButton];

@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <GoogleMaps/GoogleMaps.h>
+#import "MapViewController.h"
 
 @interface BuildDetailView: UIViewController <UITextFieldDelegate,UINavigationControllerDelegate,UITabBarControllerDelegate,CLLocationManagerDelegate,UIAlertViewDelegate>{
     NSString *_textfieldString;
@@ -17,7 +18,9 @@
 @property (nonatomic, strong) UIImage *myImage;
 @property float longitude, latitude;
 @property (nonatomic, strong) NSString *geoPlace;
+@property (nonatomic) CLLocationCoordinate2D *longpressCoordinate;
 
-- (void)setPlaceLocation:(CLLocationCoordinate2D) _longpress;
+
+- (void)setPlaceLocation_:(CLLocationCoordinate2D) __longpress;
 
 @end
