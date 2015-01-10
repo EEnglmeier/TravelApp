@@ -91,6 +91,7 @@ UIImagePickerController *pic;
     //ImageView
     UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(85, 90, 150, 150)];
     imageView.image = takenImage;
+    //[imageView setImage:_myImage];
     [[self view] addSubview: imageView];
     
 }
