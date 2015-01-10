@@ -43,6 +43,7 @@ float longitude, latitude;
 //--- Variable, um die übergebene Koordinate von OrtHinzufuegen entegegen zunehmen
 CLLocationCoordinate2D longpressedBV;
 bool fromMap = NO;
+bool imageChosen = NO;
 
 //--- ImagePicker: je nach Source durch camera oder photo library
 UIImagePickerController *pic;
@@ -57,27 +58,28 @@ UIImagePickerController *pic;
     [super viewDidLoad];
     locationCategory = @"";
     
+    imageChosen = NO;
+    
     //Initialize Location Manager & Display
     [self initLocation];
     [self initDisplay];
     
-    //---
-    //--- prüft, ob eine Koordinate via longpressed übergeben wurde
-    //--- wenn keine übergeben wurde, wird die currentLocation verwendet
-    //--- wenn eine Koordinate via longpressed übergeben wurde, wird diese verwendet
-    NSLog(@"LPBV [Latitude: %f ; Longitude: %f]",longpressedBV.latitude,longpressedBV.longitude);
-    if(!fromMap){
-        [self setGeoInformations:latitude :longitude];
-    }else{
-        [self setGeoInformations:(double)longpressedBV.latitude :(double)longpressedBV.longitude];
-    }
-    
-    [self initImagePicker];
-    
-    //double latitude = _locationManager.location.coordinate.latitude;
-    //double longitude = _locationManager.location.coordinate.longitude;
-    
 }
+
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:YES];
+    if(!imageChosen){
+        if(!fromMap){
+            double latitude = self.locationManager.location.coordinate.latitude;
+            double longitude = self.locationManager.location.coordinate.longitude;
+            [self setGeoInformations:latitude :longitude];
+        }else{
+            [self setGeoInformations:(double)longpressedBV.latitude :(double)longpressedBV.longitude];
+        }
+        [self initImagePicker];
+    }
+}
+
 
 
 /*********************************************************************************
@@ -90,10 +92,15 @@ UIImagePickerController *pic;
     
     //ImageView
     UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(85, 90, 150, 150)];
-    imageView.image = takenImage;
-    //[imageView setImage:_myImage];
+    //imageView.image = takenImage;
+    [imageView setImage:takenImage];
     [[self view] addSubview: imageView];
     
+}
+
+- (void) resetView{
+    imageChosen = NO;
+    fromMap = NO;
 }
 
 /*********************************************************************************
@@ -117,16 +124,14 @@ UIImagePickerController *pic;
     }
     
     //--- Wahl der Source
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Add a photo" message:@"Take a photo or choose from existing" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Take a photo", @"Choose from photo library", nil];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Add a photo" message:@"Take a photo or choose from existing" delegate:self cancelButtonTitle:nil otherButtonTitles:@"Choose from photo library", @"Take a photo", nil];
     alert.tag = 1;
     [alert show];
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     NSString *title = [alertView buttonTitleAtIndex:buttonIndex];
-    if ([title isEqualToString:@"Cancel"]) {
-        [self imagePickerControllerDidCancel:pic];
-    } else if ([title isEqualToString:@"Take a photo"]){
+    if ([title isEqualToString:@"Take a photo"]){
         [self takePhoto];
     } else if ([title isEqualToString:@"Choose from photo library"]){
         [self selectPhoto];
@@ -140,7 +145,7 @@ UIImagePickerController *pic;
     pic.allowsEditing = YES;
     pic.sourceType = UIImagePickerControllerSourceTypeCamera;
     pic.navigationBarHidden = YES;
-    [self presentViewController:pic animated:YES completion:nil];
+    [self presentViewController:pic animated:YES completion:^{ imageChosen = YES; }];
     NSLog(@"Bild durch camera");
 }
 
@@ -152,15 +157,19 @@ UIImagePickerController *pic;
     pic.allowsEditing = YES;
     pic.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
     pic.navigationBarHidden = YES;
-    [self presentViewController:pic animated:YES completion:nil];
+    [self presentViewController:pic animated:YES completion:^{ imageChosen = YES; }];
     NSLog(@"Bild durch Library");
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)pic {
-    [pic dismissViewControllerAnimated:YES completion:^{[self performSegueWithIdentifier:@"BuildDetailViewToMapView" sender:self];}];
+    [pic dismissViewControllerAnimated:YES completion:^{
+        [self resetView];
+        [self performSegueWithIdentifier:@"BuildDetailViewToMapView" sender:self];
+    }];
 }
 
 - (void)imagePickerController:(UIImagePickerController *)pic didFinishPickingImage:(UIImage *)image editingInfo:(NSDictionary *)editingInfo{
+    imageChosen = YES;
     self->takenImage = image;
     [pic dismissViewControllerAnimated:NO completion:^{ [self updateView]; }];
     //    [self performSegueWithIdentifier:@"OrtToBuildDetail" sender:self];
@@ -329,7 +338,7 @@ UIImagePickerController *pic;
     
     else {
         
-        NSData *imageData = UIImageJPEGRepresentation(_myImage, 0.8);
+        NSData *imageData = UIImageJPEGRepresentation(takenImage, 0.8);
         NSString *filename = [NSString stringWithFormat:@"%@.png", textField.text];
         PFFile *imageFile = [PFFile fileWithName:filename data:imageData];
         [object setObject:imageFile forKey:@"imageFile"];
@@ -349,14 +358,13 @@ UIImagePickerController *pic;
         [object setObject:geoPoint forKey:@"geoData"];
         
         [object saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-            [hud hide:YES];
+        [hud hide:YES];
             
             if (!error) {
-                // Show success message
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Upload Complete" message:@"Successfully saved the location" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-                alert.tag = 1;
-                [alert show];
-                
+
+                // Reset Flags
+                [self resetView];
+                [self performSegueWithIdentifier:@"BuildDetailViewToDetailView" sender:self];
                 // Notify table view to reload the recipes from Parse cloud
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshTable" object:self];
             
@@ -387,20 +395,15 @@ UIImagePickerController *pic;
 - (void)setPlaceLocation:(CLLocationCoordinate2D) longpressBV{
     fromMap = YES;
     longpressedBV = longpressBV;
-    NSLog(@"longpressedBV in BuildDetailView arrived!");
-    NSString *lat = [[NSString alloc] initWithFormat:@"%g", longpressedBV.latitude];
-    NSLog(@"Latitude second is: %@", lat);
-    NSString *lon = [[NSString alloc] initWithFormat:@"%g", longpressedBV.longitude];
-    NSLog(@"Longitude second is: %@", lon);
 }
 
 - (void)setGeoInformations:(double)placeLatitude:(double)placeLongitude {
     
     _returnLatitude = placeLatitude;
     _returnLongitude = placeLongitude;
-    //NSLog([NSString stringWithFormat:@"%f", _returnLatitude]);
-    //NSLog([NSString stringWithFormat:@"%f", _returnLongitude]);
+    
     __block NSString *adr1, *adr2;
+    
     GMSGeocoder *geocoder = [GMSGeocoder geocoder];
     [geocoder reverseGeocodeCoordinate:CLLocationCoordinate2DMake(placeLatitude, placeLongitude) completionHandler:^(GMSReverseGeocodeResponse *response, NSError *error) {
         GMSReverseGeocodeResult *result = response.firstResult;
@@ -411,24 +414,8 @@ UIImagePickerController *pic;
 }
 
 - (void)loadGeoInformations:(NSString*)address1:(NSString*)address2{
-    
     _address = [NSString stringWithFormat:@"%@\r%@", address1,address2];
-    //NSLog(_address);
-    UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Your location found:"
-                                                      message:[NSString stringWithFormat:@"%@", _address]
-                                                     delegate:nil
-                                            cancelButtonTitle:@"OK"
-                                            otherButtonTitles:nil];
-    [message show];
 }
-
-//- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-//    if (alertView.tag == 1){
-//        if (buttonIndex == [alertView cancelButtonIndex]){
-//            [self performSegueWithIdentifier:@"BuildDetailViewToDetailView" sender:self];
-//        }
-//    }
-//}
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     if ([segue.identifier isEqualToString:@"BuildDetailViewToDetailView"]){

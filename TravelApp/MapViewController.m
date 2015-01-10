@@ -242,7 +242,7 @@ PFGeoPoint *geoPoint;
     
     if (marker == currentLocMarker) return;
     //--- Tap auf Info Window -> Unwind Segue zu DetailView
-    [self performSegueWithIdentifier:@"MapViewToDetailView" sender:self];
+    [self performSegueWithIdentifier:@"MapViewToDetailView" sender:marker.userData];
     //NSLog(@"YES");
 }
 
@@ -260,6 +260,12 @@ PFGeoPoint *geoPoint;
         NSLog(@"Longitude is: %@", lon);
         //NSLog(@"%@",longpressCoordinate);
         [bdv setPlaceLocation:longpressCoordinate];
+    }
+    else if([segue.identifier isEqualToString:@"MapViewToDetailView"]){
+        DetailView *dv = segue.destinationViewController;
+        PFObject *place = sender;
+        dv.objectID = place.objectId;
+        dv.segueTag = @"clickedPin";
     }
 }
 

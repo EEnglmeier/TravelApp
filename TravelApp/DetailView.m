@@ -39,9 +39,7 @@ NSString *objectIDFromTableView;
     UINavigationItem *navItemLocation = [[UINavigationItem alloc] init];
     navItemLocation.title = name;
     UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStylePlain target:self action:@selector(done)];
-    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:@"Back to Map" style:UIBarButtonItemStylePlain target:self action:@selector(backToMap)];
     navItemLocation.rightBarButtonItem = doneButton;
-    navItemLocation.leftBarButtonItem = backButton;
     navBarLocation.items = @[navItemLocation];
     [[self view] addSubview: navBarLocation];
     
@@ -199,16 +197,9 @@ NSString *objectIDFromTableView;
     }
 }
 
-- (void)backToMap{
-    [self performSegueWithIdentifier:@"DetailViewUnwindToMapView" sender:self];
-    
-}
-
 
 -(void)done{
-    [self performSegueWithIdentifier:@"DetailViewUnwindToList" sender:self];
-    UITabBar *tabBar = [[UITabBar alloc] init];
-    [tabBar setSelectedItem:[tabBar.items objectAtIndex:1]];
+    [self performSegueWithIdentifier:@"DetailViewToMapView" sender:self];
 }
 
 -(void) whichObjectToShow{
@@ -225,6 +216,15 @@ NSString *objectIDFromTableView;
     
     if ([segueTag isEqualToString:@"clickedObject"]) {
         NSLog(@"tableView");
+        PFQuery *query = [PFQuery queryWithClassName:@"Place"];
+        [query whereKey:@"objectId" equalTo:self.objectID];
+        PFObject *object = [query getFirstObject];
+        name = [object objectForKey:@"name"];
+        category = [object objectForKey:@"category"];
+        adress = [object objectForKey:@"adress"];
+        imageFile = object[@"imageFile"];
+    }
+    if([segueTag isEqualToString:@"clickedPin"]){
         PFQuery *query = [PFQuery queryWithClassName:@"Place"];
         [query whereKey:@"objectId" equalTo:self.objectID];
         PFObject *object = [query getFirstObject];

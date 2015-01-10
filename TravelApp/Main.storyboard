@@ -5,6 +5,26 @@
     </dependencies>
     <scenes>
         <!--Map-->
+        <scene sceneID="xVI-1e-XCS">
+            <objects>
+                <navigationController navigationBarHidden="YES" id="apW-1d-oPw" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Map" image="Map" id="fBU-y7-KIk"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="PLA-fO-NnH">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="GUq-L0-uVr">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </toolbar>
+                    <connections>
+                        <segue destination="27c-jk-6k3" kind="relationship" relationship="rootViewController" id="AIg-6e-Nap"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="D9H-4X-h7I" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1300" y="600"/>
+        </scene>
+        <!--Map-->
         <scene sceneID="yiy-d8-G09">
             <objects>
                 <viewController id="27c-jk-6k3" customClass="MapViewController" sceneMemberID="viewController">
@@ -18,15 +38,17 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Map" image="Map" id="R33-36-fvm"/>
+                    <navigationItem key="navigationItem" id="blK-bj-tXl"/>
+                    <nil key="simulatedTopBarMetrics"/>
                     <connections>
                         <segue destination="fEl-nF-RPu" kind="showDetail" identifier="MapViewToDetailView" id="kow-mJ-7qC"/>
-                        <segue destination="RPn-uX-DOW" kind="show" identifier="MapViewToBuildDetailView" id="rIm-7i-4wB"/>
+                        <segue destination="RPn-uX-DOW" kind="showDetail" identifier="MapViewToBuildDetailView" id="rIm-7i-4wB"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3fT-dy-kMz" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="LrF-0E-H2L" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="-992" y="600"/>
+            <point key="canvasLocation" x="-1300" y="1320"/>
         </scene>
         <!--Places Table View-->
         <scene sceneID="wg7-f3-ORb">
@@ -49,7 +71,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Nw-L8-lE0" sceneMemberID="firstResponder"/>
                 <exit id="5US-DV-kPT" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="-662" y="1594"/>
+            <point key="canvasLocation" x="-298" y="1320"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="yl2-sM-qoP">
@@ -62,7 +84,7 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </tabBar>
                     <connections>
-                        <segue destination="27c-jk-6k3" kind="relationship" relationship="viewControllers" id="V43-et-uNO"/>
+                        <segue destination="apW-1d-oPw" kind="relationship" relationship="viewControllers" id="MV8-I8-7OT"/>
                         <segue destination="b80-Mu-wbw" kind="relationship" relationship="viewControllers" id="lzU-1b-eKA"/>
                         <segue destination="iFI-Te-hFx" kind="relationship" relationship="viewControllers" id="vyk-gY-Tg7"/>
                         <segue destination="jW3-FI-Om6" kind="relationship" relationship="viewControllers" id="Nu0-8m-SbF"/>
@@ -70,7 +92,7 @@
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HuB-VB-40B" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-446" y="-270"/>
+            <point key="canvasLocation" x="-832" y="-280"/>
         </scene>
         <!--Route-->
         <scene sceneID="WmK-Ki-77L">
@@ -156,14 +178,14 @@
                     </view>
                     <navigationItem key="navigationItem" id="s9F-og-o92"/>
                     <connections>
-                        <segue destination="fEl-nF-RPu" kind="show" identifier="BuildDetailViewToDetailView" id="nfK-3l-fAm"/>
+                        <segue destination="fEl-nF-RPu" kind="showDetail" identifier="BuildDetailViewToDetailView" id="nfK-3l-fAm"/>
                         <segue destination="5US-DV-kPT" kind="unwind" identifier="BuildDetailViewUnwindToList" unwindAction="unwindFromTableView:" id="R6I-oO-37E"/>
-                        <segue destination="27c-jk-6k3" kind="show" identifier="BuildDetailViewToMap" id="QQi-Td-6ui"/>
+                        <segue destination="apW-1d-oPw" kind="showDetail" identifier="BuildDetailViewToMapView" id="vJ0-0D-9NF"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RGi-dH-pOF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="191" y="2036"/>
+            <point key="canvasLocation" x="503" y="2372"/>
         </scene>
         <!--Detail View-->
         <scene sceneID="e0X-FO-tMQ">
@@ -182,12 +204,13 @@
                         <segue destination="LrF-0E-H2L" kind="unwind" identifier="DetailViewUnwindToList" unwindAction="unwindFromTableView:" id="neL-RZ-jOd"/>
                         <segue destination="daq-b4-8Xy" kind="unwind" identifier="DetailViewUnwindToMapView" unwindAction="unwindToMapView:" id="oxs-wl-z0q"/>
                         <segue destination="b80-Mu-wbw" kind="show" identifier="DetailViewToList" id="m3p-47-oeJ"/>
+                        <segue destination="apW-1d-oPw" kind="show" identifier="DetailViewToMapView" id="UvF-TF-7eh"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oUb-lO-D49" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="daq-b4-8Xy" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="-1385" y="2004"/>
+            <point key="canvasLocation" x="-1300" y="2196"/>
         </scene>
         <!--Add new Place-->
         <scene sceneID="xMW-GA-nqP">
@@ -213,7 +236,6 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="b80-Mu-wbw" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Places" image="Places" id="cPa-gy-q4n"/>
                     <toolbarItems/>
-                    <nil key="simulatedStatusBarMetrics"/>
                     <nil key="simulatedTopBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="FZV-RU-wrj">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -236,10 +258,10 @@
         <image name="Route" width="25" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="P0O-LA-TQV"/>
-        <segue reference="QQi-Td-6ui"/>
-        <segue reference="nfK-3l-fAm"/>
         <segue reference="m3p-47-oeJ"/>
+        <segue reference="nfK-3l-fAm"/>
+        <segue reference="rIm-7i-4wB"/>
+        <segue reference="UvF-TF-7eh"/>
         <segue reference="miQ-FJ-Nbk"/>
     </inferredMetricsTieBreakers>
 </document>

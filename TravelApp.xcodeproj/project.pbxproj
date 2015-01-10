@@ -207,7 +207,6 @@
 		B95390571A50217C0017E98D /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9538FAC1A5021790017E98D /* AdSupport.framework */; };
 		B95390581A50217C0017E98D /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9538FAD1A50217A0017E98D /* AssetsLibrary.framework */; };
 		B95390591A50217C0017E98D /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9538FAE1A50217A0017E98D /* AudioToolbox.framework */; };
-		B95390641A5027290017E98D /* OrtHinzuefugen.m in Sources */ = {isa = PBXBuildFile; fileRef = B95390631A5027290017E98D /* OrtHinzuefugen.m */; };
 		B95F739A1A505C66007E2F19 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B95F73991A505C66007E2F19 /* Parse.framework */; };
 		B9723D651A617A77008A2C80 /* PlacesTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = B9723D641A617A77008A2C80 /* PlacesTableView.m */; };
 		B9E5B1731A5494D700074C0C /* BuildDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = B9E5B1721A5494D700074C0C /* BuildDetailView.m */; };
@@ -432,8 +431,6 @@
 		B9538FAC1A5021790017E98D /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		B9538FAD1A50217A0017E98D /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		B9538FAE1A50217A0017E98D /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
-		B95390621A5027290017E98D /* OrtHinzuefugen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrtHinzuefugen.h; sourceTree = "<group>"; };
-		B95390631A5027290017E98D /* OrtHinzuefugen.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrtHinzuefugen.m; sourceTree = "<group>"; };
 		B95390651A5027790017E98D /* ShowPicture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShowPicture.h; sourceTree = "<group>"; };
 		B95390661A5027790017E98D /* ShowPicture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShowPicture.m; sourceTree = "<group>"; };
 		B95F73991A505C66007E2F19 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
@@ -677,8 +674,6 @@
 				B9E5B1751A54959D00074C0C /* MBProgressHUD.m */,
 				B9E5B1771A5495EF00074C0C /* DetailView.h */,
 				B9E5B1781A5495EF00074C0C /* DetailView.m */,
-				B95390621A5027290017E98D /* OrtHinzuefugen.h */,
-				B95390631A5027290017E98D /* OrtHinzuefugen.m */,
 				B9723D631A617A76008A2C80 /* PlacesTableView.h */,
 				B9723D641A617A77008A2C80 /* PlacesTableView.m */,
 				B95390651A5027790017E98D /* ShowPicture.h */,
@@ -1027,7 +1022,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				45977A791A506A8F00242E07 /* ShowPicture.m in Sources */,
-				B95390641A5027290017E98D /* OrtHinzuefugen.m in Sources */,
 				8480A0371A3F10D2006C9BB1 /* MapViewController.m in Sources */,
 				84F240231A5DB1BD00DB2BBC /* CustomInfoWindow.m in Sources */,
 				45C58F611A497782000BB6EB /* RouteMapView.swift in Sources */,
