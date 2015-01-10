@@ -8,7 +8,7 @@
 
 import UIKit
 
-class RouteOverview : UIViewController,UITableViewDelegate,UITableViewDataSource{
+/*class RouteOverview : UIViewController,UITableViewDelegate,UITableViewDataSource{
     
     var tableView:UITableView = UITableView()
     var selectedItems :[Marker] = []
@@ -98,4 +98,4 @@ class RouteOverview : UIViewController,UITableViewDelegate,UITableViewDataSource
     func unwindFromTableView(segue:UIStoryboardSegue){
         tableView.reloadData()
     }
-}
+}*/

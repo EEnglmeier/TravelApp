@@ -14,6 +14,7 @@
 #import <CoreLocation/CoreLocation.h>
 #import "MBProgressHUD.h"
 #import "MapViewController.h"
+#import "DetailView.h"
 
 @interface BuildDetailView ()
 @property (strong, nonatomic) CLLocationManager *locationManager;
@@ -531,6 +532,13 @@ CLLocationCoordinate2D _longpressed;
         if (buttonIndex == [alertView cancelButtonIndex]){
             [self performSegueWithIdentifier:@"BuildDetailViewToDetailView" sender:self];
         }
+    }
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    if ([segue.identifier isEqualToString:@"BuildDetailViewToDetailView"]){
+        DetailView *editViewController = (DetailView *)segue.destinationViewController;
+        editViewController.segueTag = @"buildDetailView";
     }
 }
 @end

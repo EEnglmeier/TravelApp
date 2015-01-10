@@ -14,27 +14,21 @@
 
 
 @implementation DetailView
+@synthesize objectID, segueTag, name, category, adress, imageFile;
 int buttonsize1 = 60;
 int aPlaceLabelY = 445;
 float buttonBorderwidth1 = 1.7f;
-NSString *name, *category, *geoName, *adress;
+NSString  *geoName;
 UIImageView *imageView;
+PFFile *imageFile;
+NSString *objectIDFromTableView;
+
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     NSLog(@"detail");
-    
-    PFQuery *query = [PFQuery queryWithClassName:@"Place"];
-    [query orderByDescending:@"updatedAt"];
-    
-    
-    //--- hier muss statt query getFirstObject eine Funktion stehen, die userData durch tapAtInfoWindow annimmt und dadurch die richtigen Inhalte für die DetailView anzeigt!
-    PFObject *aPlace = [query getFirstObject];
-    name = [aPlace objectForKey:@"name"];
-    category = [aPlace objectForKey:@"category"];
-    adress = [aPlace objectForKey:@"adress"];
-    PFFile *imageFile = aPlace[@"imageFile"];
-    
+    [self whichObjectToShow];
+
     
     [[UIApplication sharedApplication] setStatusBarHidden:YES];
     [super viewDidLoad];
@@ -215,5 +209,30 @@ UIImageView *imageView;
     UITabBar *tabBar = [[UITabBar alloc] init];
     [tabBar setSelectedItem:[tabBar.items objectAtIndex:1]];
 }
+
+-(void) whichObjectToShow{
+    if ([segueTag isEqualToString:@"buildDetailView"]) {
+        NSLog(@"buildDetailView");
+        PFQuery *query = [PFQuery queryWithClassName:@"Place"];
+        [query orderByDescending:@"updatedAt"];
+        PFObject *aPlace = [query getFirstObject];
+        name = [aPlace objectForKey:@"name"];
+        category = [aPlace objectForKey:@"category"];
+        adress = [aPlace objectForKey:@"adress"];
+        imageFile = aPlace[@"imageFile"];
+    }
+    
+    if ([segueTag isEqualToString:@"clickedObject"]) {
+        NSLog(@"tableView");
+        PFQuery *query = [PFQuery queryWithClassName:@"Place"];
+        [query whereKey:@"objectId" equalTo:self.objectID];
+        PFObject *object = [query getFirstObject];
+        name = [object objectForKey:@"name"];
+        category = [object objectForKey:@"category"];
+        adress = [object objectForKey:@"adress"];
+        imageFile = object[@"imageFile"];
+    }
+}
+
 
 @end

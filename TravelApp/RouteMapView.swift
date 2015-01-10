@@ -8,7 +8,7 @@
 
 import UIKit
 
-class RouteMapView : UIViewController{
+/*class RouteMapView : UIViewController{
     
     var passedData : [Marker]!
     var routeName : String!
@@ -143,4 +143,4 @@ class RouteMapView : UIViewController{
         
     return result
     }
-    }
+    }*/
