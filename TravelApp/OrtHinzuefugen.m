@@ -21,9 +21,9 @@ CLLocationCoordinate2D longpressed;
 //--- ImagePicker: je nach Source durch camera oder photo library
 UIImagePickerController *pic;
 
-- (void)viewDidLoad {
+- (void)viewWillAppear:(BOOL)animated {
     
-    [super viewDidLoad];
+    [super viewWillAppear:animated];
     
     //--- Wenn keine camera vorhanden
     if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
@@ -34,13 +34,7 @@ UIImagePickerController *pic;
                                                     cancelButtonTitle:@"OK"
                                                     otherButtonTitles: nil];
         [myAlertView show];
-        
     }
-}
-
-- (void)viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:animated];
-    
     //--- Wahl der Source
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Add a photo" message:@"Take a photo or choose from existing" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Take a photo", @"Choose from photo library", nil];
     alert.tag = 1;
@@ -51,8 +45,8 @@ UIImagePickerController *pic;
 - (void)imagePickerController:(UIImagePickerController *)pic didFinishPickingImage:(UIImage *)image editingInfo:(NSDictionary *)editingInfo{
     
     self->takenImage = image;
-    [self performSegueWithIdentifier:@"OrtToBuildDetail" sender:self];
-    [pic dismissViewControllerAnimated:NO completion:NULL];
+    [pic dismissViewControllerAnimated:NO completion:^{[self performSegueWithIdentifier:@"OrtToBuildDetail" sender:self];}];
+//    [self performSegueWithIdentifier:@"OrtToBuildDetail" sender:self];
 }
 
 
@@ -62,23 +56,14 @@ UIImagePickerController *pic;
 //        BuildDetailView *editViewController =
 //        (BuildDetailView *)segue.destinationViewController;
         [editViewController setMyImage:takenImage];
-        [editViewController setPlaceLocation_:longpressed];
+        //[editViewController setPlaceLocationBV:longpressed];
         NSLog(@"Segue prepared");
     }
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)pic {
-    [self performSegueWithIdentifier:@"OrtToMapView" sender:self];
-    [pic dismissViewControllerAnimated:YES completion:NULL];
+    [pic dismissViewControllerAnimated:YES completion:^{[self performSegueWithIdentifier:@"OrtToMapView" sender:self];}];
 }
-
-//--- nimmt die vom MapViewController übergebene Korrdinate entgegen und weist sie longpressed zu
-//--- um sie dann weiter an die BuildDetailView weiterzugeben
-- (void)setPlaceLocation:(CLLocationCoordinate2D) _longpress{
-    longpressed = _longpress;
-    NSLog(@"longpressed in OrtHinzufuegen arrived!");
-}
-
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     NSString *title = [alertView buttonTitleAtIndex:buttonIndex];
@@ -99,7 +84,7 @@ UIImagePickerController *pic;
     pic.allowsEditing = YES;
     pic.sourceType = UIImagePickerControllerSourceTypeCamera;
     pic.navigationBarHidden = YES;
-    [self presentViewController:pic animated:YES completion:NULL];
+    [self presentViewController:pic animated:YES completion:nil];
     NSLog(@"Bild durch camera");
 }
 
@@ -111,7 +96,7 @@ UIImagePickerController *pic;
     pic.allowsEditing = YES;
     pic.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
     pic.navigationBarHidden = YES;
-    [self presentViewController:pic animated:YES completion:NULL];
+    [self presentViewController:pic animated:YES completion:nil];
     NSLog(@"Bild durch Library");
 }
 

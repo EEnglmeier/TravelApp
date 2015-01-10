@@ -28,7 +28,7 @@ NSString *string;
     UINavigationBar *navBarLocation = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 70)];
     navBarLocation.backgroundColor = [UIColor grayColor];
     UINavigationItem *navItemLocation = [[UINavigationItem alloc] init];
-    navItemLocation.title = @"List";
+    navItemLocation.title = @"Places";
     navBarLocation.items = @[navItemLocation];
     [[self view] addSubview: navBarLocation];
     
@@ -71,7 +71,7 @@ NSString *string;
 -(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     string = [tableView cellForRowAtIndexPath:indexPath].textLabel.text;
-    NSLog(string);
+    NSLog(@"%@",string);
     [self goToDetailView];
 }
 

@@ -41,7 +41,11 @@ NSString *locationCategory = @"";
 float longitude, latitude;
 
 //--- Variable, um die übergebene Koordinate von OrtHinzufuegen entegegen zunehmen
-CLLocationCoordinate2D _longpressed;
+CLLocationCoordinate2D longpressedBV;
+bool fromMap = NO;
+
+//--- ImagePicker: je nach Source durch camera oder photo library
+UIImagePickerController *pic;
 
 //--- initialisieren des location manager
 - (CLLocationManager *)locationManager{
@@ -49,11 +53,396 @@ CLLocationCoordinate2D _longpressed;
     return _locationManager;
 }
 
-
--(void)viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:animated];
+-(void)viewDidLoad{
+    [super viewDidLoad];
     locationCategory = @"";
     
+    //Initialize Location Manager & Display
+    [self initLocation];
+    [self initDisplay];
+    
+    //---
+    //--- prüft, ob eine Koordinate via longpressed übergeben wurde
+    //--- wenn keine übergeben wurde, wird die currentLocation verwendet
+    //--- wenn eine Koordinate via longpressed übergeben wurde, wird diese verwendet
+    NSLog(@"LPBV [Latitude: %f ; Longitude: %f]",longpressedBV.latitude,longpressedBV.longitude);
+    if(!fromMap){
+        [self setGeoInformations:latitude :longitude];
+    }else{
+        [self setGeoInformations:(double)longpressedBV.latitude :(double)longpressedBV.longitude];
+    }
+    
+    [self initImagePicker];
+    
+    //double latitude = _locationManager.location.coordinate.latitude;
+    //double longitude = _locationManager.location.coordinate.longitude;
+    
+}
+
+
+/*********************************************************************************
+ 
+ Update View
+ 
+**********************************************************************************/
+
+- (void) updateView{
+    
+    //ImageView
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(85, 90, 150, 150)];
+    imageView.image = takenImage;
+    [[self view] addSubview: imageView];
+    
+}
+
+/*********************************************************************************
+ 
+ Image Picker
+ 
+*********************************************************************************/
+
+
+- (void) initImagePicker{
+    
+    //--- Wenn keine camera vorhanden
+    if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+        
+        UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                              message:@"Device has no camera"
+                                                             delegate:nil
+                                                    cancelButtonTitle:@"OK"
+                                                    otherButtonTitles: nil];
+        [myAlertView show];
+    }
+    
+    //--- Wahl der Source
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Add a photo" message:@"Take a photo or choose from existing" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Take a photo", @"Choose from photo library", nil];
+    alert.tag = 1;
+    [alert show];
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    NSString *title = [alertView buttonTitleAtIndex:buttonIndex];
+    if ([title isEqualToString:@"Cancel"]) {
+        [self imagePickerControllerDidCancel:pic];
+    } else if ([title isEqualToString:@"Take a photo"]){
+        [self takePhoto];
+    } else if ([title isEqualToString:@"Choose from photo library"]){
+        [self selectPhoto];
+    }
+}
+
+- (void)takePhoto{
+    
+    UIImagePickerController *pic = [[UIImagePickerController alloc] init];
+    pic.delegate = self;
+    pic.allowsEditing = YES;
+    pic.sourceType = UIImagePickerControllerSourceTypeCamera;
+    pic.navigationBarHidden = YES;
+    [self presentViewController:pic animated:YES completion:nil];
+    NSLog(@"Bild durch camera");
+}
+
+
+- (IBAction)selectPhoto{
+    
+    UIImagePickerController *pic = [[UIImagePickerController alloc] init];
+    pic.delegate = self;
+    pic.allowsEditing = YES;
+    pic.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    pic.navigationBarHidden = YES;
+    [self presentViewController:pic animated:YES completion:nil];
+    NSLog(@"Bild durch Library");
+}
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)pic {
+    [pic dismissViewControllerAnimated:YES completion:^{[self performSegueWithIdentifier:@"BuildDetailViewToMapView" sender:self];}];
+}
+
+- (void)imagePickerController:(UIImagePickerController *)pic didFinishPickingImage:(UIImage *)image editingInfo:(NSDictionary *)editingInfo{
+    self->takenImage = image;
+    [pic dismissViewControllerAnimated:NO completion:^{ [self updateView]; }];
+    //    [self performSegueWithIdentifier:@"OrtToBuildDetail" sender:self];
+}
+     
+/*********************************************************************************
+     
+     Button Interaction
+     
+*********************************************************************************/
+
+-(void)whichButtonIsClicked:(id)sender{
+    if (sender == buttonHotel) {
+        buttonHotel.layer.borderColor = [[UIColor colorWithRed:0/255.f green:186/255.f blue:130/255.f alpha:1.0f] CGColor];
+        locationCategory = @"hotel";
+        //buttonHotel.layer.borderColor=[UIColor blackColor].CGColor;
+        buttonFood.layer.borderColor=[UIColor blackColor].CGColor;
+        buttonCafe.layer.borderColor=[UIColor blackColor].CGColor;
+        buttonNightlife.layer.borderColor=[UIColor blackColor].CGColor;
+        buttonShopping.layer.borderColor=[UIColor blackColor].CGColor;
+        buttonActivity.layer.borderColor=[UIColor blackColor].CGColor;
+        buttonIcons.layer.borderColor=[UIColor blackColor].CGColor;
+        buttonCulture.layer.borderColor=[UIColor blackColor].CGColor;
+        buttonOther.layer.borderColor=[UIColor blackColor].CGColor;
+    }
+    
+    if (sender == buttonFood) {
+        buttonFood.layer.borderColor = [[UIColor colorWithRed:255/255.f green:0/255.f blue:0/255.f alpha:1.0f] CGColor];
+        locationCategory = @"food";
+        buttonHotel.layer.borderColor=[UIColor blackColor].CGColor;
+        //buttonFood.layer.borderColor=[UIColor blackColor].CGColor;
+        buttonCafe.layer.borderColor=[UIColor blackColor].CGColor;
+        buttonNightlife.layer.borderColor=[UIColor blackColor].CGColor;
+        buttonShopping.layer.borderColor=[UIColor blackColor].CGColor;
+        buttonActivity.layer.borderColor=[UIColor blackColor].CGColor;
+        buttonIcons.layer.borderColor=[UIColor blackColor].CGColor;
+        buttonCulture.layer.borderColor=[UIColor blackColor].CGColor;
+        buttonOther.layer.borderColor=[UIColor blackColor].CGColor;
+    }
+    
+    if (sender == buttonCafe) {
+        buttonCafe.layer.borderColor = [[UIColor colorWithRed:109/255.f green:95/255.f blue:213/255.f alpha:1.0f] CGColor];
+        locationCategory = @"cafe";
+        buttonHotel.layer.borderColor=[UIColor blackColor].CGColor;
+        buttonFood.layer.borderColor=[UIColor blackColor].CGColor;
+        //buttonCafe.layer.borderColor=[UIColor blackColor].CGColor;
+        buttonNightlife.layer.borderColor=[UIColor blackColor].CGColor;
+        buttonShopping.layer.borderColor=[UIColor blackColor].CGColor;
+        buttonActivity.layer.borderColor=[UIColor blackColor].CGColor;
+        buttonIcons.layer.borderColor=[UIColor blackColor].CGColor;
+        buttonCulture.layer.borderColor=[UIColor blackColor].CGColor;
+        buttonOther.layer.borderColor=[UIColor blackColor].CGColor;
+    }
+    
+    if (sender == buttonNightlife) {
+        buttonNightlife.layer.borderColor = [[UIColor colorWithRed:85/255.f green:85/255.f blue:85/255.f alpha:1.0f] CGColor];
+        locationCategory = @"nightlife";
+        buttonHotel.layer.borderColor=[UIColor blackColor].CGColor;
+        buttonFood.layer.borderColor=[UIColor blackColor].CGColor;
+        buttonCafe.layer.borderColor=[UIColor blackColor].CGColor;
+        //buttonNightlife.layer.borderColor=[UIColor blackColor].CGColor;
+        buttonShopping.layer.borderColor=[UIColor blackColor].CGColor;
+        buttonActivity.layer.borderColor=[UIColor blackColor].CGColor;
+        buttonIcons.layer.borderColor=[UIColor blackColor].CGColor;
+        buttonCulture.layer.borderColor=[UIColor blackColor].CGColor;
+        buttonOther.layer.borderColor=[UIColor blackColor].CGColor;
+    }
+    
+    if (sender == buttonShopping) {
+        buttonShopping.layer.borderColor = [[UIColor colorWithRed:95/255.f green:180/255.f blue:228/255.f alpha:1.0f] CGColor];
+        locationCategory = @"shopping";
+        buttonHotel.layer.borderColor=[UIColor blackColor].CGColor;
+        buttonFood.layer.borderColor=[UIColor blackColor].CGColor;
+        buttonCafe.layer.borderColor=[UIColor blackColor].CGColor;
+        buttonNightlife.layer.borderColor=[UIColor blackColor].CGColor;
+        //buttonShopping.layer.borderColor=[UIColor blackColor].CGColor;
+        buttonActivity.layer.borderColor=[UIColor blackColor].CGColor;
+        buttonIcons.layer.borderColor=[UIColor blackColor].CGColor;
+        buttonCulture.layer.borderColor=[UIColor blackColor].CGColor;
+        buttonOther.layer.borderColor=[UIColor blackColor].CGColor;
+    }
+    
+    if (sender == buttonActivity) {
+        buttonActivity.layer.borderColor = [[UIColor colorWithRed:236/255.f green:233/255.f blue:68/255.f alpha:1.0f] CGColor];
+        locationCategory = @"activity";
+        buttonHotel.layer.borderColor=[UIColor blackColor].CGColor;
+        buttonFood.layer.borderColor=[UIColor blackColor].CGColor;
+        buttonCafe.layer.borderColor=[UIColor blackColor].CGColor;
+        buttonNightlife.layer.borderColor=[UIColor blackColor].CGColor;
+        buttonShopping.layer.borderColor=[UIColor blackColor].CGColor;
+        //buttonActivity.layer.borderColor=[UIColor blackColor].CGColor;
+        buttonIcons.layer.borderColor=[UIColor blackColor].CGColor;
+        buttonCulture.layer.borderColor=[UIColor blackColor].CGColor;
+        buttonOther.layer.borderColor=[UIColor blackColor].CGColor;
+    }
+    
+    if (sender == buttonIcons) {
+        buttonIcons.layer.borderColor = [[UIColor colorWithRed:255/255.f green:130/255.f blue:0/255.f alpha:1.0f] CGColor];
+        locationCategory = @"icons";
+        buttonHotel.layer.borderColor=[UIColor blackColor].CGColor;
+        buttonFood.layer.borderColor=[UIColor blackColor].CGColor;
+        buttonCafe.layer.borderColor=[UIColor blackColor].CGColor;
+        buttonNightlife.layer.borderColor=[UIColor blackColor].CGColor;
+        buttonShopping.layer.borderColor=[UIColor blackColor].CGColor;
+        buttonActivity.layer.borderColor=[UIColor blackColor].CGColor;
+        //buttonIcons.layer.borderColor=[UIColor blackColor].CGColor;
+        buttonCulture.layer.borderColor=[UIColor blackColor].CGColor;
+        buttonOther.layer.borderColor=[UIColor blackColor].CGColor;
+    }
+    
+    if (sender == buttonCulture) {
+        buttonCulture.layer.borderColor = [[UIColor colorWithRed:244/255.f green:93/255.f blue:191/255.f alpha:1.0f] CGColor];
+        locationCategory = @"culture";
+        buttonHotel.layer.borderColor=[UIColor blackColor].CGColor;
+        buttonFood.layer.borderColor=[UIColor blackColor].CGColor;
+        buttonCafe.layer.borderColor=[UIColor blackColor].CGColor;
+        buttonNightlife.layer.borderColor=[UIColor blackColor].CGColor;
+        buttonShopping.layer.borderColor=[UIColor blackColor].CGColor;
+        buttonActivity.layer.borderColor=[UIColor blackColor].CGColor;
+        buttonIcons.layer.borderColor=[UIColor blackColor].CGColor;
+        //buttonCulture.layer.borderColor=[UIColor blackColor].CGColor;
+        buttonOther.layer.borderColor=[UIColor blackColor].CGColor;
+    }
+    
+    if (sender == buttonOther) {
+        buttonOther.layer.borderColor = [[UIColor colorWithRed:0/255.f green:0/255.f blue:0/255.f alpha:1.0f] CGColor];
+        locationCategory = @"other";
+        buttonHotel.layer.borderColor=[UIColor blackColor].CGColor;
+        buttonFood.layer.borderColor=[UIColor blackColor].CGColor;
+        buttonCafe.layer.borderColor=[UIColor blackColor].CGColor;
+        buttonNightlife.layer.borderColor=[UIColor blackColor].CGColor;
+        buttonShopping.layer.borderColor=[UIColor blackColor].CGColor;
+        buttonActivity.layer.borderColor=[UIColor blackColor].CGColor;
+        buttonIcons.layer.borderColor=[UIColor blackColor].CGColor;
+        buttonCulture.layer.borderColor=[UIColor blackColor].CGColor;
+        //buttonOther.layer.borderColor=[UIColor blackColor].CGColor;
+    }
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [textField resignFirstResponder];
+    return NO;
+}
+
+-(void)saveLocation{
+    PFObject *object = [PFObject objectWithClassName:@"Place"];
+    
+    if ([locationCategory isEqualToString:@""]) {
+        UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Attention:"
+                                                          message:@"Please select a category for your location!"
+                                                         delegate:nil
+                                                cancelButtonTitle:@"OK"
+                                                otherButtonTitles:nil];
+        [message show];
+    }
+    
+    else if ([textField.text isEqualToString:@""]) {
+        UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Attention:"
+                                                          message:@"Please type in a name for your location!"
+                                                         delegate:nil
+                                                cancelButtonTitle:@"OK"
+                                                otherButtonTitles:nil];
+        [message show];
+    }
+    
+    
+    else {
+        
+        NSData *imageData = UIImageJPEGRepresentation(_myImage, 0.8);
+        NSString *filename = [NSString stringWithFormat:@"%@.png", textField.text];
+        PFFile *imageFile = [PFFile fileWithName:filename data:imageData];
+        [object setObject:imageFile forKey:@"imageFile"];
+        
+        // Show progress
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        hud.mode = MBProgressHUDModeIndeterminate;
+        hud.labelText = @"Uploading";
+        [hud show:YES];
+        
+        [object setObject:textField.text forKey:@"name"];
+        PFGeoPoint *geoPoint = [PFGeoPoint geoPointWithLatitude:_returnLatitude longitude:_returnLongitude];
+        
+        NSLog(@"%f", geoPoint.latitude);
+        [object setObject:locationCategory forKey:@"category"];
+        [object setObject:_address forKey:@"adress"];
+        [object setObject:geoPoint forKey:@"geoData"];
+        
+        [object saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+            [hud hide:YES];
+            
+            if (!error) {
+                // Show success message
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Upload Complete" message:@"Successfully saved the location" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                alert.tag = 1;
+                [alert show];
+                
+                // Notify table view to reload the recipes from Parse cloud
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshTable" object:self];
+            
+                
+                // Dismiss the controller
+                //[self dismissViewControllerAnimated:YES completion:nil];
+            } else {
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Upload Failure" message:[error localizedDescription] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                [alert show];
+            }
+        }];
+    }
+}
+
+-(void)cancel{
+    [self performSegueWithIdentifier:@"BuildDetailViewUnwindToList" sender:self];
+}
+
+
+//--- Fehlerbehandlung, wenn die aktuelle Position nicht bestimmt werden kann
+- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error{
+    UIAlertView *errorAlert = [[UIAlertView alloc]initWithTitle:@"Location Services is disabled." message:@"Place my Memories needs access to your location. Please turn on Location Services in your device settings." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+    [errorAlert show];
+    NSLog(@"Fehler: %@",error.description);
+}
+
+//--- nimmt die von OrtHinzufuegen übergebene Koordinate von der Map durch longPressAtCoordinate entgegen und weist sie _longpressed zu
+- (void)setPlaceLocation:(CLLocationCoordinate2D) longpressBV{
+    fromMap = YES;
+    longpressedBV = longpressBV;
+    NSLog(@"longpressedBV in BuildDetailView arrived!");
+    NSString *lat = [[NSString alloc] initWithFormat:@"%g", longpressedBV.latitude];
+    NSLog(@"Latitude second is: %@", lat);
+    NSString *lon = [[NSString alloc] initWithFormat:@"%g", longpressedBV.longitude];
+    NSLog(@"Longitude second is: %@", lon);
+}
+
+- (void)setGeoInformations:(double)placeLatitude:(double)placeLongitude {
+    
+    _returnLatitude = placeLatitude;
+    _returnLongitude = placeLongitude;
+    //NSLog([NSString stringWithFormat:@"%f", _returnLatitude]);
+    //NSLog([NSString stringWithFormat:@"%f", _returnLongitude]);
+    __block NSString *adr1, *adr2;
+    GMSGeocoder *geocoder = [GMSGeocoder geocoder];
+    [geocoder reverseGeocodeCoordinate:CLLocationCoordinate2DMake(placeLatitude, placeLongitude) completionHandler:^(GMSReverseGeocodeResponse *response, NSError *error) {
+        GMSReverseGeocodeResult *result = response.firstResult;
+        adr1 = result.addressLine1;
+        adr2 = result.addressLine2;
+        [self loadGeoInformations:adr1:adr2];
+    }];
+}
+
+- (void)loadGeoInformations:(NSString*)address1:(NSString*)address2{
+    
+    _address = [NSString stringWithFormat:@"%@\r%@", address1,address2];
+    //NSLog(_address);
+    UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Your location found:"
+                                                      message:[NSString stringWithFormat:@"%@", _address]
+                                                     delegate:nil
+                                            cancelButtonTitle:@"OK"
+                                            otherButtonTitles:nil];
+    [message show];
+}
+
+//- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+//    if (alertView.tag == 1){
+//        if (buttonIndex == [alertView cancelButtonIndex]){
+//            [self performSegueWithIdentifier:@"BuildDetailViewToDetailView" sender:self];
+//        }
+//    }
+//}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    if ([segue.identifier isEqualToString:@"BuildDetailViewToDetailView"]){
+        DetailView *editViewController = (DetailView *)segue.destinationViewController;
+        editViewController.segueTag = @"buildDetailView";
+    }
+}
+
+/*********************************************************************************
+ 
+ Init Location & Display
+ 
+ **********************************************************************************/
+
+- (void) initLocation{
     self.locationManager.delegate = self;
     self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
     
@@ -66,14 +455,9 @@ CLLocationCoordinate2D _longpressed;
     [self.locationManager startMonitoringSignificantLocationChanges];
     [self.locationManager startUpdatingLocation];
     
-    double latitude = _locationManager.location.coordinate.latitude;
-    double longitude = _locationManager.location.coordinate.longitude;
-    [self getGeoInformations:latitude :longitude];
-    
-    _longpressed.latitude = -1;
-    _longpressed.longitude = -1;
-    
-    
+}
+
+- (void) initDisplay{
     // NavBar
     UINavigationBar *navBar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 70)];
     navBar.backgroundColor = [UIColor grayColor];
@@ -85,14 +469,6 @@ CLLocationCoordinate2D _longpressed;
     navItem.rightBarButtonItem = saveButton;
     navBar.items = @[navItem];
     [[self view] addSubview: navBar];
-    
-    
-    //ImageView
-    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(85, 90, 150, 150)];
-    //self.imageView.image = _myImage;
-    [imageView setImage:_myImage];
-    [[self view] addSubview: imageView];
-    
     
     //Textfield
     textField = [[UITextField alloc] initWithFrame: CGRectMake(0, 265, self.view.frame.size.width, 40)];
@@ -277,268 +653,5 @@ CLLocationCoordinate2D _longpressed;
     NSArray *buttonArray = [[NSArray alloc] initWithObjects:buttonHotel,buttonFood,buttonCafe,buttonNightlife,buttonShopping,buttonActivity,buttonIcons,buttonCulture,buttonOther,nil];
 }
 
--(void)whichButtonIsClicked:(id)sender{
-    if (sender == buttonHotel) {
-        buttonHotel.layer.borderColor = [[UIColor colorWithRed:0/255.f green:186/255.f blue:130/255.f alpha:1.0f] CGColor];
-        locationCategory = @"hotel";
-        //buttonHotel.layer.borderColor=[UIColor blackColor].CGColor;
-        buttonFood.layer.borderColor=[UIColor blackColor].CGColor;
-        buttonCafe.layer.borderColor=[UIColor blackColor].CGColor;
-        buttonNightlife.layer.borderColor=[UIColor blackColor].CGColor;
-        buttonShopping.layer.borderColor=[UIColor blackColor].CGColor;
-        buttonActivity.layer.borderColor=[UIColor blackColor].CGColor;
-        buttonIcons.layer.borderColor=[UIColor blackColor].CGColor;
-        buttonCulture.layer.borderColor=[UIColor blackColor].CGColor;
-        buttonOther.layer.borderColor=[UIColor blackColor].CGColor;
-    }
-    
-    if (sender == buttonFood) {
-        buttonFood.layer.borderColor = [[UIColor colorWithRed:255/255.f green:0/255.f blue:0/255.f alpha:1.0f] CGColor];
-        locationCategory = @"food";
-        buttonHotel.layer.borderColor=[UIColor blackColor].CGColor;
-        //buttonFood.layer.borderColor=[UIColor blackColor].CGColor;
-        buttonCafe.layer.borderColor=[UIColor blackColor].CGColor;
-        buttonNightlife.layer.borderColor=[UIColor blackColor].CGColor;
-        buttonShopping.layer.borderColor=[UIColor blackColor].CGColor;
-        buttonActivity.layer.borderColor=[UIColor blackColor].CGColor;
-        buttonIcons.layer.borderColor=[UIColor blackColor].CGColor;
-        buttonCulture.layer.borderColor=[UIColor blackColor].CGColor;
-        buttonOther.layer.borderColor=[UIColor blackColor].CGColor;
-    }
-    
-    if (sender == buttonCafe) {
-        buttonCafe.layer.borderColor = [[UIColor colorWithRed:109/255.f green:95/255.f blue:213/255.f alpha:1.0f] CGColor];
-        locationCategory = @"cafe";
-        buttonHotel.layer.borderColor=[UIColor blackColor].CGColor;
-        buttonFood.layer.borderColor=[UIColor blackColor].CGColor;
-        //buttonCafe.layer.borderColor=[UIColor blackColor].CGColor;
-        buttonNightlife.layer.borderColor=[UIColor blackColor].CGColor;
-        buttonShopping.layer.borderColor=[UIColor blackColor].CGColor;
-        buttonActivity.layer.borderColor=[UIColor blackColor].CGColor;
-        buttonIcons.layer.borderColor=[UIColor blackColor].CGColor;
-        buttonCulture.layer.borderColor=[UIColor blackColor].CGColor;
-        buttonOther.layer.borderColor=[UIColor blackColor].CGColor;
-    }
-    
-    if (sender == buttonNightlife) {
-        buttonNightlife.layer.borderColor = [[UIColor colorWithRed:85/255.f green:85/255.f blue:85/255.f alpha:1.0f] CGColor];
-        locationCategory = @"nightlife";
-        buttonHotel.layer.borderColor=[UIColor blackColor].CGColor;
-        buttonFood.layer.borderColor=[UIColor blackColor].CGColor;
-        buttonCafe.layer.borderColor=[UIColor blackColor].CGColor;
-        //buttonNightlife.layer.borderColor=[UIColor blackColor].CGColor;
-        buttonShopping.layer.borderColor=[UIColor blackColor].CGColor;
-        buttonActivity.layer.borderColor=[UIColor blackColor].CGColor;
-        buttonIcons.layer.borderColor=[UIColor blackColor].CGColor;
-        buttonCulture.layer.borderColor=[UIColor blackColor].CGColor;
-        buttonOther.layer.borderColor=[UIColor blackColor].CGColor;
-    }
-    
-    if (sender == buttonShopping) {
-        buttonShopping.layer.borderColor = [[UIColor colorWithRed:95/255.f green:180/255.f blue:228/255.f alpha:1.0f] CGColor];
-        locationCategory = @"shopping";
-        buttonHotel.layer.borderColor=[UIColor blackColor].CGColor;
-        buttonFood.layer.borderColor=[UIColor blackColor].CGColor;
-        buttonCafe.layer.borderColor=[UIColor blackColor].CGColor;
-        buttonNightlife.layer.borderColor=[UIColor blackColor].CGColor;
-        //buttonShopping.layer.borderColor=[UIColor blackColor].CGColor;
-        buttonActivity.layer.borderColor=[UIColor blackColor].CGColor;
-        buttonIcons.layer.borderColor=[UIColor blackColor].CGColor;
-        buttonCulture.layer.borderColor=[UIColor blackColor].CGColor;
-        buttonOther.layer.borderColor=[UIColor blackColor].CGColor;
-    }
-    
-    if (sender == buttonActivity) {
-        buttonActivity.layer.borderColor = [[UIColor colorWithRed:236/255.f green:233/255.f blue:68/255.f alpha:1.0f] CGColor];
-        locationCategory = @"activity";
-        buttonHotel.layer.borderColor=[UIColor blackColor].CGColor;
-        buttonFood.layer.borderColor=[UIColor blackColor].CGColor;
-        buttonCafe.layer.borderColor=[UIColor blackColor].CGColor;
-        buttonNightlife.layer.borderColor=[UIColor blackColor].CGColor;
-        buttonShopping.layer.borderColor=[UIColor blackColor].CGColor;
-        //buttonActivity.layer.borderColor=[UIColor blackColor].CGColor;
-        buttonIcons.layer.borderColor=[UIColor blackColor].CGColor;
-        buttonCulture.layer.borderColor=[UIColor blackColor].CGColor;
-        buttonOther.layer.borderColor=[UIColor blackColor].CGColor;
-    }
-    
-    if (sender == buttonIcons) {
-        buttonIcons.layer.borderColor = [[UIColor colorWithRed:255/255.f green:130/255.f blue:0/255.f alpha:1.0f] CGColor];
-        locationCategory = @"icons";
-        buttonHotel.layer.borderColor=[UIColor blackColor].CGColor;
-        buttonFood.layer.borderColor=[UIColor blackColor].CGColor;
-        buttonCafe.layer.borderColor=[UIColor blackColor].CGColor;
-        buttonNightlife.layer.borderColor=[UIColor blackColor].CGColor;
-        buttonShopping.layer.borderColor=[UIColor blackColor].CGColor;
-        buttonActivity.layer.borderColor=[UIColor blackColor].CGColor;
-        //buttonIcons.layer.borderColor=[UIColor blackColor].CGColor;
-        buttonCulture.layer.borderColor=[UIColor blackColor].CGColor;
-        buttonOther.layer.borderColor=[UIColor blackColor].CGColor;
-    }
-    
-    if (sender == buttonCulture) {
-        buttonCulture.layer.borderColor = [[UIColor colorWithRed:244/255.f green:93/255.f blue:191/255.f alpha:1.0f] CGColor];
-        locationCategory = @"culture";
-        buttonHotel.layer.borderColor=[UIColor blackColor].CGColor;
-        buttonFood.layer.borderColor=[UIColor blackColor].CGColor;
-        buttonCafe.layer.borderColor=[UIColor blackColor].CGColor;
-        buttonNightlife.layer.borderColor=[UIColor blackColor].CGColor;
-        buttonShopping.layer.borderColor=[UIColor blackColor].CGColor;
-        buttonActivity.layer.borderColor=[UIColor blackColor].CGColor;
-        buttonIcons.layer.borderColor=[UIColor blackColor].CGColor;
-        //buttonCulture.layer.borderColor=[UIColor blackColor].CGColor;
-        buttonOther.layer.borderColor=[UIColor blackColor].CGColor;
-    }
-    
-    if (sender == buttonOther) {
-        buttonOther.layer.borderColor = [[UIColor colorWithRed:0/255.f green:0/255.f blue:0/255.f alpha:1.0f] CGColor];
-        locationCategory = @"other";
-        buttonHotel.layer.borderColor=[UIColor blackColor].CGColor;
-        buttonFood.layer.borderColor=[UIColor blackColor].CGColor;
-        buttonCafe.layer.borderColor=[UIColor blackColor].CGColor;
-        buttonNightlife.layer.borderColor=[UIColor blackColor].CGColor;
-        buttonShopping.layer.borderColor=[UIColor blackColor].CGColor;
-        buttonActivity.layer.borderColor=[UIColor blackColor].CGColor;
-        buttonIcons.layer.borderColor=[UIColor blackColor].CGColor;
-        buttonCulture.layer.borderColor=[UIColor blackColor].CGColor;
-        //buttonOther.layer.borderColor=[UIColor blackColor].CGColor;
-    }
-}
 
-- (BOOL)textFieldShouldReturn:(UITextField *)textField {
-    [textField resignFirstResponder];
-    return NO;
-}
-
--(void)saveLocation{
-    PFObject *object = [PFObject objectWithClassName:@"Place"];
-    
-    if ([locationCategory isEqualToString:@""]) {
-        UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Attention:"
-                                                          message:@"Please select a category for your location!"
-                                                         delegate:nil
-                                                cancelButtonTitle:@"OK"
-                                                otherButtonTitles:nil];
-        [message show];
-    }
-    
-    else if ([textField.text isEqualToString:@""]) {
-        UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Attention:"
-                                                          message:@"Please type in a name for your location!"
-                                                         delegate:nil
-                                                cancelButtonTitle:@"OK"
-                                                otherButtonTitles:nil];
-        [message show];
-    }
-    
-    
-    else {
-        
-        NSData *imageData = UIImageJPEGRepresentation(_myImage, 0.8);
-        NSString *filename = [NSString stringWithFormat:@"%@.png", textField.text];
-        PFFile *imageFile = [PFFile fileWithName:filename data:imageData];
-        [object setObject:imageFile forKey:@"imageFile"];
-        
-        // Show progress
-        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-        hud.mode = MBProgressHUDModeIndeterminate;
-        hud.labelText = @"Uploading";
-        [hud show:YES];
-        
-        [object setObject:textField.text forKey:@"name"];
-        PFGeoPoint *geoPoint;
-        
-        //--- prüft, ob eine Koordinate via longpressed übergeben wurde
-        //--- wenn keine übergeben wurde, wird die currentLocation verwendet
-        //--- wenn eine Koordinate via longpressed übergeben wurde, wird diese verwendet
-        if(_longpressed.longitude == -1 && _longpressed.latitude == -1){
-             geoPoint = [PFGeoPoint geoPointWithLatitude:_returnLatitude longitude:_returnLongitude];
-        }else{
-            geoPoint = [PFGeoPoint geoPointWithLatitude:_longpressed.latitude longitude:_longpressed.longitude];
-        }
-        [object setObject:locationCategory forKey:@"category"];
-        [object setObject:_address forKey:@"adress"];
-        [object setObject:geoPoint forKey:@"geoData"];
-        
-        [object saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-            [hud hide:YES];
-            
-            if (!error) {
-                // Show success message
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Upload Complete" message:@"Successfully saved the location" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-                alert.tag = 1;
-                [alert show];
-                
-                // Notify table view to reload the recipes from Parse cloud
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshTable" object:self];
-            
-                
-                // Dismiss the controller
-                //[self dismissViewControllerAnimated:YES completion:nil];
-            } else {
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Upload Failure" message:[error localizedDescription] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-                [alert show];
-            }
-        }];
-    }
-}
-
--(void)cancel{
-    [self performSegueWithIdentifier:@"BuildDetailViewUnwindToList" sender:self];
-}
-
-
-//--- Fehlerbehandlung, wenn die aktuelle Position nicht bestimmt werden kann
-- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error{
-    UIAlertView *errorAlert = [[UIAlertView alloc]initWithTitle:@"Location Services is disabled." message:@"Place my Memories needs access to your location. Please turn on Location Services in your device settings." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
-    [errorAlert show];
-    NSLog(@"Fehler: %@",error.description);
-}
-
-//--- nimmt die von OrtHinzufuegen übergebene Koordinate von der Map durch longPressAtCoordinate entgegen und weist sie _longpressed zu
-- (void)setPlaceLocation_:(CLLocationCoordinate2D) __longpress{
-    _longpressed = __longpress;
-    NSLog(@"_longpressed in BuildDetailView arrived!");
-}
-
-- (void)getGeoInformations:(double)placeLatitude:(double)placeLongitude {
-    _returnLatitude = placeLatitude;
-    _returnLongitude = placeLongitude;
-    //NSLog([NSString stringWithFormat:@"%f", _returnLatitude]);
-    //NSLog([NSString stringWithFormat:@"%f", _returnLongitude]);
-    __block NSString *adr1, *adr2;
-    GMSGeocoder *geocoder = [GMSGeocoder geocoder];
-    [geocoder reverseGeocodeCoordinate:CLLocationCoordinate2DMake(placeLatitude, placeLongitude) completionHandler:^(GMSReverseGeocodeResponse *response, NSError *error) {
-        GMSReverseGeocodeResult *result = response.firstResult;
-        adr1 = result.addressLine1;
-        adr2 = result.addressLine2;
-        [self loadGeoInformations:adr1:adr2];
-    }];
-}
-
-- (void)loadGeoInformations:(NSString*)address1:(NSString*)address2{
-    _address = [NSString stringWithFormat:@"%@\r%@", address1,address2];
-    //NSLog(_address);
-    UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Your location found:"
-                                                      message:[NSString stringWithFormat:@"%@", _address]
-                                                     delegate:nil
-                                            cancelButtonTitle:@"OK"
-                                            otherButtonTitles:nil];
-    [message show];
-}
-
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-    if (alertView.tag == 1){
-        if (buttonIndex == [alertView cancelButtonIndex]){
-            [self performSegueWithIdentifier:@"BuildDetailViewToDetailView" sender:self];
-        }
-    }
-}
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
-    if ([segue.identifier isEqualToString:@"BuildDetailViewToDetailView"]){
-        DetailView *editViewController = (DetailView *)segue.destinationViewController;
-        editViewController.segueTag = @"buildDetailView";
-    }
-}
 @end

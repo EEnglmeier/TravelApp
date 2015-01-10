@@ -234,7 +234,7 @@ PFGeoPoint *geoPoint;
 - (void)mapView:(GMSMapView *)mapView didLongPressAtCoordinate:(CLLocationCoordinate2D)coordinate{
     longpressCoordinate = coordinate;
     NSLog(@"You tapped at %f,%f", longpressCoordinate.latitude, longpressCoordinate.longitude);
-    [self performSegueWithIdentifier:@"MapViewToOrt" sender:self];
+    [self performSegueWithIdentifier:@"MapViewToBuildDetailView" sender:self];
 }
 
 
@@ -251,17 +251,17 @@ PFGeoPoint *geoPoint;
     [self fetchPlaces];
 }
 
-//- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
-//    if([segue.identifier isEqualToString:@"MapViewToOrt"]){
-//        OrtHinzuefugen *oh = segue.destinationViewController;
-//        NSString *lat = [[NSString alloc] initWithFormat:@"%g", longpressCoordinate.latitude];
-//        NSString *lon = [[NSString alloc] initWithFormat:@"%g", longpressCoordinate.longitude];
-//        NSLog(@"Latitude is: %@", lat);
-//        NSLog(@"Longitude is: %@", lon);
-//        //NSLog(@"%@",longpressCoordinate);
-//        [oh setPlaceLocation:longpressCoordinate];
-//    }
-//}
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    if([segue.identifier isEqualToString:@"MapViewToBuildDetailView"]){
+        BuildDetailView *bdv = segue.destinationViewController;
+        NSString *lat = [[NSString alloc] initWithFormat:@"%g", longpressCoordinate.latitude];
+        NSString *lon = [[NSString alloc] initWithFormat:@"%g", longpressCoordinate.longitude];
+        NSLog(@"Latitude is: %@", lat);
+        NSLog(@"Longitude is: %@", lon);
+        //NSLog(@"%@",longpressCoordinate);
+        [bdv setPlaceLocation:longpressCoordinate];
+    }
+}
 
 
 - (IBAction)touchDown:(id)sender {

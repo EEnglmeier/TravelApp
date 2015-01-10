@@ -21,6 +21,7 @@ float buttonBorderwidth1 = 1.7f;
 NSString  *geoName;
 UIImageView *imageView;
 PFFile *imageFile;
+NSString *objectIDFromMapView;
 NSString *objectIDFromTableView;
 
 
@@ -232,6 +233,7 @@ NSString *objectIDFromTableView;
         adress = [object objectForKey:@"adress"];
         imageFile = object[@"imageFile"];
     }
+    
 }
 
 

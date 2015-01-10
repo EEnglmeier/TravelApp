@@ -12,7 +12,7 @@
 
 @interface BuildDetailView: UIViewController <UITextFieldDelegate,UINavigationControllerDelegate,UITabBarControllerDelegate,CLLocationManagerDelegate,UIAlertViewDelegate>{
     NSString *_textfieldString;
-    
+    UIImage *takenImage;
 }
 @property (nonatomic, retain) UIImageView *imageView;
 @property (nonatomic, strong) UIImage *myImage;
@@ -21,6 +21,6 @@
 @property (nonatomic) CLLocationCoordinate2D *longpressCoordinate;
 
 
-- (void)setPlaceLocation_:(CLLocationCoordinate2D) __longpress;
+- (void)setPlaceLocation:(CLLocationCoordinate2D) longpressBV;
 
 @end

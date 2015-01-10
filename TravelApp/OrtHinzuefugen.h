@@ -17,7 +17,7 @@
 //@property (strong, nonatomic) IBOutlet UIImageView *imageView;
 //@property (nonatomic, strong) UIImage *takenImage;
 
-- (void)setPlaceLocation:(CLLocationCoordinate2D) _longpress;
+//- (void)setPlaceLocation:(CLLocationCoordinate2D) longpress;
 - (void)takePhoto;
 
 
