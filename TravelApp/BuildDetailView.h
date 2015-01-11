@@ -20,7 +20,6 @@
 @property (nonatomic, strong) NSString *geoPlace;
 @property (nonatomic) CLLocationCoordinate2D *longpressCoordinate;
 
-
 - (void)setPlaceLocation:(CLLocationCoordinate2D) longpressBV;
 
 @end

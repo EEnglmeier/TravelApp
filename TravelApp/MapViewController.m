@@ -246,10 +246,6 @@ PFGeoPoint *geoPoint;
     //NSLog(@"YES");
 }
 
-- (IBAction)unwindToMapView:(UIStoryboardSegue *)unwindSegue{
-    NSLog(@"%@",unwindSegue.sourceViewController);
-    [self fetchPlaces];
-}
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     if([segue.identifier isEqualToString:@"MapViewToBuildDetailView"]){
@@ -269,13 +265,10 @@ PFGeoPoint *geoPoint;
     }
 }
 
-
 - (IBAction)touchDown:(id)sender {
     GMSCameraUpdate *cu = [GMSCameraUpdate setTarget:self.locationManager.location.coordinate zoom:16];
     [mapView_ animateWithCameraUpdate:cu];
     //    NSLog(@"touchedLocation %@", self.locationManager.location);
     //    NSLog(@"touchedLocation %@", mapView_.camera);
 }
-
-
 @end

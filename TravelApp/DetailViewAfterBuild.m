@@ -1,22 +1,19 @@
 //
-//  DetailView.m
+//  DetailViewAfterBuild.m
 //  TravelApp
 //
-//  Created by Zenib Awan on 15.12.14.
-//  Copyright (c) 2014 Eli. All rights reserved.
+//  Created by Katrin Schauer on 11.01.15.
+//  Copyright (c) 2015 Eli. All rights reserved.
 //
 
-#import "DetailView.h"
-#import <UIKit/UIKit.h>
-#import <Parse/Parse.h>
-#import <QuartzCore/QuartzCore.h>
-#import "MapViewController.h"
+#import "DetailViewAfterBuild.h"
 
-@interface DetailView ()
+@interface DetailViewAfterBuild ()
+
 
 @end
 
-@implementation DetailView
+@implementation DetailViewAfterBuild
 @synthesize objectID, segueTag, name, category, adress, imageFile;
 int buttonsize1 = 60;
 int aPlaceLabelY = 445;
@@ -32,7 +29,7 @@ NSString *objectIDFromTableView;
     [super viewWillAppear:animated];
     NSLog(@"detail");
     [self whichObjectToShow];
-
+    
     
     [[UIApplication sharedApplication] setStatusBarHidden:YES];
     [super viewDidLoad];
@@ -63,11 +60,6 @@ NSString *objectIDFromTableView;
     locationLabel.layer.borderColor = [UIColor grayColor].CGColor;
     locationLabel.layer.borderWidth = 1.0;
     [self.view addSubview:locationLabel];
-    
-    /*UILabel *locGeoName = [[UILabel alloc] initWithFrame:CGRectMake(20, 320, 280, 40)];
-     locGeoName.text = geoName;
-     locGeoName.font = [UIFont systemFontOfSize:13];
-     [self.view addSubview:locGeoName];*/
     
     UILabel *locAdress = [[UILabel alloc] initWithFrame:CGRectMake(20, 325, 280, 40)];
     locAdress.text = adress;
@@ -236,6 +228,4 @@ NSString *objectIDFromTableView;
     }
     
 }
-
-
 @end

@@ -101,7 +101,6 @@ NSString *string;
 
 -(void)goToDetailView{
     [self performSegueWithIdentifier:@"ListeToDetailView" sender:self];
-    
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{

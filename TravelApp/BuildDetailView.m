@@ -164,7 +164,7 @@ UIImagePickerController *pic;
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)pic {
     [pic dismissViewControllerAnimated:YES completion:^{
         [self resetView];
-        [self performSegueWithIdentifier:@"BuildDetailViewToMapView" sender:self];
+        [self unwindToMap:@"BuildDetailViewToMap"];
     }];
 }
 
@@ -174,7 +174,11 @@ UIImagePickerController *pic;
     [pic dismissViewControllerAnimated:NO completion:^{ [self updateView]; }];
     //    [self performSegueWithIdentifier:@"OrtToBuildDetail" sender:self];
 }
-     
+
+- (IBAction)unwindToMap:(UIStoryboardSegue *)unwindSegue{
+    self.tabBarController.selectedIndex = 0;
+}
+
 /*********************************************************************************
      
      Button Interaction
@@ -364,7 +368,7 @@ UIImagePickerController *pic;
 
                 // Reset Flags
                 [self resetView];
-                [self performSegueWithIdentifier:@"BuildDetailViewToDetailView" sender:self];
+                [self performSegueWithIdentifier:@"BuildDetailViewToDetailViewAfterBuild" sender:self];
                 // Notify table view to reload the recipes from Parse cloud
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshTable" object:self];
             
@@ -380,7 +384,9 @@ UIImagePickerController *pic;
 }
 
 -(void)cancel{
-    [self performSegueWithIdentifier:@"BuildDetailViewUnwindToList" sender:self];
+    [self resetView];
+    NSLog(@"Cancel Button is clicked");
+    [self unwindToMap:@"BuildDetailViewToMap"];
 }
 
 
@@ -417,8 +423,9 @@ UIImagePickerController *pic;
     _address = [NSString stringWithFormat:@"%@\r%@", address1,address2];
 }
 
+
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
-    if ([segue.identifier isEqualToString:@"BuildDetailViewToDetailView"]){
+    if ([segue.identifier isEqualToString:@"BuildDetailViewToDetailViewAfterBuild"]){
         DetailView *editViewController = (DetailView *)segue.destinationViewController;
         editViewController.segueTag = @"buildDetailView";
     }

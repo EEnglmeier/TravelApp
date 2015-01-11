@@ -46,7 +46,6 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3fT-dy-kMz" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <exit id="LrF-0E-H2L" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="-1300" y="1320"/>
         </scene>
@@ -65,7 +64,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="9sW-eY-0mo"/>
                     <connections>
-                        <segue destination="fEl-nF-RPu" kind="show" identifier="ListeToDetailView" id="yfe-L4-Rfo"/>
+                        <segue destination="fEl-nF-RPu" kind="showDetail" identifier="ListeToDetailView" id="yfe-L4-Rfo"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Nw-L8-lE0" sceneMemberID="firstResponder"/>
@@ -166,7 +165,7 @@
         <!--Build Detail View-->
         <scene sceneID="ojf-ET-dhH">
             <objects>
-                <viewController id="RPn-uX-DOW" customClass="BuildDetailView" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="BuildDetailView" id="RPn-uX-DOW" customClass="BuildDetailView" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="7Js-Ll-jyT"/>
                         <viewControllerLayoutGuide type="bottom" id="pcF-a3-uoB"/>
@@ -178,14 +177,32 @@
                     </view>
                     <navigationItem key="navigationItem" id="s9F-og-o92"/>
                     <connections>
-                        <segue destination="fEl-nF-RPu" kind="showDetail" identifier="BuildDetailViewToDetailView" id="nfK-3l-fAm"/>
                         <segue destination="5US-DV-kPT" kind="unwind" identifier="BuildDetailViewUnwindToList" unwindAction="unwindFromTableView:" id="R6I-oO-37E"/>
-                        <segue destination="apW-1d-oPw" kind="showDetail" identifier="BuildDetailViewToMapView" id="vJ0-0D-9NF"/>
+                        <segue destination="SCg-kB-NT9" kind="showDetail" identifier="BuildDetailViewToDetailViewAfterBuil" id="tn6-TL-CYe"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RGi-dH-pOF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="503" y="2372"/>
+            <point key="canvasLocation" x="-17" y="2180"/>
+        </scene>
+        <!--Detail View After Build-->
+        <scene sceneID="m6A-gS-bWc">
+            <objects>
+                <viewController id="SCg-kB-NT9" customClass="DetailViewAfterBuild" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Xqa-P7-j8R"/>
+                        <viewControllerLayoutGuide type="bottom" id="Ijs-cX-3ja"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="y9y-Me-MOy">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="rab-90-QK4"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Y5W-I9-vIv" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-687" y="3146"/>
         </scene>
         <!--Detail View-->
         <scene sceneID="e0X-FO-tMQ">
@@ -201,16 +218,13 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <connections>
-                        <segue destination="LrF-0E-H2L" kind="unwind" identifier="DetailViewUnwindToList" unwindAction="unwindFromTableView:" id="neL-RZ-jOd"/>
-                        <segue destination="daq-b4-8Xy" kind="unwind" identifier="DetailViewUnwindToMapView" unwindAction="unwindToMapView:" id="oxs-wl-z0q"/>
                         <segue destination="b80-Mu-wbw" kind="show" identifier="DetailViewToList" id="m3p-47-oeJ"/>
-                        <segue destination="apW-1d-oPw" kind="show" identifier="DetailViewToMapView" id="UvF-TF-7eh"/>
+                        <segue destination="27c-jk-6k3" kind="show" identifier="DetailViewToMapView" id="T8E-Sw-Irp"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oUb-lO-D49" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <exit id="daq-b4-8Xy" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="-1300" y="2196"/>
+            <point key="canvasLocation" x="-840" y="2364"/>
         </scene>
         <!--Add new Place-->
         <scene sceneID="xMW-GA-nqP">
@@ -243,7 +257,7 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="8rJ-Kc-sve" kind="relationship" relationship="rootViewController" id="qMi-dj-pjc"/>
+                        <segue destination="SCg-kB-NT9" kind="relationship" relationship="rootViewController" id="JVe-gQ-M4Q"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Hb-ht-udD" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -258,10 +272,11 @@
         <image name="Route" width="25" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="m3p-47-oeJ"/>
-        <segue reference="nfK-3l-fAm"/>
-        <segue reference="rIm-7i-4wB"/>
-        <segue reference="UvF-TF-7eh"/>
         <segue reference="miQ-FJ-Nbk"/>
+        <segue reference="T8E-Sw-Irp"/>
+        <segue reference="kow-mJ-7qC"/>
+        <segue reference="m3p-47-oeJ"/>
+        <segue reference="rIm-7i-4wB"/>
+        <segue reference="tn6-TL-CYe"/>
     </inferredMetricsTieBreakers>
 </document>
