@@ -33,9 +33,9 @@
 		45C91DBF1A337F36000C2D4B /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45C91DBE1A337F36000C2D4B /* OpenGLES.framework */; };
 		45C91DC11A337F3B000C2D4B /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45C91DC01A337F3B000C2D4B /* QuartzCore.framework */; };
 		45C91DC31A337F43000C2D4B /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45C91DC21A337F43000C2D4B /* SystemConfiguration.framework */; };
+		8431CEDE1A630CCB000DB88B /* bundle1.o in Frameworks */ = {isa = PBXBuildFile; fileRef = 8431CEDD1A630CCB000DB88B /* bundle1.o */; };
 		84429C551A5ECEA700006323 /* InfoWindowCurrentLoc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84429C541A5ECEA700006323 /* InfoWindowCurrentLoc.xib */; };
 		8480A0371A3F10D2006C9BB1 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8480A0361A3F10D2006C9BB1 /* MapViewController.m */; };
-		84E198751A6306C30082ED13 /* DetailViewAfterBuild.m in Sources */ = {isa = PBXBuildFile; fileRef = 84E198741A6306C30082ED13 /* DetailViewAfterBuild.m */; };
 		84F240201A5DB10600DB2BBC /* InfoWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84F2401F1A5DB10600DB2BBC /* InfoWindow.xib */; };
 		84F240231A5DB1BD00DB2BBC /* CustomInfoWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 84F240221A5DB1BD00DB2BBC /* CustomInfoWindow.m */; };
 		84FBDD071A485D2900CC3DC4 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84FBDD061A485D2900CC3DC4 /* Images.xcassets */; };
@@ -255,11 +255,10 @@
 		45C91DC01A337F3B000C2D4B /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		45C91DC21A337F43000C2D4B /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		45C91DC41A338101000C2D4B /* TravelApp-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TravelApp-Bridging-Header.h"; sourceTree = "<group>"; };
+		8431CEDD1A630CCB000DB88B /* bundle1.o */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.objfile"; path = bundle1.o; sourceTree = "<group>"; };
 		84429C541A5ECEA700006323 /* InfoWindowCurrentLoc.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InfoWindowCurrentLoc.xib; sourceTree = "<group>"; };
 		8480A0351A3F10D2006C9BB1 /* MapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
 		8480A0361A3F10D2006C9BB1 /* MapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapViewController.m; sourceTree = "<group>"; };
-		84E198731A6306C30082ED13 /* DetailViewAfterBuild.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailViewAfterBuild.h; sourceTree = "<group>"; };
-		84E198741A6306C30082ED13 /* DetailViewAfterBuild.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailViewAfterBuild.m; sourceTree = "<group>"; };
 		84F2401F1A5DB10600DB2BBC /* InfoWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InfoWindow.xib; sourceTree = "<group>"; };
 		84F240211A5DB1BD00DB2BBC /* CustomInfoWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomInfoWindow.h; sourceTree = "<group>"; };
 		84F240221A5DB1BD00DB2BBC /* CustomInfoWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomInfoWindow.m; sourceTree = "<group>"; };
@@ -603,6 +602,7 @@
 				B95390281A50217B0017E98D /* JavaScriptCore.framework in Frameworks */,
 				B9538FD01A50217A0017E98D /* libAWDSupport.dylib in Frameworks */,
 				45C91DAF1A337EE3000C2D4B /* CoreData.framework in Frameworks */,
+				8431CEDE1A630CCB000DB88B /* bundle1.o in Frameworks */,
 				B95390351A50217B0017E98D /* OpenAL.framework in Frameworks */,
 				B953901A1A50217B0017E98D /* libxslt.dylib in Frameworks */,
 				B953901C1A50217B0017E98D /* libz.1.2.5.dylib in Frameworks */,
@@ -674,8 +674,6 @@
 				B9E5B1751A54959D00074C0C /* MBProgressHUD.m */,
 				B9E5B1771A5495EF00074C0C /* DetailView.h */,
 				B9E5B1781A5495EF00074C0C /* DetailView.m */,
-				84E198731A6306C30082ED13 /* DetailViewAfterBuild.h */,
-				84E198741A6306C30082ED13 /* DetailViewAfterBuild.m */,
 				B9723D631A617A76008A2C80 /* PlacesTableView.h */,
 				B9723D641A617A77008A2C80 /* PlacesTableView.m */,
 				B95390651A5027790017E98D /* ShowPicture.h */,
@@ -735,6 +733,7 @@
 				B9538F061A5021770017E98D /* libAppPatch.dylib */,
 				B9538F071A5021770017E98D /* libarchive.2.dylib */,
 				B9538F081A5021770017E98D /* libarchive.dylib */,
+				8431CEDD1A630CCB000DB88B /* bundle1.o */,
 				B9538F091A5021770017E98D /* libassertion_extension.dylib */,
 				B9538F0A1A5021770017E98D /* libassertion_launchd.dylib */,
 				B9538F0B1A5021770017E98D /* libAWDProtobuf.dylib */,
@@ -1035,7 +1034,6 @@
 				45C58F601A497782000BB6EB /* Marker.swift in Sources */,
 				B9E5B1731A5494D700074C0C /* BuildDetailView.m in Sources */,
 				B9723D651A617A77008A2C80 /* PlacesTableView.m in Sources */,
-				84E198751A6306C30082ED13 /* DetailViewAfterBuild.m in Sources */,
 				45C58F651A497782000BB6EB /* RouteOverview.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1163,6 +1161,7 @@
 				);
 				INFOPLIST_FILE = TravelApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MACH_O_TYPE = mh_execute;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "TravelApp/TravelApp-Bridging-Header.h";
@@ -1184,6 +1183,7 @@
 				);
 				INFOPLIST_FILE = TravelApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MACH_O_TYPE = mh_execute;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "TravelApp/TravelApp-Bridging-Header.h";

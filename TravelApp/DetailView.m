@@ -63,11 +63,7 @@ NSString *objectIDFromTableView;
     locationLabel.layer.borderColor = [UIColor grayColor].CGColor;
     locationLabel.layer.borderWidth = 1.0;
     [self.view addSubview:locationLabel];
-    
-    /*UILabel *locGeoName = [[UILabel alloc] initWithFrame:CGRectMake(20, 320, 280, 40)];
-     locGeoName.text = geoName;
-     locGeoName.font = [UIFont systemFontOfSize:13];
-     [self.view addSubview:locGeoName];*/
+
     
     UILabel *locAdress = [[UILabel alloc] initWithFrame:CGRectMake(20, 325, 280, 40)];
     locAdress.text = adress;
@@ -215,6 +211,16 @@ NSString *objectIDFromTableView;
 
 -(void) whichObjectToShow{
     
+    if ([segueTag isEqualToString:@"buildDetailView"]) {
+        PFQuery *query = [PFQuery queryWithClassName:@"Place"];
+        [query whereKey:@"objectId" equalTo:self.objectID];
+        PFObject *object = [query getFirstObject];
+        name = [object objectForKey:@"name"];
+        category = [object objectForKey:@"category"];
+        adress = [object objectForKey:@"adress"];
+        imageFile = object[@"imageFile"];
+    }
+    
     if ([segueTag isEqualToString:@"clickedObject"]) {
         NSLog(@"tableView");
         PFQuery *query = [PFQuery queryWithClassName:@"Place"];
@@ -234,8 +240,5 @@ NSString *objectIDFromTableView;
         adress = [object objectForKey:@"adress"];
         imageFile = object[@"imageFile"];
     }
-    
 }
-
-
 @end

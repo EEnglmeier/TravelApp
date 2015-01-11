@@ -368,7 +368,7 @@ UIImagePickerController *pic;
 
                 // Reset Flags
                 [self resetView];
-                [self performSegueWithIdentifier:@"BuildDetailViewToDetailViewAfterBuild" sender:self];
+                [self performSegueWithIdentifier:@"BuildDetailViewToDetailView" sender:self];
                 // Notify table view to reload the recipes from Parse cloud
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshTable" object:self];
             
@@ -386,7 +386,7 @@ UIImagePickerController *pic;
 -(void)cancel{
     [self resetView];
     NSLog(@"Cancel Button is clicked");
-    [self unwindToMap:@"BuildDetailViewToMap"];
+    //[self unwindToMap:@"BuildDetailViewToMap"];
 }
 
 
@@ -425,7 +425,7 @@ UIImagePickerController *pic;
 
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
-    if ([segue.identifier isEqualToString:@"BuildDetailViewToDetailViewAfterBuild"]){
+    if ([segue.identifier isEqualToString:@"BuildDetailViewToDetailView"]){
         DetailView *editViewController = (DetailView *)segue.destinationViewController;
         editViewController.segueTag = @"buildDetailView";
     }
@@ -645,7 +645,6 @@ UIImagePickerController *pic;
     labelOther.font = [UIFont systemFontOfSize:12];
     [self.view addSubview:labelOther];
     
-    NSArray *buttonArray = [[NSArray alloc] initWithObjects:buttonHotel,buttonFood,buttonCafe,buttonNightlife,buttonShopping,buttonActivity,buttonIcons,buttonCulture,buttonOther,nil];
 }
 
 
