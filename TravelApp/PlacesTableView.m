@@ -19,7 +19,7 @@ NSString *string;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    theTableView = [[UITableView alloc] initWithFrame:CGRectMake(10, 80, 300, 400) style:UITableViewStylePlain];
+    theTableView = [[UITableView alloc] initWithFrame:CGRectMake(10, 80, 300, self.view.frame.size.height) style:UITableViewStylePlain];
     theTableView.delegate = self;
     theTableView.dataSource = self;
     [theTableView reloadData];
