@@ -17,7 +17,7 @@
 @property (nonatomic, retain) UITableView *theTableView;
 @property (nonatomic, strong) NSArray *arrayName;
 @property (nonatomic, strong) NSArray *arrayAdress;
-@property (nonatomic, strong) NSArray *arrayImage;
+@property (nonatomic, strong) NSArray *arrayCategory;
 @property (nonatomic, strong) NSString *clickedObjectID;
 
 @end

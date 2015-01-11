@@ -13,7 +13,7 @@
 
 
 @implementation PlacesTableView
-@synthesize theArray, theTableView, arrayName, arrayAdress, arrayImage, clickedObjectID;
+@synthesize theArray, theTableView, arrayName, arrayAdress, arrayCategory, clickedObjectID;
 NSString *string;
 
 - (void)viewDidLoad
@@ -64,7 +64,42 @@ NSString *string;
     
     cell.textLabel.text = [arrayName objectAtIndex:indexPath.row];
     cell.detailTextLabel.text = [arrayAdress objectAtIndex:indexPath.row];
-    //cell.imageView.file = [arrayImage objectAtIndex:indexPath.row];
+    if([[arrayCategory objectAtIndex:indexPath.row] isEqual: @"shopping"]){
+        cell.imageView.image = [UIImage imageNamed:@"pin_shopping"];
+        //cell.imageView.frame = CGRectMake(0, 0, 10, 10);
+    }
+    
+    if([[arrayCategory objectAtIndex:indexPath.row] isEqual: @"food"]){
+        cell.imageView.image = [UIImage imageNamed:@"pin_food"];
+    }
+    
+    if([[arrayCategory objectAtIndex:indexPath.row] isEqual: @"nightlife"]){
+        cell.imageView.image = [UIImage imageNamed:@"pin_nightlife"];
+    }
+    
+    if([[arrayCategory objectAtIndex:indexPath.row] isEqual: @"cafe"]){
+        cell.imageView.image = [UIImage imageNamed:@"pin_cafe"];
+    }
+    
+    if([[arrayCategory objectAtIndex:indexPath.row] isEqual: @"activity"]){
+        cell.imageView.image = [UIImage imageNamed:@"pin_activity"];
+    }
+    
+    if([[arrayCategory objectAtIndex:indexPath.row] isEqual: @"culture"]){
+        cell.imageView.image = [UIImage imageNamed:@"pin_culture"];
+    }
+    
+    if([[arrayCategory objectAtIndex:indexPath.row] isEqual: @"hotel"]){
+        cell.imageView.image = [UIImage imageNamed:@"pin_hotel"];
+    }
+    
+    if([[arrayCategory objectAtIndex:indexPath.row] isEqual: @"icons"]){
+        cell.imageView.image = [UIImage imageNamed:@"pin_icons"];
+    }
+    
+    if([[arrayCategory objectAtIndex:indexPath.row] isEqual: @"other"]){
+        cell.imageView.image = [UIImage imageNamed:@"pin_other"];
+    }
     return cell;
 }
 
@@ -79,7 +114,7 @@ NSString *string;
 - (void) gettingAllSearchResults{
     NSMutableArray *places = [[NSMutableArray alloc]init];
     NSMutableArray *address = [[NSMutableArray alloc]init];
-    NSMutableArray *images = [[NSMutableArray alloc]init];
+    NSMutableArray *categories = [[NSMutableArray alloc]init];
     
     PFQuery *event_query = [PFQuery queryWithClassName:@"Place"];
     [event_query orderByDescending:@"updatedAt"];
@@ -89,11 +124,11 @@ NSString *string;
             for (PFObject *object in objects) {
                 [places addObject:[object objectForKey:@"name"]];
                 [address addObject:[object objectForKey:@"adress"]];
-                [images addObject:[object objectForKey:@"imageFile"]];
+                [categories addObject:[object objectForKey:@"category"]];
             }
             arrayName = places;
             arrayAdress = address;
-            arrayImage = images;
+            arrayCategory = categories;
             [theTableView reloadData];
         }
     }];
