@@ -438,8 +438,8 @@
 		B9723D641A617A77008A2C80 /* PlacesTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlacesTableView.m; sourceTree = "<group>"; };
 		B9E5B1711A5494D700074C0C /* BuildDetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BuildDetailView.h; sourceTree = "<group>"; };
 		B9E5B1721A5494D700074C0C /* BuildDetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BuildDetailView.m; sourceTree = "<group>"; };
-		B9E5B1741A54959D00074C0C /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
-		B9E5B1751A54959D00074C0C /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
+		B9E5B1741A54959D00074C0C /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MBProgressHUD.h; path = TravelApp/MBProgressHUD.h; sourceTree = "<group>"; };
+		B9E5B1751A54959D00074C0C /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MBProgressHUD.m; path = TravelApp/MBProgressHUD.m; sourceTree = "<group>"; };
 		B9E5B1771A5495EF00074C0C /* DetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailView.h; sourceTree = "<group>"; };
 		B9E5B1781A5495EF00074C0C /* DetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -670,8 +670,6 @@
 			children = (
 				B9E5B1711A5494D700074C0C /* BuildDetailView.h */,
 				B9E5B1721A5494D700074C0C /* BuildDetailView.m */,
-				B9E5B1741A54959D00074C0C /* MBProgressHUD.h */,
-				B9E5B1751A54959D00074C0C /* MBProgressHUD.m */,
 				B9E5B1771A5495EF00074C0C /* DetailView.h */,
 				B9E5B1781A5495EF00074C0C /* DetailView.m */,
 				B9723D631A617A76008A2C80 /* PlacesTableView.h */,
@@ -728,6 +726,8 @@
 		8440FB601A3C874400D17C2B /* Framework */ = {
 			isa = PBXGroup;
 			children = (
+				B9E5B1741A54959D00074C0C /* MBProgressHUD.h */,
+				B9E5B1751A54959D00074C0C /* MBProgressHUD.m */,
 				45977AAE1A506D4F00242E07 /* Bolts.framework */,
 				B95F73991A505C66007E2F19 /* Parse.framework */,
 				B9538F061A5021770017E98D /* libAppPatch.dylib */,
