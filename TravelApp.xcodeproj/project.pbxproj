@@ -35,6 +35,7 @@
 		45C91DC31A337F43000C2D4B /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45C91DC21A337F43000C2D4B /* SystemConfiguration.framework */; };
 		84429C551A5ECEA700006323 /* InfoWindowCurrentLoc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84429C541A5ECEA700006323 /* InfoWindowCurrentLoc.xib */; };
 		8480A0371A3F10D2006C9BB1 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8480A0361A3F10D2006C9BB1 /* MapViewController.m */; };
+		84E198751A6306C30082ED13 /* DetailViewAfterBuild.m in Sources */ = {isa = PBXBuildFile; fileRef = 84E198741A6306C30082ED13 /* DetailViewAfterBuild.m */; };
 		84F240201A5DB10600DB2BBC /* InfoWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84F2401F1A5DB10600DB2BBC /* InfoWindow.xib */; };
 		84F240231A5DB1BD00DB2BBC /* CustomInfoWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 84F240221A5DB1BD00DB2BBC /* CustomInfoWindow.m */; };
 		84FBDD071A485D2900CC3DC4 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84FBDD061A485D2900CC3DC4 /* Images.xcassets */; };
@@ -187,7 +188,6 @@
 		B95390431A50217B0017E98D /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9538F981A5021790017E98D /* VideoToolbox.framework */; };
 		B95390441A50217B0017E98D /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9538F991A5021790017E98D /* WebKit.framework */; };
 		B95390451A50217C0017E98D /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9538F9A1A5021790017E98D /* AVKit.framework */; };
-		B95390461A50217C0017E98D /* bundle1.o in Frameworks */ = {isa = PBXBuildFile; fileRef = B9538F9B1A5021790017E98D /* bundle1.o */; };
 		B95390471A50217C0017E98D /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9538F9C1A5021790017E98D /* CFNetwork.framework */; };
 		B95390481A50217C0017E98D /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9538F9D1A5021790017E98D /* CloudKit.framework */; };
 		B95390491A50217C0017E98D /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9538F9E1A5021790017E98D /* CoreAudio.framework */; };
@@ -258,6 +258,8 @@
 		84429C541A5ECEA700006323 /* InfoWindowCurrentLoc.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InfoWindowCurrentLoc.xib; sourceTree = "<group>"; };
 		8480A0351A3F10D2006C9BB1 /* MapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
 		8480A0361A3F10D2006C9BB1 /* MapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapViewController.m; sourceTree = "<group>"; };
+		84E198731A6306C30082ED13 /* DetailViewAfterBuild.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailViewAfterBuild.h; sourceTree = "<group>"; };
+		84E198741A6306C30082ED13 /* DetailViewAfterBuild.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailViewAfterBuild.m; sourceTree = "<group>"; };
 		84F2401F1A5DB10600DB2BBC /* InfoWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InfoWindow.xib; sourceTree = "<group>"; };
 		84F240211A5DB1BD00DB2BBC /* CustomInfoWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomInfoWindow.h; sourceTree = "<group>"; };
 		84F240221A5DB1BD00DB2BBC /* CustomInfoWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomInfoWindow.m; sourceTree = "<group>"; };
@@ -411,7 +413,6 @@
 		B9538F981A5021790017E98D /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = System/Library/Frameworks/VideoToolbox.framework; sourceTree = SDKROOT; };
 		B9538F991A5021790017E98D /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		B9538F9A1A5021790017E98D /* AVKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVKit.framework; path = System/Library/Frameworks/AVKit.framework; sourceTree = SDKROOT; };
-		B9538F9B1A5021790017E98D /* bundle1.o */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.objfile"; name = bundle1.o; path = usr/lib/bundle1.o; sourceTree = SDKROOT; };
 		B9538F9C1A5021790017E98D /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		B9538F9D1A5021790017E98D /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		B9538F9E1A5021790017E98D /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
@@ -531,7 +532,6 @@
 				B9538FFD1A50217B0017E98D /* libMobileGestalt.dylib in Frameworks */,
 				B95390251A50217B0017E98D /* HealthKit.framework in Frameworks */,
 				B953904A1A50217C0017E98D /* CoreBluetooth.framework in Frameworks */,
-				B95390461A50217C0017E98D /* bundle1.o in Frameworks */,
 				B9538FF01A50217A0017E98D /* libheimdal-asn1.dylib in Frameworks */,
 				B9538FED1A50217A0017E98D /* libform.dylib in Frameworks */,
 				B95390221A50217B0017E98D /* GameController.framework in Frameworks */,
@@ -674,6 +674,8 @@
 				B9E5B1751A54959D00074C0C /* MBProgressHUD.m */,
 				B9E5B1771A5495EF00074C0C /* DetailView.h */,
 				B9E5B1781A5495EF00074C0C /* DetailView.m */,
+				84E198731A6306C30082ED13 /* DetailViewAfterBuild.h */,
+				84E198741A6306C30082ED13 /* DetailViewAfterBuild.m */,
 				B9723D631A617A76008A2C80 /* PlacesTableView.h */,
 				B9723D641A617A77008A2C80 /* PlacesTableView.m */,
 				B95390651A5027790017E98D /* ShowPicture.h */,
@@ -879,7 +881,6 @@
 				B9538F981A5021790017E98D /* VideoToolbox.framework */,
 				B9538F991A5021790017E98D /* WebKit.framework */,
 				B9538F9A1A5021790017E98D /* AVKit.framework */,
-				B9538F9B1A5021790017E98D /* bundle1.o */,
 				B9538F9C1A5021790017E98D /* CFNetwork.framework */,
 				B9538F9D1A5021790017E98D /* CloudKit.framework */,
 				B9538F9E1A5021790017E98D /* CoreAudio.framework */,
@@ -1034,6 +1035,7 @@
 				45C58F601A497782000BB6EB /* Marker.swift in Sources */,
 				B9E5B1731A5494D700074C0C /* BuildDetailView.m in Sources */,
 				B9723D651A617A77008A2C80 /* PlacesTableView.m in Sources */,
+				84E198751A6306C30082ED13 /* DetailViewAfterBuild.m in Sources */,
 				45C58F651A497782000BB6EB /* RouteOverview.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
