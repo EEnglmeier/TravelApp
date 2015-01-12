@@ -8,7 +8,7 @@
 
 import UIKit
 
-/*class RouteMapView : UIViewController{
+class RouteMapView : UIViewController,GMSMapViewDelegate{
     
     var passedData : [Marker]!
     var routeName : String!
@@ -18,6 +18,7 @@ import UIKit
     var mapView = GMSMapView()
     var longPath = GMSMutablePath()
     var camera = GMSCameraPosition()
+    let maxRouteDist = 75000.0
     
     override func viewDidLoad() {
         passedData = sortPlacesByMinDist(passedData)
@@ -31,24 +32,20 @@ import UIKit
         backButton.frame = CGRectMake(0,20,150,50)
         backButton.setTitle("Back to Overview", forState: UIControlState.Normal)
         backButton.addTarget(self, action: "backAction:", forControlEvents: UIControlEvents.TouchUpInside)
-        /*
-        var startNavButton = UIButton.buttonWithType(UIButtonType.System) as UIButton
-        startNavButton.frame = CGRectMake(100,500,150,50)
-        startNavButton.setTitle("Start Navigation", forState: UIControlState.Normal)
-        startNavButton.addTarget(self, action: "navAction:", forControlEvents: UIControlEvents.TouchUpInside)
-        */
         navBar.addSubview(backButton)
         var camera = GMSCameraPosition.cameraWithLatitude(passedData[0].latitude, longitude:passedData[0].longitude, zoom: 13.5)
         mapView = GMSMapView.mapWithFrame(mapFrame, camera:camera)
+        mapView.delegate = self
         mapView.mapType = kGMSTypeTerrain
         var path = GMSMutablePath()
         for var index = 0; index < passedData.count; ++index {
             var pin = GMSMarker()
             pin.position = CLLocationCoordinate2DMake(passedData[index].latitude, passedData[index].longitude)
-            pin.snippet = passedData[index].name
             pin.appearAnimation = kGMSMarkerAnimationPop
+            pin.icon = UIImage(named:"pin_"+passedData[index].category)
+            pin.userData = passedData[index]
             pin.map = mapView
-        if(getTotalDist(passedData) < 50000.0){
+        if(getTotalDist(passedData) < maxRouteDist){
             if(index < passedData.count-1){
             var loc1 : CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: passedData[index].latitude, longitude: passedData[index].longitude)
             var loc2 : CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: passedData[index+1].latitude, longitude: passedData[index+1].longitude)
@@ -75,6 +72,19 @@ import UIKit
         //self.view.addSubview(startNavButton)
         super.viewDidLoad()
     }
+   /*
+    func mapView(mapView: GMSMapView!, markerInfoWindow marker: GMSMarker!) -> UIView! {
+        var infoWindow : InfoWindow = NSBundle(forClass: CustomInfoWindow.self).loadNibNamed("CustomInfoWindow", owner:self, options: nil)[0] as InfoWindow
+        var pin: Marker = marker.userData as Marker
+        infoWindow.mainText.text = pin.name
+        infoWindow.mainText.font = UIFont(name: "HelveticaNeue-UltraLight",size: 14)
+        infoWindow.secondaryText.text = pin.address
+        infoWindow.secondaryText.font = UIFont(name: "HelveticaNeue-UltraLight",size: 8)
+        infoWindow.catView.image = UIImage(named: pin.category + ".jpg")
+        infoWindow.pictureView.image = pin.pictures[0]
+        return infoWindow
+    }*/
+    
     func backAction(sender:UIButton){
         self.performSegueWithIdentifier("RouteMapViewToRoute", sender: self)
     }
@@ -103,7 +113,6 @@ import UIKit
                     }
                 }
             }
-            
             dispatch_async(dispatch_get_main_queue()) {
                 completion(encodedRoute)
             }
@@ -143,4 +152,4 @@ import UIKit
         
     return result
     }
-    }*/
+    }

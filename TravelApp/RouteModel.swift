@@ -7,27 +7,96 @@
 //
 
 import Foundation
+import Parse
 
 class RouteModel{
     
     var allLocs : [Marker] = []
     var allRoutes : [Route] = []
+    var pic : [UIImage] = []
     
     init(){
-        let munich = Marker(longitude:11.581981, latitude: 48.135125, name: "Munich",address:"Some Random Address")
-        let tokyo  = Marker(longitude: 139.691706, latitude: 35.689487, name: "Tokyo",address:"Some Random Address")
-        let newYork  = Marker (longitude: -74.005941, latitude: 40.712784, name: "New York",address:"Some Random Address")
-        let lmu = Marker(longitude:  11.581076, latitude:48.151043 , name: "LMU", address: "Professor-Huber-Platz 2")
-        let oet = Marker(longitude:11.593287, latitude:48.146113 , name: "Oettingenstrasse", address: "Oettingenstarsse 67")
-        let fkirche = Marker(longitude: 11.573984, latitude: 48.138515, name: "Frauenkirche", address: "Frauenplatz12")
-        let iTor = Marker(longitude: 11.581934, latitude: 48.135014, name: "Isartor", address: "Isartorplatz")
-        allLocs = [munich,tokyo,newYork,lmu,oet,fkirche,iTor]
-        let route = Route(markers: [munich,tokyo,newYork],name: "Route1")
-        let route2 = Route(markers: [munich], name: "Route2")
-        let route3 = Route(markers: [lmu,oet,fkirche,iTor], name: "LMU-OET-FKirche-Isartor")
-        let route4 = Route(markers: [oet,lmu,fkirche,iTor], name: "Oet-lmu-FKirche-Isartor")
-        let route5 = Route(markers: [iTor,lmu,fkirche,oet], name: "Isartor-LMU-FKirche-Oet")
-        allRoutes = [route,route2,route3,route4,route5]
+        getAllPlacesFromParse()
+        getAllRoutesFromParse()
+    }
+    
+    func getAllPlacesFromParse(){
+        var query : PFQuery = PFQuery(className: "Place")
+        query.orderByDescending("name")
+        var objs = query.findObjects()
+        if(objs != nil && !objs.isEmpty){
+        for o in objs{
+        var geoObj = o.objectForKey("geoData") as PFGeoPoint
+        var objName = o.objectForKey("name") as String
+        var objAddress = o.objectForKey("adress") as String
+        var objCat = o.objectForKey("category") as String
+       // pic.append(o.objectForKey("imageFile") as UIImage) // Data
+        allLocs.append(Marker(longitude: geoObj.longitude, latitude: geoObj.latitude, name: objName, address: objAddress, category: objCat, images: pic))
+            }
+        }
+    }
+    
+    func getAllRoutesFromParse(){
+        for m in allLocs{
+            println(m.name)
+        }
+        var query : PFQuery = PFQuery(className: "Route")
+        query.orderByDescending("routeName")
+        var objs = query.findObjects()
+        for o in objs{
+            var routeName = o.objectForKey("routeName") as String
+            var routePlaces = o.objectForKey("listOfPoints") as [String]
+            var tempMarkers : [Marker] = []
+            for nm in routePlaces{
+                tempMarkers.append(self.getMarkerByName(nm))
+            }
+        allRoutes.append(Route(markers: tempMarkers, name: routeName))
+        }
+    }
+    
+    func updateAllData(){
+        allLocs = []
+        allRoutes = []
+        getAllPlacesFromParse()
+        getAllRoutesFromParse()
+    }
+    
+    func getMarkerPosByName(mn : String) -> Int{
+        var result = 0
+        for var index = 0; index < allLocs.count; ++index{
+            if(allLocs[index].name == mn){
+                result = index
+            }
+        }
+        return result
+    }
+    
+    func getMarkerByName(nm : String) -> Marker{
+        var result : Marker!
+        for var index = 0; index < allLocs.count; ++index{
+            if(allLocs[index].name == nm){
+                result = allLocs[index]
+            }
+        }
+        return result
+    }
+    
+    func removeAssociatedRoutes(rmMarker : Marker){
+        for var index = 0; index < allRoutes.count; ++index{
+            if(allRoutes[index].containsMarker(rmMarker)){
+               allRoutes.removeAtIndex(index)
+        }
+        }
+    }
+    
+    func updateMarker(longitude:Double,latitude:Double,name:String,address:String,category:String,images:[UIImage]){
+    var pos = getMarkerPosByName(name)
+    allLocs[pos].name = name
+    allLocs[pos].longitude = longitude
+    allLocs[pos].latitude = latitude
+    allLocs[pos].address = address
+    allLocs[pos].category = category
+    allLocs[pos].pictures = images
     }
     
     struct Static{

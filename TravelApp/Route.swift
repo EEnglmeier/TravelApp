@@ -8,7 +8,8 @@
 
 import Foundation
 
-struct Route{
+@objc
+class Route : Equatable{
     var orderderdMarkers : [Marker] = []
     var name : String
     
@@ -16,4 +17,18 @@ struct Route{
     self.orderderdMarkers = markers
     self.name = name
     }
+    
+    func containsMarker(marker : Marker) -> Bool{
+        var result = false;
+        for m in orderderdMarkers{
+            if (m == marker){
+                result = true
+            }
+        }
+        return result
+    }
+}
+
+func == (lhs:Route,rhs:Route) -> Bool{
+    return lhs.name == rhs.name
 }

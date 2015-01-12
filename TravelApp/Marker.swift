@@ -8,22 +8,25 @@
 
 import Foundation
 
- struct Marker : Equatable{
+@objc
+ class Marker : Equatable{
     
     var longitude,latitude : Double
     var name:String
-    //var categorie : String!
-    //var picture : String!
+    var category : String!
+    var pictures : [UIImage]!
     var address : String
     
-    init(longitude:Double,latitude:Double,name:String,address:String){
+    init(longitude:Double,latitude:Double,name:String,address:String,category:String,images:[UIImage]){
         self.longitude = longitude
         self.latitude = latitude
         self.name = name
         self.address = address
+        self.category = category
+        self.pictures = images
     }
-    
 }
 
 func == (lhs:Marker,rhs:Marker) -> Bool{
-    return lhs.name == rhs.name && lhs.latitude == rhs.latitude && lhs.longitude == rhs.longitude && lhs.address == rhs.address}
+    return lhs.name == rhs.name && lhs.latitude == rhs.latitude && lhs.longitude == rhs.longitude && lhs.address == rhs.address
+}

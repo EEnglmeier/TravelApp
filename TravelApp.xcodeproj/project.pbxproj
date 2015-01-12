@@ -7,15 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		451478A51A631B50003F7821 /* Marker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451478A41A631B50003F7821 /* Marker.swift */; };
+		451478A71A631BE4003F7821 /* RouteModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451478A61A631BE4003F7821 /* RouteModel.swift */; };
+		451478A91A631C06003F7821 /* Route.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451478A81A631C06003F7821 /* Route.swift */; };
+		451478AB1A631CBB003F7821 /* RouteOverview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451478AA1A631CBB003F7821 /* RouteOverview.swift */; };
+		451478AD1A631DFC003F7821 /* RouteMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451478AC1A631DFC003F7821 /* RouteMapView.swift */; };
+		451478AF1A631E68003F7821 /* RouteTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451478AE1A631E68003F7821 /* RouteTableView.swift */; };
 		45977A791A506A8F00242E07 /* ShowPicture.m in Sources */ = {isa = PBXBuildFile; fileRef = B95390661A5027790017E98D /* ShowPicture.m */; };
 		45977AAF1A506D4F00242E07 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45977AAE1A506D4F00242E07 /* Bolts.framework */; };
-		45C58F601A497782000BB6EB /* Marker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C58F581A497782000BB6EB /* Marker.swift */; };
-		45C58F611A497782000BB6EB /* RouteMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C58F591A497782000BB6EB /* RouteMapView.swift */; };
-		45C58F621A497782000BB6EB /* RouteTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C58F5A1A497782000BB6EB /* RouteTableView.swift */; };
 		45C58F631A497782000BB6EB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 45C58F5B1A497782000BB6EB /* Main.storyboard */; };
-		45C58F651A497782000BB6EB /* RouteOverview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C58F5D1A497782000BB6EB /* RouteOverview.swift */; };
-		45C58F661A497782000BB6EB /* Route.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C58F5E1A497782000BB6EB /* Route.swift */; };
-		45C58F671A497782000BB6EB /* RouteModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C58F5F1A497782000BB6EB /* RouteModel.swift */; };
 		45C91D891A337883000C2D4B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C91D881A337883000C2D4B /* AppDelegate.swift */; };
 		45C91D931A337883000C2D4B /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45C91D911A337883000C2D4B /* LaunchScreen.xib */; };
 		45C91D9F1A337883000C2D4B /* TravelAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C91D9E1A337883000C2D4B /* TravelAppTests.swift */; };
@@ -225,14 +225,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		451478A41A631B50003F7821 /* Marker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Marker.swift; sourceTree = "<group>"; };
+		451478A61A631BE4003F7821 /* RouteModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RouteModel.swift; sourceTree = "<group>"; };
+		451478A81A631C06003F7821 /* Route.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Route.swift; sourceTree = "<group>"; };
+		451478AA1A631CBB003F7821 /* RouteOverview.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RouteOverview.swift; sourceTree = "<group>"; };
+		451478AC1A631DFC003F7821 /* RouteMapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RouteMapView.swift; sourceTree = "<group>"; };
+		451478AE1A631E68003F7821 /* RouteTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RouteTableView.swift; sourceTree = "<group>"; };
 		45977AAE1A506D4F00242E07 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
-		45C58F581A497782000BB6EB /* Marker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Marker.swift; sourceTree = "<group>"; };
-		45C58F591A497782000BB6EB /* RouteMapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RouteMapView.swift; sourceTree = "<group>"; };
-		45C58F5A1A497782000BB6EB /* RouteTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RouteTableView.swift; sourceTree = "<group>"; };
 		45C58F5B1A497782000BB6EB /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
-		45C58F5D1A497782000BB6EB /* RouteOverview.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RouteOverview.swift; sourceTree = "<group>"; };
-		45C58F5E1A497782000BB6EB /* Route.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Route.swift; sourceTree = "<group>"; };
-		45C58F5F1A497782000BB6EB /* RouteModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RouteModel.swift; sourceTree = "<group>"; };
 		45C91D831A337883000C2D4B /* TravelApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TravelApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		45C91D871A337883000C2D4B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		45C91D881A337883000C2D4B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -438,8 +438,8 @@
 		B9723D641A617A77008A2C80 /* PlacesTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlacesTableView.m; sourceTree = "<group>"; };
 		B9E5B1711A5494D700074C0C /* BuildDetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BuildDetailView.h; sourceTree = "<group>"; };
 		B9E5B1721A5494D700074C0C /* BuildDetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BuildDetailView.m; sourceTree = "<group>"; };
-		B9E5B1741A54959D00074C0C /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
-		B9E5B1751A54959D00074C0C /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
+		B9E5B1741A54959D00074C0C /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MBProgressHUD.h; path = TravelApp/MBProgressHUD.h; sourceTree = "<group>"; };
+		B9E5B1751A54959D00074C0C /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MBProgressHUD.m; path = TravelApp/MBProgressHUD.m; sourceTree = "<group>"; };
 		B9E5B1771A5495EF00074C0C /* DetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailView.h; sourceTree = "<group>"; };
 		B9E5B1781A5495EF00074C0C /* DetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -670,8 +670,6 @@
 			children = (
 				B9E5B1711A5494D700074C0C /* BuildDetailView.h */,
 				B9E5B1721A5494D700074C0C /* BuildDetailView.m */,
-				B9E5B1741A54959D00074C0C /* MBProgressHUD.h */,
-				B9E5B1751A54959D00074C0C /* MBProgressHUD.m */,
 				B9E5B1771A5495EF00074C0C /* DetailView.h */,
 				B9E5B1781A5495EF00074C0C /* DetailView.m */,
 				B9723D631A617A76008A2C80 /* PlacesTableView.h */,
@@ -680,18 +678,16 @@
 				B95390661A5027790017E98D /* ShowPicture.m */,
 				84F240211A5DB1BD00DB2BBC /* CustomInfoWindow.h */,
 				84F240221A5DB1BD00DB2BBC /* CustomInfoWindow.m */,
-				45C91D881A337883000C2D4B /* AppDelegate.swift */,
 				8480A0351A3F10D2006C9BB1 /* MapViewController.h */,
 				8480A0361A3F10D2006C9BB1 /* MapViewController.m */,
-				45C58F581A497782000BB6EB /* Marker.swift */,
-				45C58F591A497782000BB6EB /* RouteMapView.swift */,
-				45C58F5A1A497782000BB6EB /* RouteTableView.swift */,
-				84F2401F1A5DB10600DB2BBC /* InfoWindow.xib */,
-				84429C541A5ECEA700006323 /* InfoWindowCurrentLoc.xib */,
 				45C58F5B1A497782000BB6EB /* Main.storyboard */,
-				45C58F5D1A497782000BB6EB /* RouteOverview.swift */,
-				45C58F5E1A497782000BB6EB /* Route.swift */,
-				45C58F5F1A497782000BB6EB /* RouteModel.swift */,
+				45C91D881A337883000C2D4B /* AppDelegate.swift */,
+				451478A41A631B50003F7821 /* Marker.swift */,
+				451478AE1A631E68003F7821 /* RouteTableView.swift */,
+				451478AC1A631DFC003F7821 /* RouteMapView.swift */,
+				451478A61A631BE4003F7821 /* RouteModel.swift */,
+				451478AA1A631CBB003F7821 /* RouteOverview.swift */,
+				451478A81A631C06003F7821 /* Route.swift */,
 				84FBDD061A485D2900CC3DC4 /* Images.xcassets */,
 				45C91D911A337883000C2D4B /* LaunchScreen.xib */,
 				45C91D861A337883000C2D4B /* Supporting Files */,
@@ -703,6 +699,8 @@
 		45C91D861A337883000C2D4B /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				84F2401F1A5DB10600DB2BBC /* InfoWindow.xib */,
+				84429C541A5ECEA700006323 /* InfoWindowCurrentLoc.xib */,
 				45C91D871A337883000C2D4B /* Info.plist */,
 			);
 			name = "Supporting Files";
@@ -728,6 +726,8 @@
 		8440FB601A3C874400D17C2B /* Framework */ = {
 			isa = PBXGroup;
 			children = (
+				B9E5B1741A54959D00074C0C /* MBProgressHUD.h */,
+				B9E5B1751A54959D00074C0C /* MBProgressHUD.m */,
 				45977AAE1A506D4F00242E07 /* Bolts.framework */,
 				B95F73991A505C66007E2F19 /* Parse.framework */,
 				B9538F061A5021770017E98D /* libAppPatch.dylib */,
@@ -1024,17 +1024,17 @@
 				45977A791A506A8F00242E07 /* ShowPicture.m in Sources */,
 				8480A0371A3F10D2006C9BB1 /* MapViewController.m in Sources */,
 				84F240231A5DB1BD00DB2BBC /* CustomInfoWindow.m in Sources */,
-				45C58F611A497782000BB6EB /* RouteMapView.swift in Sources */,
 				B9E5B1791A5495EF00074C0C /* DetailView.m in Sources */,
-				45C58F671A497782000BB6EB /* RouteModel.swift in Sources */,
+				451478A91A631C06003F7821 /* Route.swift in Sources */,
+				451478AB1A631CBB003F7821 /* RouteOverview.swift in Sources */,
+				451478A71A631BE4003F7821 /* RouteModel.swift in Sources */,
+				451478AF1A631E68003F7821 /* RouteTableView.swift in Sources */,
 				45C91D891A337883000C2D4B /* AppDelegate.swift in Sources */,
-				45C58F621A497782000BB6EB /* RouteTableView.swift in Sources */,
-				45C58F661A497782000BB6EB /* Route.swift in Sources */,
+				451478AD1A631DFC003F7821 /* RouteMapView.swift in Sources */,
 				B9E5B1761A54959D00074C0C /* MBProgressHUD.m in Sources */,
-				45C58F601A497782000BB6EB /* Marker.swift in Sources */,
 				B9E5B1731A5494D700074C0C /* BuildDetailView.m in Sources */,
 				B9723D651A617A77008A2C80 /* PlacesTableView.m in Sources */,
-				45C58F651A497782000BB6EB /* RouteOverview.swift in Sources */,
+				451478A51A631B50003F7821 /* Marker.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
