@@ -12,9 +12,13 @@
 #import "DetailView.h"
 
 
+
 @implementation PlacesTableView
 @synthesize theArray, theTableView, arrayName, arrayAdress, arrayCategory, clickedObjectID;
-NSString *string;
+NSString *string, *string_ObjectToDelete;
+NSString *arrayName;
+NSString *arrayAdress;
+NSString *arrayCategory;
 
 - (void)viewDidLoad
 {
@@ -35,28 +39,25 @@ NSString *string;
     [self gettingAllSearchResults];
 }
 
-- (void)viewDidUnload
-{
+- (void)viewDidUnload{
     [super viewDidUnload];
 }
 
 
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     // Return the number of sections.
     return 1;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     // Return the number of rows in the section.
     return [arrayName count];
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     static NSString *CellIdentifier = @"Cell";
+    
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
@@ -64,41 +65,42 @@ NSString *string;
     
     cell.textLabel.text = [arrayName objectAtIndex:indexPath.row];
     cell.detailTextLabel.text = [arrayAdress objectAtIndex:indexPath.row];
+    
     if([[arrayCategory objectAtIndex:indexPath.row] isEqual: @"shopping"]){
-        cell.imageView.image = [UIImage imageNamed:@"pin_shopping"];
+        cell.imageView.image = [UIImage imageNamed:@"shopping"];
         //cell.imageView.frame = CGRectMake(0, 0, 10, 10);
     }
     
     if([[arrayCategory objectAtIndex:indexPath.row] isEqual: @"food"]){
-        cell.imageView.image = [UIImage imageNamed:@"pin_food"];
+        cell.imageView.image = [UIImage imageNamed:@"food"];
     }
     
     if([[arrayCategory objectAtIndex:indexPath.row] isEqual: @"nightlife"]){
-        cell.imageView.image = [UIImage imageNamed:@"pin_nightlife"];
+        cell.imageView.image = [UIImage imageNamed:@"nightlife"];
     }
     
     if([[arrayCategory objectAtIndex:indexPath.row] isEqual: @"cafe"]){
-        cell.imageView.image = [UIImage imageNamed:@"pin_cafe"];
+        cell.imageView.image = [UIImage imageNamed:@"cafe"];
     }
     
     if([[arrayCategory objectAtIndex:indexPath.row] isEqual: @"activity"]){
-        cell.imageView.image = [UIImage imageNamed:@"pin_activity"];
+        cell.imageView.image = [UIImage imageNamed:@"activity"];
     }
     
     if([[arrayCategory objectAtIndex:indexPath.row] isEqual: @"culture"]){
-        cell.imageView.image = [UIImage imageNamed:@"pin_culture"];
+        cell.imageView.image = [UIImage imageNamed:@"culture"];
     }
     
     if([[arrayCategory objectAtIndex:indexPath.row] isEqual: @"hotel"]){
-        cell.imageView.image = [UIImage imageNamed:@"pin_hotel"];
+        cell.imageView.image = [UIImage imageNamed:@"hotel"];
     }
     
     if([[arrayCategory objectAtIndex:indexPath.row] isEqual: @"icons"]){
-        cell.imageView.image = [UIImage imageNamed:@"pin_icons"];
+        cell.imageView.image = [UIImage imageNamed:@"icons"];
     }
     
     if([[arrayCategory objectAtIndex:indexPath.row] isEqual: @"other"]){
-        cell.imageView.image = [UIImage imageNamed:@"pin_other"];
+        cell.imageView.image = [UIImage imageNamed:@"other"];
     }
     return cell;
 }
@@ -134,6 +136,51 @@ NSString *string;
     }];
 }
 
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        //add code here for when you hit delete
+        NSMutableArray* arrayNameDelete = arrayName;
+        NSMutableArray* arrayAdressDelete = arrayAdress;
+        NSMutableArray* arrayCategoryDelete = arrayCategory;
+        [self deleteFromParseTable:indexPath];
+        [arrayNameDelete  removeObjectAtIndex:indexPath.row];
+        [arrayAdressDelete removeObjectAtIndex:indexPath.row];
+        [arrayCategoryDelete removeObjectAtIndex:indexPath.row];
+        [theTableView reloadData];
+        
+    }
+}
+
+- (void)setEditing:(BOOL)editing animated:(BOOL)animated{
+    self.theTableView.allowsMultipleSelectionDuringEditing = editing;
+    [super setEditing:editing animated:animated];
+}
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    // Return YES if you want the specified item to be editable.
+    return YES;
+}
+
+- (void)deleteFromParseTable:(NSIndexPath *)indexToDelete {
+    string_ObjectToDelete = [theTableView cellForRowAtIndexPath:indexToDelete].textLabel.text;
+    PFQuery *query = [PFQuery queryWithClassName:@"Place"];
+    [query whereKey:@"name" equalTo:string_ObjectToDelete];
+    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if (!error) {
+            // The find succeeded.
+            NSLog(@"Successfully retrieved %lu scores.", (unsigned long)objects.count);
+            // Do something with the found objects
+            for (PFObject *object in objects) {
+                [object deleteInBackground];
+            }
+        } else {
+            // Log details of the failure
+            NSLog(@"Error: %@ %@", error, [error userInfo]);
+        }
+    }];
+    
+}
+
 -(void)goToDetailView{
     [self performSegueWithIdentifier:@"ListeToDetailView" sender:self];
     
@@ -151,6 +198,35 @@ NSString *string;
         editViewController.objectID = clickedObjectID;
         editViewController.segueTag = @"clickedObject";
     }
+}
+
+-(UIImage *)scaleImage:(UIImage *)image toSize:(CGSize)newSize {
+    
+    float width = newSize.width;
+    float height = newSize.height;
+    
+    UIGraphicsBeginImageContext(newSize);
+    CGRect rect = CGRectMake(0, 0, width, height);
+    
+    float widthRatio = image.size.width / width;
+    float heightRatio = image.size.height / height;
+    float divisor = widthRatio > heightRatio ? widthRatio : heightRatio;
+    
+    width = image.size.width / divisor;
+    height = image.size.height / divisor;
+    
+    rect.size.width  = width;
+    rect.size.height = height;
+    
+    if(height < width)
+        rect.origin.y = height / 3;
+    [image drawInRect: rect];
+    
+    UIImage *smallImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return smallImage;
+    
 }
 
 
