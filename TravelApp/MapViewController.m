@@ -8,28 +8,27 @@
 
 #import <UIKit/UIKit.h>
 #import "MapViewController.h"
-//#import <CoreLocation/CoreLocation.h>
 @import CoreLocation;
-
-
 
 @interface MapViewController ()
 
-//@property (strong, nonatomic) NSMutableArray *marker;
-//@property (strong, nonatomic) NSMutableArray *places;
 @property (strong, nonatomic) CLLocationManager *locationManager;
 @property (strong, nonatomic) UIButton *currentLocationButton;
 @property (strong, nonatomic) IBOutlet UIButton *locationButton;
-//@property (strong, nonatomic) NSMutableArray *allPlaces;
 
 - (IBAction)touchDown:(id)sender;
-
 
 @end
 
 @implementation MapViewController
 
-//--- Map
+///*********************************************************************************
+//
+// variables
+//
+//**********************************************************************************/
+
+
 GMSMapView *mapView_;
 
 CLLocationCoordinate2D longpressCoordinate;
@@ -44,15 +43,85 @@ GMSMarker *pin;
 NSString *name, *category, *geoName, *adress;
 PFGeoPoint *geoPoint;
 
-//--- initialisieren des location manager
+
+///*********************************************************************************
+//
+// viewDidLoad
+//
+//**********************************************************************************/
+
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    
+    [self loadLocationManager];
+    [self initLocation];
+    [self initDisplay];
+    [self loadCurrentLocationMarker];
+}
+
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:YES];
+    
+    [self fetchPlaces];
+}
+
+///*********************************************************************************
+//
+// locationManager
+//
+//**********************************************************************************/
+
+
+//--- locationManager
 - (CLLocationManager *)locationManager{
     if (! _locationManager) _locationManager = [[CLLocationManager alloc] init];
     return _locationManager;
 }
 
 
+- (void)showCurrentLocation{
+    mapView_.myLocationEnabled = YES;
+    [self.locationManager startUpdatingLocation];
+}
+
+
+//--- updated regelmäßig die aktuelle Position
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations{
+    currentLocMarker.position = self.locationManager.location.coordinate;
+}
+
+
+//--- Fehlerbehandlung, wenn die aktuelle Position nicht bestimmt werden kann
+- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error{
+    UIAlertView *errorAlert = [[UIAlertView alloc]initWithTitle:@"Location Services is disabled." message:@"Place my Memories needs access to your location. Please turn on Location Services in your device settings." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+    [errorAlert show];
+    NSLog(@"Error: %@",error.description);
+}
+
+
+- (void)loadLocationManager{
+    //--- delegate Methoden
+    self.locationManager.delegate = self;
+    self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+    
+    //iOS8 required, um location services nutzen zu können
+    if ([self.locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
+        [self.locationManager requestWhenInUseAuthorization];
+    }
+    [self.locationManager requestWhenInUseAuthorization];
+    [self.locationManager startMonitoringSignificantLocationChanges];
+    [self.locationManager startUpdatingLocation];
+}
+
+///*********************************************************************************
+//
+// load and init methods
+//
+//**********************************************************************************/
+
 //--- Marker für die aktuelle Position
-- (void)loadCurrentLocationWithImage{
+- (void)loadCurrentLocationMarker{
     GMSGeocoder *geocoder = [GMSGeocoder geocoder];
     [geocoder reverseGeocodeCoordinate:currentLocation completionHandler:^(GMSReverseGeocodeResponse *response, NSError *error) {
         currentLocMarker = [GMSMarker markerWithPosition:currentLocation];
@@ -64,7 +133,7 @@ PFGeoPoint *geoPoint;
 }
 
 
-//--- lädt alle bisher gespeicherten Orte in *allPlaces
+//--- loads all saved places
 - (void)fetchPlaces{
     
     [mapView_ clear];
@@ -82,7 +151,7 @@ PFGeoPoint *geoPoint;
 }
 
 
-//--- erzeugt einen Pin für jeden gespeicherten Ort
+//--- sets a pin on map for each saved place
 - (void)pinsOnMap : (NSArray*) places{
     
     for (PFObject *place in places) {
@@ -134,22 +203,8 @@ PFGeoPoint *geoPoint;
     }
 }
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    
-    //--- delegate Methoden
-    self.locationManager.delegate = self;
-    self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
-    
-    //iOS8 required, um location services nutzen zu können
-    if ([self.locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
-        [self.locationManager requestWhenInUseAuthorization];
-    }
-    [self.locationManager requestWhenInUseAuthorization];
-    [self.locationManager startMonitoringSignificantLocationChanges];
-    [self.locationManager startUpdatingLocation];
-    
-    
+
+- (void)initLocation{
     //--- einmaliges Laden der aktuellen Position
     NSLog(@"initialised Location at: %@", self.locationManager.location);
     currentLocation = self.locationManager.location.coordinate;
@@ -164,7 +219,11 @@ PFGeoPoint *geoPoint;
     mapView_.delegate = self;
     self.view = mapView_;
     NSLog(@"%@",mapView_.camera);
+}
 
+
+- (void)initDisplay{
+    
     //--- Abstand von unten und oben, um compassButton und myLocationButton sichtbar zu machen
     UIEdgeInsets mapInsets = UIEdgeInsetsMake(50.0, 0.0, 50.0, 0.0);
     mapView_.padding = mapInsets;
@@ -181,35 +240,21 @@ PFGeoPoint *geoPoint;
     [locationButton setImage:buttonImage forState:UIControlStateNormal];
     locationButton.frame = CGRectMake(10.0, 430.0, 60.0, 60.0);
     [mapView_ addSubview:locationButton];
-    
-    //--- lädt den aktuellen Ort inkl. Marker
-    [self loadCurrentLocationWithImage];
-    //--- lädt alle gespeicherten Orte inkl. Marker
-    [self fetchPlaces];
 }
 
-
-- (void)showCurrentLocation{
-    mapView_.myLocationEnabled = YES;
-    [self.locationManager startUpdatingLocation];
-}
-
-//--- updated regelmäßig die aktuelle Position
-- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations{
-    currentLocMarker.position = self.locationManager.location.coordinate;
-}
-
-//--- Fehlerbehandlung, wenn die aktuelle Position nicht bestimmt werden kann
-- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error{
-    UIAlertView *errorAlert = [[UIAlertView alloc]initWithTitle:@"Location Services is disabled." message:@"Place my Memories needs access to your location. Please turn on Location Services in your device settings." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
-    [errorAlert show];
-    NSLog(@"Error: %@",error.description);
-}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+
+///*********************************************************************************
+//
+// delegate Methoden
+//
+//**********************************************************************************/
+
 
 //--- InfoWindow der Pins
 - (UIView *)mapView:(GMSMapView *)mapView markerInfoWindow:(GMSMarker *)marker{
@@ -239,13 +284,17 @@ PFGeoPoint *geoPoint;
 
 
 - (void)mapView:(GMSMapView *)mapView didTapInfoWindowOfMarker:(GMSMarker *)marker{
-    
     if (marker == currentLocMarker) return;
     //--- Tap auf Info Window -> Unwind Segue zu DetailView
     [self performSegueWithIdentifier:@"MapViewToDetailView" sender:marker.userData];
     //NSLog(@"YES");
 }
 
+///*********************************************************************************
+//
+// segues
+//
+//**********************************************************************************/
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     if([segue.identifier isEqualToString:@"MapViewToBuildDetailView"]){
@@ -254,7 +303,6 @@ PFGeoPoint *geoPoint;
         NSString *lon = [[NSString alloc] initWithFormat:@"%g", longpressCoordinate.longitude];
         NSLog(@"Latitude is: %@", lat);
         NSLog(@"Longitude is: %@", lon);
-        //NSLog(@"%@",longpressCoordinate);
         [bdv setPlaceLocation:longpressCoordinate];
     }
     else if([segue.identifier isEqualToString:@"MapViewToDetailView"]){
@@ -265,10 +313,15 @@ PFGeoPoint *geoPoint;
     }
 }
 
+///*********************************************************************************
+//
+// Actions
+//
+//**********************************************************************************/
+
 - (IBAction)touchDown:(id)sender {
     GMSCameraUpdate *cu = [GMSCameraUpdate setTarget:self.locationManager.location.coordinate zoom:16];
     [mapView_ animateWithCameraUpdate:cu];
-    //    NSLog(@"touchedLocation %@", self.locationManager.location);
-    //    NSLog(@"touchedLocation %@", mapView_.camera);
+
 }
 @end

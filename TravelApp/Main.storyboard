@@ -75,7 +75,7 @@
         <!--Tab Bar Controller-->
         <scene sceneID="yl2-sM-qoP">
             <objects>
-                <tabBarController id="49e-Tb-3d3" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="tabbarController" id="49e-Tb-3d3" sceneMemberID="viewController">
                     <nil key="simulatedBottomBarMetrics"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="W28-zg-YXA">
                         <rect key="frame" x="0.0" y="975" width="768" height="49"/>
@@ -185,25 +185,6 @@
             </objects>
             <point key="canvasLocation" x="399" y="2156"/>
         </scene>
-        <!--Detail View After Build-->
-        <scene sceneID="m6A-gS-bWc">
-            <objects>
-                <viewController id="SCg-kB-NT9" customClass="DetailViewAfterBuild" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="Xqa-P7-j8R"/>
-                        <viewControllerLayoutGuide type="bottom" id="Ijs-cX-3ja"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="y9y-Me-MOy">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                    <navigationItem key="navigationItem" id="rab-90-QK4"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Y5W-I9-vIv" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="399" y="3146"/>
-        </scene>
         <!--Detail View-->
         <scene sceneID="e0X-FO-tMQ">
             <objects>
@@ -274,10 +255,10 @@
         <image name="Route" width="25" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Jnn-XM-onh"/>
+        <segue reference="lzU-1b-eKA"/>
         <segue reference="miQ-FJ-Nbk"/>
-        <segue reference="yfe-L4-Rfo"/>
-        <segue reference="m3p-47-oeJ"/>
-        <segue reference="T8E-Sw-Irp"/>
+        <segue reference="AIg-6e-Nap"/>
+        <segue reference="kow-mJ-7qC"/>
+        <segue reference="rIm-7i-4wB"/>
     </inferredMetricsTieBreakers>
 </document>

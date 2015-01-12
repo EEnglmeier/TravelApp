@@ -21,5 +21,4 @@
 @property (nonatomic) CLLocationCoordinate2D *longpressCoordinate;
 
 - (void)setPlaceLocation:(CLLocationCoordinate2D) longpressBV;
-
 @end

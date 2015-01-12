@@ -17,14 +17,24 @@
 #import "DetailView.h"
 
 @interface BuildDetailView ()
+
 @property (strong, nonatomic) CLLocationManager *locationManager;
+
 @end
+
 
 @implementation BuildDetailView {
     NSString *_address;
     double _returnLongitude;
     double _returnLatitude;
 }
+
+///*********************************************************************************
+//
+// variables
+//
+//**********************************************************************************/
+
 int buttonsize = 44;
 float buttonBorderwidth = 1.2f;
 int dist2Button = 60;
@@ -42,17 +52,66 @@ float longitude, latitude;
 
 //--- Variable, um die übergebene Koordinate von OrtHinzufuegen entegegen zunehmen
 CLLocationCoordinate2D longpressedBV;
+
+//--- flags
 bool fromMap = NO;
 bool imageChosen = NO;
 
-//--- ImagePicker: je nach Source durch camera oder photo library
+//--- imagePicker
 UIImagePickerController *pic;
+
+
+///*********************************************************************************
+//
+// locationManager
+//
+//**********************************************************************************/
 
 //--- initialisieren des location manager
 - (CLLocationManager *)locationManager{
     if (! _locationManager) _locationManager = [[CLLocationManager alloc] init];
     return _locationManager;
 }
+
+//--- Fehlerbehandlung, wenn die aktuelle Position nicht bestimmt werden kann
+- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error{
+    UIAlertView *errorAlert = [[UIAlertView alloc]initWithTitle:@"Location Services is disabled." message:@"Place my Memories needs access to your location. Please turn on Location Services in your device settings." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+    [errorAlert show];
+    NSLog(@"Fehler: %@",error.description);
+}
+
+///*********************************************************************************
+//
+// navigation functions & button actions
+//
+//**********************************************************************************/
+
+- (void)backToMap{
+    // back to map... (im storyboard heißt der tabbarcontroller "tabbarController"
+    UITabBarController* tabController = [[UIStoryboard storyboardWithName:@"Main" bundle:NULL] instantiateViewControllerWithIdentifier:@"tabbarController"];
+    
+    // hier kann man die transition ändern z.B. kCATransitionPush, kCATransitionFromBottom ...
+    CATransition* transition = [CATransition animation];
+    transition.duration = 0.5;
+    transition.type = kCATransitionFromBottom;
+    //transition.type = kCATransitionFade;
+    
+    // present tabController
+    [self.view.window.layer addAnimation:transition forKey:kCATransition];
+    [self presentViewController:tabController animated:NO completion:nil];
+}
+
+-(void)cancel{
+    //[self resetView];
+    NSLog(@"Cancel Button is clicked");
+    [self backToMap];
+}
+
+///*********************************************************************************
+//
+// viewDidLoad & viewWillAppear
+//
+//**********************************************************************************/
 
 -(void)viewDidLoad{
     [super viewDidLoad];
@@ -80,13 +139,11 @@ UIImagePickerController *pic;
     }
 }
 
-
-
-/*********************************************************************************
- 
- Update View
- 
-**********************************************************************************/
+///*********************************************************************************
+//
+// updateView & resetView
+//
+//**********************************************************************************/
 
 - (void) updateView{
     
@@ -103,11 +160,11 @@ UIImagePickerController *pic;
     fromMap = NO;
 }
 
-/*********************************************************************************
- 
- Image Picker
- 
-*********************************************************************************/
+///*********************************************************************************
+//
+// image picker
+//
+//**********************************************************************************/
 
 
 - (void) initImagePicker{
@@ -124,22 +181,25 @@ UIImagePickerController *pic;
     }
     
     //--- Wahl der Source
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Add a photo" message:@"Take a photo or choose from existing" delegate:self cancelButtonTitle:nil otherButtonTitles:@"Choose from photo library", @"Take a photo", nil];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Add a photo" message:@"Take a photo or choose from existing" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Choose from photo library", @"Take a photo", nil];
     alert.tag = 1;
     [alert show];
 }
 
+
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     NSString *title = [alertView buttonTitleAtIndex:buttonIndex];
-    if ([title isEqualToString:@"Take a photo"]){
+    if ([title isEqualToString:@"Cancel"]) {
+        [self backToMap];
+    } else if ([title isEqualToString:@"Take a photo"]){
         [self takePhoto];
     } else if ([title isEqualToString:@"Choose from photo library"]){
         [self selectPhoto];
     }
 }
 
+
 - (void)takePhoto{
-    
     UIImagePickerController *pic = [[UIImagePickerController alloc] init];
     pic.delegate = self;
     pic.allowsEditing = YES;
@@ -151,7 +211,6 @@ UIImagePickerController *pic;
 
 
 - (IBAction)selectPhoto{
-    
     UIImagePickerController *pic = [[UIImagePickerController alloc] init];
     pic.delegate = self;
     pic.allowsEditing = YES;
@@ -163,8 +222,7 @@ UIImagePickerController *pic;
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)pic {
     [pic dismissViewControllerAnimated:YES completion:^{
-        [self resetView];
-        [self unwindToMap:@"BuildDetailViewToMap"];
+        [self backToMap];
     }];
 }
 
@@ -172,18 +230,13 @@ UIImagePickerController *pic;
     imageChosen = YES;
     self->takenImage = image;
     [pic dismissViewControllerAnimated:NO completion:^{ [self updateView]; }];
-    //    [self performSegueWithIdentifier:@"OrtToBuildDetail" sender:self];
 }
 
-- (IBAction)unwindToMap:(UIStoryboardSegue *)unwindSegue{
-    self.tabBarController.selectedIndex = 0;
-}
-
-/*********************************************************************************
-     
-     Button Interaction
-     
-*********************************************************************************/
+///*********************************************************************************
+//
+// button interaction
+//
+//**********************************************************************************/
 
 -(void)whichButtonIsClicked:(id)sender{
     if (sender == buttonHotel) {
@@ -318,6 +371,12 @@ UIImagePickerController *pic;
     return NO;
 }
 
+///*********************************************************************************
+//
+// save locations
+//
+//**********************************************************************************/
+
 -(void)saveLocation{
     PFObject *object = [PFObject objectWithClassName:@"Place"];
     
@@ -383,19 +442,11 @@ UIImagePickerController *pic;
     }
 }
 
--(void)cancel{
-    [self resetView];
-    NSLog(@"Cancel Button is clicked");
-    //[self unwindToMap:@"BuildDetailViewToMap"];
-}
-
-
-//--- Fehlerbehandlung, wenn die aktuelle Position nicht bestimmt werden kann
-- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error{
-    UIAlertView *errorAlert = [[UIAlertView alloc]initWithTitle:@"Location Services is disabled." message:@"Place my Memories needs access to your location. Please turn on Location Services in your device settings." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
-    [errorAlert show];
-    NSLog(@"Fehler: %@",error.description);
-}
+///*********************************************************************************
+//
+// getter & setter GeoInformation
+//
+//**********************************************************************************/
 
 //--- nimmt die von OrtHinzufuegen übergebene Koordinate von der Map durch longPressAtCoordinate entgegen und weist sie _longpressed zu
 - (void)setPlaceLocation:(CLLocationCoordinate2D) longpressBV{
@@ -415,31 +466,25 @@ UIImagePickerController *pic;
         GMSReverseGeocodeResult *result = response.firstResult;
         adr1 = result.addressLine1;
         adr2 = result.addressLine2;
-        [self loadGeoInformations:adr1:adr2];
+        [self getGeoInformations:adr1:adr2];
     }];
 }
 
-- (void)loadGeoInformations:(NSString*)address1:(NSString*)address2{
+- (void)getGeoInformations:(NSString*)address1:(NSString*)address2{
     _address = [NSString stringWithFormat:@"%@\r%@", address1,address2];
 }
 
+///*********************************************************************************
+//
+// segues
+//
+//**********************************************************************************/
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     if ([segue.identifier isEqualToString:@"BuildDetailViewToDetailView"]){
         DetailView *editViewController = (DetailView *)segue.destinationViewController;
         editViewController.segueTag = @"buildDetailView";
     }
-}
-
-/*********************************************************************************
- 
- UnwindToMap
- 
-**********************************************************************************/
-
-- (IBAction)unwindBuildDetailViewToMap:(UIStoryboardSegue *)segue{
-    NSLog(@"Segue arrived [DV -> BDV]");
-    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 /*********************************************************************************
@@ -655,7 +700,6 @@ UIImagePickerController *pic;
     labelOther.text = @"Other";
     labelOther.font = [UIFont systemFontOfSize:12];
     [self.view addSubview:labelOther];
-    
 }
 
 

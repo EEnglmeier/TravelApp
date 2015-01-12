@@ -18,6 +18,13 @@
 @end
 
 @implementation DetailView
+
+///*********************************************************************************
+//
+// variables
+//
+//**********************************************************************************/
+
 @synthesize objectID, segueTag, name, category, adress, imageFile;
 int buttonsize1 = 60;
 int aPlaceLabelY = 445;
@@ -29,15 +36,110 @@ NSString *objectIDFromMapView;
 NSString *objectIDFromTableView;
 
 
+///*********************************************************************************
+//
+// viewWillAppear
+//
+//**********************************************************************************/
+
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    NSLog(@"detail");
+    
     [self whichObjectToShow];
+    [self initDisplay];
+    
+}
 
+///*********************************************************************************
+//
+// navigation functions & button actions
+//
+//**********************************************************************************/
+
+- (void)backToMap{
+    // back to map... (im storyboard heißt der tabbarcontroller "tabbarController"
+    UITabBarController* tabController = [[UIStoryboard storyboardWithName:@"Main" bundle:NULL] instantiateViewControllerWithIdentifier:@"tabbarController"];
     
-    [[UIApplication sharedApplication] setStatusBarHidden:YES];
-    [super viewDidLoad];
+    // hier kann man die transition ändern z.B. kCATransitionPush, kCATransitionFromBottom ...
+    CATransition* transition = [CATransition animation];
+    transition.duration = 0.5;
+    transition.type = kCATransitionFromBottom;
+    //transition.type = kCATransitionFade;
     
+    // present tabController
+    [self.view.window.layer addAnimation:transition forKey:kCATransition];
+    [self presentViewController:tabController animated:NO completion:nil];
+}
+
+-(void)done{
+    NSLog(@"Done Button is clicked");
+    [self backToMap];
+    
+}
+
+/////*********************************************************************************
+////
+//// segues
+////
+////**********************************************************************************/
+//
+//-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+//    NSLog(@"SEGUE IDENT: %@", segue.identifier);
+//    if ([segue.identifier isEqualToString:@"DetailViewToMapView"]) {
+//        NSLog(@"segue detail view to map view prepared");
+//        [self dismissViewControllerAnimated:YES completion:nil];
+//        [segue.destinationViewController fetchPlaces];
+//        [segue.destinationViewController loadCurrentLocationMarker];
+//    }
+//}
+
+///*********************************************************************************
+//
+// which place to show in detailView
+//
+//**********************************************************************************/
+
+-(void) whichObjectToShow{
+    
+    if ([segueTag isEqualToString:@"buildDetailView"]) {
+        NSLog(@"from buildDetailView");
+        PFQuery *query = [PFQuery queryWithClassName:@"Place"];
+        [query orderByDescending:@"updatedAt"];
+        PFObject *aPlace = [query getFirstObject];
+        name = [aPlace objectForKey:@"name"];
+        category = [aPlace objectForKey:@"category"];
+        adress = [aPlace objectForKey:@"adress"];
+        imageFile = aPlace[@"imageFile"];
+    }
+    
+    if ([segueTag isEqualToString:@"clickedObject"]) {
+        NSLog(@"from tableView");
+        PFQuery *query = [PFQuery queryWithClassName:@"Place"];
+        [query whereKey:@"objectId" equalTo:self.objectID];
+        PFObject *object = [query getFirstObject];
+        name = [object objectForKey:@"name"];
+        category = [object objectForKey:@"category"];
+        adress = [object objectForKey:@"adress"];
+        imageFile = object[@"imageFile"];
+    }
+    if([segueTag isEqualToString:@"clickedPin"]){
+        PFQuery *query = [PFQuery queryWithClassName:@"Place"];
+        [query whereKey:@"objectId" equalTo:self.objectID];
+        PFObject *object = [query getFirstObject];
+        name = [object objectForKey:@"name"];
+        category = [object objectForKey:@"category"];
+        adress = [object objectForKey:@"adress"];
+        imageFile = object[@"imageFile"];
+    }
+}
+
+///*********************************************************************************
+//
+// initDisplay
+//
+//**********************************************************************************/
+
+- (void)initDisplay{
     UINavigationBar *navBarLocation = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 70)];
     navBarLocation.backgroundColor = [UIColor grayColor];
     UINavigationItem *navItemLocation = [[UINavigationItem alloc] init];
@@ -52,11 +154,12 @@ NSString *objectIDFromTableView;
         if (!data) {
             return NSLog(@"%@", error);
         }
-        
         // Do something with the image
         imageView.image = [UIImage imageWithData:data];
     }];
     [[self view] addSubview: imageView];
+    
+    [[UIApplication sharedApplication] setStatusBarHidden:YES];
     
     UILabel *locationLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 265, self.view.frame.size.width, 40)];
     locationLabel.text = [@"     " stringByAppendingString: name];
@@ -64,11 +167,11 @@ NSString *objectIDFromTableView;
     locationLabel.layer.borderColor = [UIColor grayColor].CGColor;
     locationLabel.layer.borderWidth = 1.0;
     [self.view addSubview:locationLabel];
-
+    
     
     UILabel *locAdress = [[UILabel alloc] initWithFrame:CGRectMake(20, 325, 280, 40)];
     locAdress.text = adress;
-    locAdress.lineBreakMode = UILineBreakModeWordWrap;
+    //locAdress.lineBreakMode = UILineBreakModeWordWrap;
     locAdress.numberOfLines = 2;
     locAdress.font = [UIFont systemFontOfSize:13];
     [self.view addSubview:locAdress];
@@ -187,62 +290,6 @@ NSString *objectIDFromTableView;
         locationLabel.text = @"Other";
         locationLabel.font = [UIFont systemFontOfSize:14];
         [self.view addSubview:locationLabel];
-    }
-}
-
--(void)done{
-    NSLog(@"Done Button is clicked");
-    if ([segueTag isEqualToString:@"buildDetailView"]) {
-        NSLog(@"COMING FROM BDV");
-        [self performSegueWithIdentifier:@"UnwindDV" sender:self];
-        //[self dismissViewControllerAnimated:YES completion:nil];
-    }
-    else{
-        [self dismissViewControllerAnimated:YES completion:nil];
-    }
-}
-
--(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
-    NSLog(@"SEGUE IDENT: %@", segue.identifier);
-    if ([segue.identifier isEqualToString:@"DetailViewToMapView"]) {
-        NSLog(@"segue detail view to map view prepared");
-        [self dismissViewControllerAnimated:YES completion:nil];
-        [segue.destinationViewController fetchPlaces];
-        [segue.destinationViewController loadCurrentLocationWithImage];
-    }
-}
-
--(void) whichObjectToShow{
-    
-    if ([segueTag isEqualToString:@"buildDetailView"]) {
-        NSLog(@"from buildDetailView");
-        PFQuery *query = [PFQuery queryWithClassName:@"Place"];
-        [query orderByDescending:@"updatedAt"];
-        PFObject *aPlace = [query getFirstObject];
-        name = [aPlace objectForKey:@"name"];
-        category = [aPlace objectForKey:@"category"];
-        adress = [aPlace objectForKey:@"adress"];
-        imageFile = aPlace[@"imageFile"];
-    }
-    
-    if ([segueTag isEqualToString:@"clickedObject"]) {
-        NSLog(@"from tableView");
-        PFQuery *query = [PFQuery queryWithClassName:@"Place"];
-        [query whereKey:@"objectId" equalTo:self.objectID];
-        PFObject *object = [query getFirstObject];
-        name = [object objectForKey:@"name"];
-        category = [object objectForKey:@"category"];
-        adress = [object objectForKey:@"adress"];
-        imageFile = object[@"imageFile"];
-    }
-    if([segueTag isEqualToString:@"clickedPin"]){
-        PFQuery *query = [PFQuery queryWithClassName:@"Place"];
-        [query whereKey:@"objectId" equalTo:self.objectID];
-        PFObject *object = [query getFirstObject];
-        name = [object objectForKey:@"name"];
-        category = [object objectForKey:@"category"];
-        adress = [object objectForKey:@"adress"];
-        imageFile = object[@"imageFile"];
     }
 }
 @end

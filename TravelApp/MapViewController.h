@@ -14,11 +14,11 @@
 #import "DetailView.h"
 #import "CustomInfoWindow.h"
 #import "BuildDetailView.h"
+
 @interface MapViewController : UIViewController <GMSMapViewDelegate, CLLocationManagerDelegate>
 
 - (void) fetchPlaces;
-- (void)loadCurrentLocationWithImage;
-
+- (void)loadCurrentLocationMarker;
 
 @property (strong, nonatomic) IBOutlet GMSMapView *mapView_;
 

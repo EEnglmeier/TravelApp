@@ -680,7 +680,6 @@
 				84F240221A5DB1BD00DB2BBC /* CustomInfoWindow.m */,
 				8480A0351A3F10D2006C9BB1 /* MapViewController.h */,
 				8480A0361A3F10D2006C9BB1 /* MapViewController.m */,
-				45C58F5B1A497782000BB6EB /* Main.storyboard */,
 				45C91D881A337883000C2D4B /* AppDelegate.swift */,
 				451478A41A631B50003F7821 /* Marker.swift */,
 				451478AE1A631E68003F7821 /* RouteTableView.swift */,
@@ -688,7 +687,10 @@
 				451478A61A631BE4003F7821 /* RouteModel.swift */,
 				451478AA1A631CBB003F7821 /* RouteOverview.swift */,
 				451478A81A631C06003F7821 /* Route.swift */,
+				45C58F5B1A497782000BB6EB /* Main.storyboard */,
 				84FBDD061A485D2900CC3DC4 /* Images.xcassets */,
+				84F2401F1A5DB10600DB2BBC /* InfoWindow.xib */,
+				84429C541A5ECEA700006323 /* InfoWindowCurrentLoc.xib */,
 				45C91D911A337883000C2D4B /* LaunchScreen.xib */,
 				45C91D861A337883000C2D4B /* Supporting Files */,
 				45C91DC41A338101000C2D4B /* TravelApp-Bridging-Header.h */,
@@ -699,8 +701,6 @@
 		45C91D861A337883000C2D4B /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				84F2401F1A5DB10600DB2BBC /* InfoWindow.xib */,
-				84429C541A5ECEA700006323 /* InfoWindowCurrentLoc.xib */,
 				45C91D871A337883000C2D4B /* Info.plist */,
 			);
 			name = "Supporting Files";
