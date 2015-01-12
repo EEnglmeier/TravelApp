@@ -47,7 +47,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3fT-dy-kMz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1300" y="1320"/>
+            <point key="canvasLocation" x="-1300" y="1368"/>
         </scene>
         <!--Places Table View-->
         <scene sceneID="wg7-f3-ORb">
@@ -70,7 +70,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Nw-L8-lE0" sceneMemberID="firstResponder"/>
                 <exit id="5US-DV-kPT" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="-298" y="1320"/>
+            <point key="canvasLocation" x="-298" y="1384"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="yl2-sM-qoP">
@@ -202,7 +202,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Y5W-I9-vIv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-687" y="3146"/>
+            <point key="canvasLocation" x="399" y="3146"/>
         </scene>
         <!--Detail View-->
         <scene sceneID="e0X-FO-tMQ">
@@ -220,11 +220,13 @@
                     <connections>
                         <segue destination="b80-Mu-wbw" kind="show" identifier="DetailViewToList" id="m3p-47-oeJ"/>
                         <segue destination="27c-jk-6k3" kind="show" identifier="DetailViewToMapView" id="T8E-Sw-Irp"/>
+                        <segue destination="P1I-6b-jbU" kind="unwind" identifier="UnwindDV" unwindAction="unwindBuildDetailViewToMap:" id="jLL-bN-8tA"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oUb-lO-D49" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="P1I-6b-jbU" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="-840" y="2364"/>
+            <point key="canvasLocation" x="-636" y="2232"/>
         </scene>
         <!--Add new Place-->
         <scene sceneID="xMW-GA-nqP">
@@ -256,6 +258,9 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="8rJ-Kc-sve" kind="relationship" relationship="rootViewController" id="Sro-bD-R31"/>
+                    </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Hb-ht-udD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -269,9 +274,9 @@
         <image name="Route" width="25" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="miQ-FJ-Nbk"/>
         <segue reference="Jnn-XM-onh"/>
-        <segue reference="wgc-U3-i8t"/>
+        <segue reference="miQ-FJ-Nbk"/>
+        <segue reference="yfe-L4-Rfo"/>
         <segue reference="m3p-47-oeJ"/>
         <segue reference="T8E-Sw-Irp"/>
     </inferredMetricsTieBreakers>

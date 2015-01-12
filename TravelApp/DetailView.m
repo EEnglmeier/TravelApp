@@ -11,6 +11,7 @@
 #import <Parse/Parse.h>
 #import <QuartzCore/QuartzCore.h>
 #import "MapViewController.h"
+#import "BuildDetailView.h"
 
 @interface DetailView ()
 
@@ -193,7 +194,8 @@ NSString *objectIDFromTableView;
     NSLog(@"Done Button is clicked");
     if ([segueTag isEqualToString:@"buildDetailView"]) {
         NSLog(@"COMING FROM BDV");
-        [self dismissViewControllerAnimated:YES completion:nil];
+        [self performSegueWithIdentifier:@"UnwindDV" sender:self];
+        //[self dismissViewControllerAnimated:YES completion:nil];
     }
     else{
         [self dismissViewControllerAnimated:YES completion:nil];
@@ -201,6 +203,7 @@ NSString *objectIDFromTableView;
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    NSLog(@"SEGUE IDENT: %@", segue.identifier);
     if ([segue.identifier isEqualToString:@"DetailViewToMapView"]) {
         NSLog(@"segue detail view to map view prepared");
         [self dismissViewControllerAnimated:YES completion:nil];
@@ -212,17 +215,18 @@ NSString *objectIDFromTableView;
 -(void) whichObjectToShow{
     
     if ([segueTag isEqualToString:@"buildDetailView"]) {
+        NSLog(@"from buildDetailView");
         PFQuery *query = [PFQuery queryWithClassName:@"Place"];
-        [query whereKey:@"objectId" equalTo:self.objectID];
-        PFObject *object = [query getFirstObject];
-        name = [object objectForKey:@"name"];
-        category = [object objectForKey:@"category"];
-        adress = [object objectForKey:@"adress"];
-        imageFile = object[@"imageFile"];
+        [query orderByDescending:@"updatedAt"];
+        PFObject *aPlace = [query getFirstObject];
+        name = [aPlace objectForKey:@"name"];
+        category = [aPlace objectForKey:@"category"];
+        adress = [aPlace objectForKey:@"adress"];
+        imageFile = aPlace[@"imageFile"];
     }
     
     if ([segueTag isEqualToString:@"clickedObject"]) {
-        NSLog(@"tableView");
+        NSLog(@"from tableView");
         PFQuery *query = [PFQuery queryWithClassName:@"Place"];
         [query whereKey:@"objectId" equalTo:self.objectID];
         PFObject *object = [query getFirstObject];
