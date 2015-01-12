@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import Parse
 
-/*class RouteOverview : UIViewController,UITableViewDelegate,UITableViewDataSource{
+class RouteOverview : UIViewController,UITableViewDelegate,UITableViewDataSource{
     
     var tableView:UITableView = UITableView()
     var selectedItems :[Marker] = []
@@ -16,7 +17,6 @@ import UIKit
 
     
     override func viewDidLoad() {
-        
         //Add and Configure TableView
         tableView.frame = CGRectMake(10, 75, 300, 400)
         tableView.dataSource = self
@@ -31,15 +31,17 @@ import UIKit
         var navBar = UINavigationBar()
         navBar.frame = CGRectMake(self.view.bounds.minX,self.view.bounds.minY,self.view.bounds.width,70)
         navBar.backgroundColor = UIColor.grayColor()
-        var newRouteButton = UIButton.buttonWithType(UIButtonType.ContactAdd) as UIButton
-        newRouteButton.frame = CGRectMake(190,20,150,50)
-       // newRouteButton.setTitle("Add new Route", forState: UIControlState.Normal)
+        var newRouteButton = UIButton.buttonWithType(UIButtonType.System) as UIButton
+        newRouteButton.frame = CGRectMake(225,20,150,50)
+        newRouteButton.setImage(UIImage(named: "Add.png"), forState: UIControlState.Normal)
         newRouteButton.addTarget(self, action: "showRoutesAction:", forControlEvents: UIControlEvents.TouchUpInside)
         navBar.addSubview(newRouteButton)
-        var label = UILabel()
-        label.frame = CGRectMake(190,20,150,50)
-        label.text = "Test"
         self.view.addSubview(navBar)
+        var titelLabel = UILabel(frame: CGRectMake(self.view.frame.midX-50, -20, 120, 100))
+        titelLabel.text = "Route Overview"
+        titelLabel.textColor = UIColor.blackColor()
+        titelLabel.font = UIFont(name: "IowanOldStyle-Bold",size: 15)
+        self.view.addSubview(titelLabel)
         super.viewDidLoad()
     }
 
@@ -67,6 +69,10 @@ import UIKit
     }
     func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if(editingStyle == UITableViewCellEditingStyle.Delete && !RouteModel.sharedInstance.allRoutes.isEmpty){
+            var parseDelete = PFQuery(className: "Route")
+            parseDelete.whereKey("routeName", containsString: RouteModel.sharedInstance.allRoutes[indexPath.row].name)
+            var obj = parseDelete.findObjects()
+            obj[0].deleteEventually()
             RouteModel.sharedInstance.allRoutes.removeAtIndex(indexPath.row)
             tableView.reloadData()
         }
@@ -76,12 +82,12 @@ import UIKit
         self.selectedRow = indexPath.row
         self.performSegueWithIdentifier("RouteToRouteMapView", sender: self)
     }
-    /*override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if(segue.identifier == "RouteToRouteMapView"){
             var svc = segue.destinationViewController as RouteMapView
             svc.passedData = RouteModel.sharedInstance.allRoutes[selectedRow].orderderdMarkers
         }
-    }*/
+    }
     func showRoutesAction(sender:UIButton){
         self.performSegueWithIdentifier("RouteOverViewToRouteTableView", sender: self)
     }
@@ -98,4 +104,4 @@ import UIKit
     func unwindFromTableView(segue:UIStoryboardSegue){
         tableView.reloadData()
     }
-}*/
+}

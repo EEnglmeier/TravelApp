@@ -6,7 +6,8 @@
 //  Copyright (c) 2014 Eli. All rights reserved.
 //
 
-/*import UIKit
+import UIKit
+import Parse
 
 class RouteTableView : UIViewController,UITableViewDelegate,UITableViewDataSource{
     
@@ -55,10 +56,16 @@ class RouteTableView : UIViewController,UITableViewDelegate,UITableViewDataSourc
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "cell")
-        cell.textLabel.text = RouteModel.sharedInstance.allLocs[indexPath.item].name
-        cell.detailTextLabel?.text =  RouteModel.sharedInstance.allLocs[indexPath.item].address
-        return cell
+        var cell:UITableViewCell? = tableView.dequeueReusableCellWithIdentifier("cell") as? UITableViewCell
+        if !(cell==nil)
+        {
+            cell = UITableViewCell(style: UITableViewCellStyle.Subtitle,
+                reuseIdentifier: "cell")
+        }
+
+        cell!.textLabel.text = RouteModel.sharedInstance.allLocs[indexPath.item].name
+        cell!.detailTextLabel?.text =  RouteModel.sharedInstance.allLocs[indexPath.item].address
+        return cell!
     }
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
          self.selectedItems.append(RouteModel.sharedInstance.allLocs[indexPath.row])
@@ -70,7 +77,6 @@ class RouteTableView : UIViewController,UITableViewDelegate,UITableViewDataSourc
         if(segue.identifier == "DataToMap"){
             var svc = segue.destinationViewController as RouteMapView
             svc.passedData = selectedItems
-            svc.routeName = RouteModel.sharedInstance.allRoutes.last?.name
         }
     }
     
@@ -86,6 +92,14 @@ class RouteTableView : UIViewController,UITableViewDelegate,UITableViewDataSourc
             if(Array(arrayLiteral: self.textfieldInput.text)[0] != ""){
             let route = Route(markers: self.selectedItems, name: self.textfieldInput.text)
             RouteModel.sharedInstance.allRoutes.append(route)
+            var parseSave = PFObject(className: "Route")
+            parseSave.setObject(self.textfieldInput.text, forKey: "routeName")
+                var tempNames : [String] = []
+                for m in self.selectedItems{
+                    tempNames.append(m.name)
+                }
+            parseSave.setObject(tempNames, forKey: "listOfPoints")
+            parseSave.save()
             self.performSegueWithIdentifier("DataToMap", sender: self)}
             else{
             var inputAlert = UIAlertController(title:"Please name your Route", message:"" , preferredStyle: .Alert)
@@ -126,4 +140,4 @@ extension Array {
             self.removeAtIndex(index!)
         }
     }
-}*/
+}
