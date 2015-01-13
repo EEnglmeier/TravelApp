@@ -181,7 +181,7 @@ UIImagePickerController *pic;
     }
     
     //--- Wahl der Source
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Add a photo" message:@"Take a photo or choose from existing" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Choose from photo library", @"Take a photo", nil];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Add a photo" message:@"Use the camera or choose from existing" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Choose from photo library", @"Take a photo", nil];
     alert.tag = 1;
     [alert show];
 }
@@ -526,7 +526,7 @@ UIImagePickerController *pic;
     textField.borderStyle = UITextBorderStyleRoundedRect;
     textField.font = [UIFont systemFontOfSize:15];
     textField.placeholder = @"Enter a name..";
-    textField.autocorrectionType = UITextAutocorrectionTypeNo;
+    textField.autocorrectionType = UITextAutocorrectionTypeYes;
     textField.keyboardType = UIKeyboardAppearanceDefault;
     textField.returnKeyType = UIReturnKeyDone;
     textField.clearButtonMode = UITextFieldViewModeWhileEditing;

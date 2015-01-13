@@ -32,15 +32,15 @@ class RouteOverview : UIViewController,UITableViewDelegate,UITableViewDataSource
         navBar.frame = CGRectMake(self.view.bounds.minX,self.view.bounds.minY,self.view.bounds.width,70)
         navBar.backgroundColor = UIColor.grayColor()
         var newRouteButton = UIButton.buttonWithType(UIButtonType.System) as UIButton
-        newRouteButton.frame = CGRectMake(225,20,150,50)
-        newRouteButton.setImage(UIImage(named: "Add.png"), forState: UIControlState.Normal)
+        newRouteButton.frame = CGRectMake(220,25,150,50)
+        newRouteButton.setImage(UIImage(named: "Add_Route.png"), forState: UIControlState.Normal)
         newRouteButton.addTarget(self, action: "showRoutesAction:", forControlEvents: UIControlEvents.TouchUpInside)
         navBar.addSubview(newRouteButton)
         self.view.addSubview(navBar)
-        var titelLabel = UILabel(frame: CGRectMake(self.view.frame.midX-50, -20, 120, 100))
+        var titelLabel = UILabel(frame: CGRectMake(self.view.frame.midX-60, 0, 150, 100))
         titelLabel.text = "Route Overview"
         titelLabel.textColor = UIColor.blackColor()
-        titelLabel.font = UIFont(name: "IowanOldStyle-Bold",size: 15)
+        //titelLabel.font = UIFont(name: "IowanOldStyle-Bold",size: 15)
         self.view.addSubview(titelLabel)
         super.viewDidLoad()
     }

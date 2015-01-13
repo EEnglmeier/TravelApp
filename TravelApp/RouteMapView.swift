@@ -29,7 +29,7 @@ class RouteMapView : UIViewController,GMSMapViewDelegate{
         navBar.backgroundColor = UIColor.grayColor()
         self.view.addSubview(navBar)
         var backButton = UIButton.buttonWithType(UIButtonType.System) as UIButton
-        backButton.frame = CGRectMake(0,20,150,50)
+        backButton.frame = CGRectMake(0,25,150,50)
         backButton.setTitle("Back to Overview", forState: UIControlState.Normal)
         backButton.addTarget(self, action: "backAction:", forControlEvents: UIControlEvents.TouchUpInside)
         navBar.addSubview(backButton)

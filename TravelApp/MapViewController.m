@@ -57,12 +57,12 @@ PFGeoPoint *geoPoint;
     [self loadLocationManager];
     [self initLocation];
     [self initDisplay];
-    [self loadCurrentLocationMarker];
 }
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];
     
+    [self loadCurrentLocationMarker];
     [self fetchPlaces];
 }
 
@@ -73,7 +73,7 @@ PFGeoPoint *geoPoint;
 //**********************************************************************************/
 
 
-//--- locationManager
+//--- init, if !locationManager
 - (CLLocationManager *)locationManager{
     if (! _locationManager) _locationManager = [[CLLocationManager alloc] init];
     return _locationManager;
@@ -208,7 +208,7 @@ PFGeoPoint *geoPoint;
     //--- einmaliges Laden der aktuellen Position
     NSLog(@"initialised Location at: %@", self.locationManager.location);
     currentLocation = self.locationManager.location.coordinate;
-    GMSCameraPosition *cam = [GMSCameraPosition cameraWithTarget:currentLocation zoom:18];
+    GMSCameraPosition *cam = [GMSCameraPosition cameraWithTarget:currentLocation zoom:16];
     mapView_ = [GMSMapView mapWithFrame:CGRectZero camera:cam];
     mapView_.camera = cam;
     //--- mapView settings

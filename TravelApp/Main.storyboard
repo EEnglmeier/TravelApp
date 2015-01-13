@@ -255,10 +255,10 @@
         <image name="Route" width="25" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="rIm-7i-4wB"/>
+        <segue reference="T8E-Sw-Irp"/>
+        <segue reference="kow-mJ-7qC"/>
         <segue reference="lzU-1b-eKA"/>
         <segue reference="miQ-FJ-Nbk"/>
-        <segue reference="AIg-6e-Nap"/>
-        <segue reference="kow-mJ-7qC"/>
-        <segue reference="rIm-7i-4wB"/>
     </inferredMetricsTieBreakers>
 </document>

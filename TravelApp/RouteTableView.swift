@@ -29,7 +29,7 @@ class RouteTableView : UIViewController,UITableViewDelegate,UITableViewDataSourc
         
         //Add and Configure CreateRouteButton
         var createRouteButton = UIButton.buttonWithType(UIButtonType.System) as UIButton
-        createRouteButton.frame = CGRectMake(175,20,150,50)
+        createRouteButton.frame = CGRectMake(175,25,150,50)
         createRouteButton.setTitle("Create New Route", forState: UIControlState.Normal)
         createRouteButton.addTarget(self, action: "createRouteAction:", forControlEvents: UIControlEvents.TouchUpInside)
         
@@ -40,7 +40,7 @@ class RouteTableView : UIViewController,UITableViewDelegate,UITableViewDataSourc
         self.view.addSubview(navBar)
         navBar.addSubview(createRouteButton)
         var backButton = UIButton.buttonWithType(UIButtonType.System) as UIButton
-        backButton.frame = CGRectMake(20,20,50,50)
+        backButton.frame = CGRectMake(20,25,50,50)
         backButton.setTitle("Cancel", forState: UIControlState.Normal)
         backButton.addTarget(self, action: "backAction:", forControlEvents: UIControlEvents.TouchUpInside)
         navBar.addSubview(backButton)
