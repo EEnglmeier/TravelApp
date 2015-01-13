@@ -406,7 +406,7 @@ UIImagePickerController *pic;
         NSString *filename = [NSString stringWithFormat:@"%@.png", textField.text];
         PFFile *imageFile = [PFFile fileWithName:filename data:imageData];
         [pics setObject:imageFile forKey:@"imageFile"];
-        [pics setObject:textField.text forKey:@"name"];
+        [pics setObject:textField.text forKey:@"placeName"];
         
         // Show progress
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];

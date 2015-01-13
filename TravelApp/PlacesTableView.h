@@ -18,6 +18,7 @@
 @property (nonatomic, strong) NSMutableArray *arrayName;
 @property (nonatomic, strong) NSMutableArray *arrayAdress;
 @property (nonatomic, strong) NSMutableArray *arrayCategory;
+@property (nonatomic, strong) NSMutableArray *arrayImages;
 @property (nonatomic, strong) NSString *clickedObjectID;
 
 

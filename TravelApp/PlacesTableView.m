@@ -19,7 +19,7 @@
 //**********************************************************************************/
 
 @implementation PlacesTableView
-@synthesize theArray, theTableView, arrayName, arrayAdress, arrayCategory, clickedObjectID;
+@synthesize theArray, theTableView, arrayName, arrayAdress, arrayImages, arrayCategory, clickedObjectID;
 NSString *string, *string_ObjectToDelete;
 NSString *arrayName;
 NSString *arrayAdress;
@@ -150,10 +150,29 @@ NSString *arrayCategory;
     NSMutableArray *places = [[NSMutableArray alloc]init];
     NSMutableArray *address = [[NSMutableArray alloc]init];
     NSMutableArray *categories = [[NSMutableArray alloc]init];
+    NSMutableArray *images = [[NSMutableArray alloc]init];
     
     PFQuery *event_query = [PFQuery queryWithClassName:@"Place"];
     [event_query orderByDescending:@"updatedAt"];
     [event_query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        
+        if (!error) {
+            for (PFObject *object in objects) {
+                [places addObject:[object objectForKey:@"name"]];
+                [address addObject:[object objectForKey:@"adress"]];
+                [categories addObject:[object objectForKey:@"category"]];
+            }
+            arrayName = places;
+            arrayAdress = address;
+            arrayCategory = categories;
+            [theTableView reloadData];
+        }
+    }];
+    
+    
+    PFQuery *event_query1 = [PFQuery queryWithClassName:@"Pics"];
+    [event_query1 orderByDescending:@"updatedAt"];
+    [event_query1 findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         
         if (!error) {
             for (PFObject *object in objects) {

@@ -26,7 +26,7 @@ typedef void(^methodAWithCompletion)(BOOL);
 //
 //**********************************************************************************/
 
-@synthesize objectID, segueTag, name, category, adress, imageFile, allImages;
+@synthesize objectID, segueTag, name, category, adress, imageFile, allImages, test;
 int buttonsize1 = 60;
 int aPlaceLabelY = 460;
 float buttonBorderwidth1 = 1.7f;
@@ -42,6 +42,7 @@ UIImage *pickedImage;
 bool *finished;
 NSMutableArray *arrayAllImages;
 UIButton *button_Right, *button_Left;
+PFObject *aImage;
 
 
 ///*********************************************************************************
@@ -121,18 +122,17 @@ UIButton *button_Right, *button_Left;
         name = [aPlace objectForKey:@"name"];
         category = [aPlace objectForKey:@"category"];
         adress = [aPlace objectForKey:@"adress"];
-        PFQuery *queryImg = [PFQuery queryWithClassName:@"Pics"];
-        [query orderByDescending:@"name"];
-        PFObject *aImage = [queryImg getFirstObject];
-        imageFile = aImage[@"imageFile"];
-        [imageFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
-            if (!data) {
-                return NSLog(@"%@", error);
+        [self getImageWithCompletion:^(BOOL finished) {
+            if(finished){
+                NSLog(@"success");
             }
-            // Do something with the image
-            imageView.image = [UIImage imageWithData:data];
         }];
-     
+        
+    
+        //PFQuery *queryImg = [PFQuery queryWithClassName:@"Pics"];
+        //[query orderByDescending:@"name"];
+        //[query whereKey:@"name" equalTo:[PFObject objectWithoutDataWithClassName:@"Pics" objectId:name]];
+        //PFObject *aImage = [pictures getFirstObject];
     }
     
     if ([segueTag isEqualToString:@"clickedObject"]) {
@@ -166,8 +166,46 @@ UIButton *button_Right, *button_Left;
                 NSLog(@"success");
             }
         }];
+        [self getOneImage];
     }
 }
+
+- (void)getImageWithCompletion:(void (^) (BOOL success))completion
+{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, kNilOptions), ^{
+        
+        PFQuery *innerQuery = [PFQuery queryWithClassName:@"Place"];
+        [innerQuery whereKeyExists:@"name"];
+        PFQuery *query22 = [PFQuery queryWithClassName:@"Pics"];
+        [query22 whereKey:@"placeName" matchesKey:@"name" inQuery:innerQuery];
+        
+        [query22 findObjectsInBackgroundWithBlock:^(NSArray *results, NSError *error) {
+            //  will contain users with a hometown team with a winning record
+            if(!error){
+                test = results;
+            }
+            aImage = test[0];
+            NSLog(@"Successttttttttttttfully retrieved %lu images.", (unsigned long)test.count);
+        }];
+        imageFile = aImage[@"imageFile"];
+        [imageFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
+            if (!data) {
+                return NSLog(@"%@", error);
+            }
+            // Do something with the image
+            imageView.image = [UIImage imageWithData:data];
+        }];
+    });
+    completion(YES);
+    
+}
+
+- (void)getOneImage{
+    [self getImageWithCompletion:^(BOOL success) {
+        // check if thing worked.
+    }];
+}
+
 
 //*********************************************************************************
 //
@@ -177,7 +215,6 @@ UIButton *button_Right, *button_Left;
 
 - (void)downloadAllImages{
     [self methodAWithCompletion:^(BOOL success) {
-        // check if thing worked.
     }];
 }
 
@@ -190,6 +227,7 @@ UIButton *button_Right, *button_Left;
         [query whereKey:@"name" equalTo:name];
         [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
             if (!error) {
+                
                 for (PFObject *object in objects) {
                     [arrayAllImages addObject:object];
                 }
@@ -202,8 +240,6 @@ UIButton *button_Right, *button_Left;
                  // Do something with the image
                  imageView.image = [UIImage imageWithData:data];
                  }];
-                
-                
             }
             NSLog(@"Successfully retrieved %lu images.", (unsigned long)allImages.count);
         }];
