@@ -8,7 +8,7 @@
 
 import Foundation
 import Parse
-
+@objc
 class RouteModel{
     
     var allLocs : [Marker] = []
@@ -30,7 +30,7 @@ class RouteModel{
         var objName = o.objectForKey("name") as String
         var objAddress = o.objectForKey("adress") as String
         var objCat = o.objectForKey("category") as String
-       // pic.append(o.objectForKey("imageFile") as UIImage) // Data
+       // pic.append(o.objectForKey("imageFile") as UIImage))
         allLocs.append(Marker(longitude: geoObj.longitude, latitude: geoObj.latitude, name: objName, address: objAddress, category: objCat, images: pic))
             }
         }
@@ -81,12 +81,23 @@ class RouteModel{
         return result
     }
     
-    func removeAssociatedRoutes(rmMarker : Marker){
+    func removeMarkerByName(nm : String){
+        var rmMarker = self.getMarkerByName(nm)
+        allLocs.removeObject(rmMarker)
+    }
+    
+    func removeAssociatedRoutes(markerName:String){
+        var rmMarker = self.getMarkerByName(markerName)
         for var index = 0; index < allRoutes.count; ++index{
             if(allRoutes[index].containsMarker(rmMarker)){
-               allRoutes.removeAtIndex(index)
+                var parseDelete = PFQuery(className: "Route")
+                parseDelete.whereKey("routeName", containsString: allRoutes[index].name)
+                var obj = parseDelete.findObjects()
+                obj[0].deleteEventually()
+                allRoutes.removeAtIndex(index)
+            }
         }
-        }
+        self.updateAllData()
     }
     
     func updateMarker(longitude:Double,latitude:Double,name:String,address:String,category:String,images:[UIImage]){

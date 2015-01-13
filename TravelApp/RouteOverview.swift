@@ -24,7 +24,6 @@ class RouteOverview : UIViewController,UITableViewDelegate,UITableViewDataSource
         tableView.autoresizingMask = UIViewAutoresizing.FlexibleHeight
         tableView.allowsMultipleSelection = false
         tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "cell")
-        tableView.reloadData()
         self.view.addSubview(tableView)
         
     
@@ -45,6 +44,10 @@ class RouteOverview : UIViewController,UITableViewDelegate,UITableViewDataSource
         super.viewDidLoad()
     }
 
+    override func viewWillAppear(animated: Bool) {
+        tableView.reloadData()
+    }
+    
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if(!RouteModel.sharedInstance.allRoutes.isEmpty){
             tableView.allowsSelection = true

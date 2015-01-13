@@ -18,13 +18,12 @@ class RouteTableView : UIViewController,UITableViewDelegate,UITableViewDataSourc
     override func viewDidLoad() {
 
         //Add and Configure TableView
-        tableView.frame = CGRectMake(10, 75, 300, 400)
+        tableView.frame = CGRectMake(10, 75, 300, self.view.frame.size.height-75)
         tableView.dataSource = self
         tableView.delegate = self
         tableView.autoresizingMask = UIViewAutoresizing.FlexibleHeight
         tableView.allowsMultipleSelection = true
         tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "cell")
-        tableView.reloadData()
         self.view.addSubview(tableView)
         
         //Add and Configure CreateRouteButton
@@ -46,7 +45,9 @@ class RouteTableView : UIViewController,UITableViewDelegate,UITableViewDataSourc
         navBar.addSubview(backButton)
         super.viewDidLoad()
     }
- 
+    override func viewWillAppear(animated: Bool) {
+            tableView.reloadData()
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }

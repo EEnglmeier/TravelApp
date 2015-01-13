@@ -12,6 +12,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "MapViewController.h"
 #import "BuildDetailView.h"
+#import "TravelApp-Swift.h"
 
 @interface DetailView ()
 
@@ -80,6 +81,7 @@ UIButton *button_Right, *button_Left;
 }
 
 -(void)done{
+    [[RouteModel sharedInstance] updateAllData];
     NSLog(@"Done Button is clicked");
     if ([segueTag isEqualToString:@"buildDetailView"]) {
         [self backToMap];

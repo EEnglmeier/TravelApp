@@ -44,6 +44,8 @@ class RouteMapView : UIViewController,GMSMapViewDelegate{
             pin.appearAnimation = kGMSMarkerAnimationPop
             pin.icon = UIImage(named:"pin_"+passedData[index].category)
             pin.userData = passedData[index]
+            pin.title = passedData[index].name
+            pin.snippet = passedData[index].address
             pin.map = mapView
         if(getTotalDist(passedData) < maxRouteDist){
             if(index < passedData.count-1){

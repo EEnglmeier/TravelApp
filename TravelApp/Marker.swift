@@ -28,5 +28,5 @@ import Foundation
 }
 
 func == (lhs:Marker,rhs:Marker) -> Bool{
-    return lhs.name == rhs.name && lhs.latitude == rhs.latitude && lhs.longitude == rhs.longitude && lhs.address == rhs.address
+    return lhs.name == rhs.name && lhs.latitude == rhs.latitude && lhs.longitude == rhs.longitude && lhs.address == rhs.address && lhs.category == rhs.category
 }

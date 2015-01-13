@@ -10,7 +10,7 @@
 #import "PlacesTableView.h"
 #import <Parse/Parse.h>
 #import "DetailView.h"
-
+#import "TravelApp-Swift.h"
 
 ///*********************************************************************************
 //
@@ -121,6 +121,8 @@ NSString *arrayCategory;
         NSMutableArray* arrayNameDelete = arrayName;
         NSMutableArray* arrayAdressDelete = arrayAdress;
         NSMutableArray* arrayCategoryDelete = arrayCategory;
+        [[RouteModel sharedInstance] removeAssociatedRoutes:arrayName[indexPath.row]];
+        [[RouteModel sharedInstance] removeMarkerByName:arrayName[indexPath.row]];
         [self deleteFromParseTable:indexPath];
         [arrayNameDelete  removeObjectAtIndex:indexPath.row];
         [arrayAdressDelete removeObjectAtIndex:indexPath.row];
@@ -256,7 +258,7 @@ NSString *arrayCategory;
 //
 //**********************************************************************************/
 -(void)initDisplay{
-    theTableView = [[UITableView alloc] initWithFrame:CGRectMake(10, 80, 300, self.view.frame.size.height) style:UITableViewStylePlain];
+    theTableView = [[UITableView alloc] initWithFrame:CGRectMake(10, 75, 300, self.view.frame.size.height-80) style:UITableViewStylePlain];
     theTableView.delegate = self;
     theTableView.dataSource = self;
     [theTableView reloadData];
