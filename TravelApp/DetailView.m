@@ -27,7 +27,7 @@ typedef void(^methodAWithCompletion)(BOOL);
 //
 //**********************************************************************************/
 
-@synthesize objectID, segueTag, name, category, adress, imageFile, allImages;
+@synthesize objectID, segueTag, name, category, adress, imageFile, allImages, getImage;
 int buttonsize1 = 60;
 int aPlaceLabelY = 460;
 float buttonBorderwidth1 = 1.7f;
@@ -41,7 +41,7 @@ bool _imageChosen = NO;
 UIButton *nextImage;
 UIImage *pickedImage;
 bool *finished;
-NSMutableArray *arrayAllImages;
+NSMutableArray *arrayAllImages, *obj;
 UIButton *button_Right, *button_Left;
 
 
@@ -124,16 +124,60 @@ UIButton *button_Right, *button_Left;
         category = [aPlace objectForKey:@"category"];
         adress = [aPlace objectForKey:@"adress"];
         PFQuery *queryImg = [PFQuery queryWithClassName:@"Pics"];
-        [queryImg orderByDescending:@"placeName"];
-        PFObject *aImage = [queryImg getFirstObject];
-        imageFile = aImage[@"imageFile"];
-        [imageFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
+        [queryImg whereKey:@"placeName" equalTo:name];
+        [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:2]];
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, kNilOptions), ^{
+            [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:2]];
+            PFObject *aImage = [queryImg getFirstObject];
+            [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:2]];
+            imageFile = aImage[@"imageFile"];
+            [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:2]];
+            [imageFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
+            [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:2]];
             if (!data) {
+                [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:2]];
                 return NSLog(@"%@", error);
             }
             // Do something with the image
             imageView.image = [UIImage imageWithData:data];
+            }];
+        });
+        
+        
+        
+        
+        /*PFQuery *getPlaces = [PFQuery queryWithClassName:@"Place"];
+        
+        //[getPlaces orderByAscending:@"celebid"];
+        
+        PFQuery *getPics = [PFQuery queryWithClassName:@"Pic"];
+        
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, kNilOptions), ^{
+            [getPics whereKey:@"placeName" matchesKey:@"name" inQuery:getPlaces];
+        [getPics findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+            if (!error) {
+                for (PFObject *object in objects) {
+                    [obj addObject:object];
+                }
+                getImage = obj;
+            }
+            
+            PFObject *aImage = getImage[0];
+            
+            imageFile = aImage[@"imageFile"];
+            [imageFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
+                if (!data) {
+                    return NSLog(@"%@", error);
+                }
+                // Do something with the image
+                imageView.image = [UIImage imageWithData:data];
+            }];
         }];
+            
+            
+        });*/
+        
+        
         
     }
     

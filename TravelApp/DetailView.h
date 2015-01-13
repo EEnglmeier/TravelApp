@@ -20,6 +20,7 @@
 @property (nonatomic, strong) NSString *adress;
 @property (nonatomic, strong) PFFile *imageFile;
 @property (nonatomic, strong) NSMutableArray *allImages;
+@property (nonatomic, strong) NSMutableArray *getImage;
 
 @property (nonatomic, strong) NSArray *test;
 
