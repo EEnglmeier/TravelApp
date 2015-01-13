@@ -85,12 +85,21 @@ class RouteTableView : UIViewController,UITableViewDelegate,UITableViewDataSourc
         self.performSegueWithIdentifier("RouteTableViewToRoute", sender: self)
     }
     
+    func routeIsUnique(rName : String) -> Bool {
+        for routes in RouteModel.sharedInstance.allRoutes{
+            if (routes.name == rName){
+                return false
+            }
+        }
+        return true
+    }
+    
     func createRouteAction(sender:UIButton){
-        if(self.selectedItems.count > 1){
+        if(self.selectedItems.count > 1 ){
         var inputAlert = UIAlertController(title:"Enter Route Name", message:"" , preferredStyle: .Alert)
         inputAlert.addAction(UIAlertAction(title: "Create", style: UIAlertActionStyle.Default, handler: { (action) -> Void in
             self.textfieldInput = inputAlert.textFields![0] as UITextField
-            if(Array(arrayLiteral: self.textfieldInput.text)[0] != ""){
+            if(Array(arrayLiteral: self.textfieldInput.text)[0] != "" && self.routeIsUnique(self.textfieldInput.text)){
             let route = Route(markers: self.selectedItems, name: self.textfieldInput.text)
             RouteModel.sharedInstance.allRoutes.append(route)
             var parseSave = PFObject(className: "Route")
@@ -103,7 +112,7 @@ class RouteTableView : UIViewController,UITableViewDelegate,UITableViewDataSourc
             parseSave.save()
             self.performSegueWithIdentifier("DataToMap", sender: self)}
             else{
-            var inputAlert = UIAlertController(title:"Please name your Route", message:"" , preferredStyle: .Alert)
+            var inputAlert = UIAlertController(title:"Enter unique Route Name", message:"" , preferredStyle: .Alert)
             inputAlert.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Default, handler: { (action) -> Void in
                     self.selectedItems.removeAll(keepCapacity: false)
                     self.tableView.reloadData()

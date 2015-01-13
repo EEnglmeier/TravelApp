@@ -85,13 +85,15 @@ class RouteMapView : UIViewController,GMSMapViewDelegate{
         infoWindow.catView.image = UIImage(named: pin.category + ".jpg")
         infoWindow.pictureView.image = pin.pictures[0]
         return infoWindow
-    }*/
-    
-    func backAction(sender:UIButton){
-        self.performSegueWithIdentifier("RouteMapViewToRoute", sender: self)
     }
     
     func navAction(sender:UIButton){
+    }
+    
+    */
+    
+    func backAction(sender:UIButton){
+        self.performSegueWithIdentifier("RouteMapViewToRoute", sender: self)
     }
     
     func fetchDirectionsFrom(from: CLLocationCoordinate2D, to: CLLocationCoordinate2D, completion: ((String?) -> Void)) -> ()
