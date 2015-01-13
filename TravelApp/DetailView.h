@@ -18,6 +18,7 @@
 @property (nonatomic, strong) NSString *category;
 @property (nonatomic, strong) NSString *adress;
 @property (nonatomic, strong) PFFile *imageFile;
+@property (nonatomic, strong) NSMutableArray *allImages;
 
 - (void)backToMap;
 

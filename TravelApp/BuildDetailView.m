@@ -379,6 +379,7 @@ UIImagePickerController *pic;
 
 -(void)saveLocation{
     PFObject *object = [PFObject objectWithClassName:@"Place"];
+    PFObject *pics = [PFObject objectWithClassName:@"Pics"];
     
     if ([locationCategory isEqualToString:@""]) {
         UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Attention:"
@@ -404,7 +405,8 @@ UIImagePickerController *pic;
         NSData *imageData = UIImageJPEGRepresentation(takenImage, 0.8);
         NSString *filename = [NSString stringWithFormat:@"%@.png", textField.text];
         PFFile *imageFile = [PFFile fileWithName:filename data:imageData];
-        [object setObject:imageFile forKey:@"imageFile"];
+        [pics setObject:imageFile forKey:@"imageFile"];
+        [pics setObject:textField.text forKey:@"name"];
         
         // Show progress
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
@@ -421,16 +423,31 @@ UIImagePickerController *pic;
         [object setObject:geoPoint forKey:@"geoData"];
         
         [object saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-        [hud hide:YES];
+            //[hud hide:YES];
             
             if (!error) {
-
+                [pics saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                    [hud hide:YES];
+                    
+                    if (!error) {
+                        
+                        
+                        
+                        
+                        // Dismiss the controller
+                        //[self dismissViewControllerAnimated:YES completion:nil];
+                    } else {
+                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Upload Failure" message:[error localizedDescription] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                        [alert show];
+                    }
+                }];
+                
                 // Reset Flags
                 [self resetView];
                 [self performSegueWithIdentifier:@"BuildDetailViewToDetailView" sender:self];
                 // Notify table view to reload the recipes from Parse cloud
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshTable" object:self];
-            
+                
                 
                 // Dismiss the controller
                 //[self dismissViewControllerAnimated:YES completion:nil];
@@ -439,6 +456,7 @@ UIImagePickerController *pic;
                 [alert show];
             }
         }];
+
     }
 }
 

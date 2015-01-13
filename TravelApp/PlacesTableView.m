@@ -5,7 +5,6 @@
 //  Created by Zenib Awan on 09.01.15.
 //  Copyright (c) 2015 Eli. All rights reserved.
 //
-//
 
 
 #import "PlacesTableView.h"
@@ -13,6 +12,11 @@
 #import "DetailView.h"
 
 
+///*********************************************************************************
+//
+// variables
+//
+//**********************************************************************************/
 
 @implementation PlacesTableView
 @synthesize theArray, theTableView, arrayName, arrayAdress, arrayCategory, clickedObjectID;
@@ -21,22 +25,16 @@ NSString *arrayName;
 NSString *arrayAdress;
 NSString *arrayCategory;
 
+///*********************************************************************************
+//
+// viewDidLoad
+//
+//**********************************************************************************/
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    theTableView = [[UITableView alloc] initWithFrame:CGRectMake(10, 80, 300, self.view.frame.size.height) style:UITableViewStylePlain];
-    theTableView.delegate = self;
-    theTableView.dataSource = self;
-    [theTableView reloadData];
-    [self.view addSubview:theTableView];
-    
-    UINavigationBar *navBarLocation = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 70)];
-    navBarLocation.backgroundColor = [UIColor grayColor];
-    UINavigationItem *navItemLocation = [[UINavigationItem alloc] init];
-    navItemLocation.title = @"Places";
-    navBarLocation.items = @[navItemLocation];
-    [[self view] addSubview: navBarLocation];
-    
+    [self initDisplay];
     [self gettingAllSearchResults];
 }
 
@@ -44,7 +42,11 @@ NSString *arrayCategory;
     [super viewDidUnload];
 }
 
-
+///*********************************************************************************
+//
+// delegate methods
+//
+//**********************************************************************************/
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     // Return the number of sections.
@@ -113,30 +115,6 @@ NSString *arrayCategory;
     [self goToDetailView];
 }
 
-
-- (void) gettingAllSearchResults{
-    NSMutableArray *places = [[NSMutableArray alloc]init];
-    NSMutableArray *address = [[NSMutableArray alloc]init];
-    NSMutableArray *categories = [[NSMutableArray alloc]init];
-    
-    PFQuery *event_query = [PFQuery queryWithClassName:@"Place"];
-    [event_query orderByDescending:@"updatedAt"];
-    [event_query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-        
-        if (!error) {
-            for (PFObject *object in objects) {
-                [places addObject:[object objectForKey:@"name"]];
-                [address addObject:[object objectForKey:@"adress"]];
-                [categories addObject:[object objectForKey:@"category"]];
-            }
-            arrayName = places;
-            arrayAdress = address;
-            arrayCategory = categories;
-            [theTableView reloadData];
-        }
-    }];
-}
-
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         //add code here for when you hit delete
@@ -162,6 +140,41 @@ NSString *arrayCategory;
     return YES;
 }
 
+///*********************************************************************************
+//
+// load all places in arrays
+//
+//**********************************************************************************/
+
+- (void) gettingAllSearchResults{
+    NSMutableArray *places = [[NSMutableArray alloc]init];
+    NSMutableArray *address = [[NSMutableArray alloc]init];
+    NSMutableArray *categories = [[NSMutableArray alloc]init];
+    
+    PFQuery *event_query = [PFQuery queryWithClassName:@"Place"];
+    [event_query orderByDescending:@"updatedAt"];
+    [event_query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        
+        if (!error) {
+            for (PFObject *object in objects) {
+                [places addObject:[object objectForKey:@"name"]];
+                [address addObject:[object objectForKey:@"adress"]];
+                [categories addObject:[object objectForKey:@"category"]];
+            }
+            arrayName = places;
+            arrayAdress = address;
+            arrayCategory = categories;
+            [theTableView reloadData];
+        }
+    }];
+}
+
+///*********************************************************************************
+//
+// delete the selected cell
+//
+//**********************************************************************************/
+
 - (void)deleteFromParseTable:(NSIndexPath *)indexToDelete {
     string_ObjectToDelete = [theTableView cellForRowAtIndexPath:indexToDelete].textLabel.text;
     PFQuery *query = [PFQuery queryWithClassName:@"Place"];
@@ -180,12 +193,30 @@ NSString *arrayCategory;
         }
     }];
     
+    PFQuery *query1 = [PFQuery queryWithClassName:@"Pics"];
+    [query1 whereKey:@"name" equalTo:string_ObjectToDelete];
+    [query1 findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if (!error) {
+            // The find succeeded.
+            NSLog(@"Successfully retrieved %lu scores.", (unsigned long)objects.count);
+            // Do something with the found objects
+            for (PFObject *object in objects) {
+                [object deleteInBackground];
+            }
+        } else {
+            // Log details of the failure
+            NSLog(@"Error: %@ %@", error, [error userInfo]);
+        }
+    }];
+    
 }
 
--(void)goToDetailView{
-    [self performSegueWithIdentifier:@"ListeToDetailView" sender:self];
-}
 
+///*********************************************************************************
+//
+// prepare for segue
+//
+//**********************************************************************************/
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     PFQuery *query = [PFQuery queryWithClassName:@"Place"];
     [query whereKey:@"name" equalTo:string];
@@ -200,35 +231,30 @@ NSString *arrayCategory;
     }
 }
 
--(UIImage *)scaleImage:(UIImage *)image toSize:(CGSize)newSize {
+///*********************************************************************************
+//
+// initDisplay
+//
+//**********************************************************************************/
+-(void)initDisplay{
+    theTableView = [[UITableView alloc] initWithFrame:CGRectMake(10, 80, 300, self.view.frame.size.height) style:UITableViewStylePlain];
+    theTableView.delegate = self;
+    theTableView.dataSource = self;
+    [theTableView reloadData];
+    [self.view addSubview:theTableView];
     
-    float width = newSize.width;
-    float height = newSize.height;
-    
-    UIGraphicsBeginImageContext(newSize);
-    CGRect rect = CGRectMake(0, 0, width, height);
-    
-    float widthRatio = image.size.width / width;
-    float heightRatio = image.size.height / height;
-    float divisor = widthRatio > heightRatio ? widthRatio : heightRatio;
-    
-    width = image.size.width / divisor;
-    height = image.size.height / divisor;
-    
-    rect.size.width  = width;
-    rect.size.height = height;
-    
-    if(height < width)
-        rect.origin.y = height / 3;
-    [image drawInRect: rect];
-    
-    UIImage *smallImage = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    
-    return smallImage;
-    
+    UINavigationBar *navBarLocation = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 70)];
+    navBarLocation.backgroundColor = [UIColor grayColor];
+    UINavigationItem *navItemLocation = [[UINavigationItem alloc] init];
+    navItemLocation.title = @"Places";
+    navBarLocation.items = @[navItemLocation];
+    [[self view] addSubview: navBarLocation];
 }
 
+-(void)goToDetailView{
+    [self performSegueWithIdentifier:@"ListeToDetailView" sender:self];
+    
+}
 
 @end
 

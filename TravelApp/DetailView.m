@@ -18,6 +18,7 @@
 @end
 
 @implementation DetailView
+typedef void(^methodAWithCompletion)(BOOL);
 
 ///*********************************************************************************
 //
@@ -25,15 +26,22 @@
 //
 //**********************************************************************************/
 
-@synthesize objectID, segueTag, name, category, adress, imageFile;
+@synthesize objectID, segueTag, name, category, adress, imageFile, allImages;
 int buttonsize1 = 60;
-int aPlaceLabelY = 445;
+int aPlaceLabelY = 460;
 float buttonBorderwidth1 = 1.7f;
 NSString  *geoName;
 UIImageView *imageView;
 PFFile *imageFile;
 NSString *objectIDFromMapView;
 NSString *objectIDFromTableView;
+UIImagePickerController *pic;
+bool _imageChosen = NO;
+UIButton *nextImage;
+UIImage *pickedImage;
+bool *finished;
+NSMutableArray *arrayAllImages;
+UIButton *button_Right, *button_Left;
 
 
 ///*********************************************************************************
@@ -113,7 +121,18 @@ NSString *objectIDFromTableView;
         name = [aPlace objectForKey:@"name"];
         category = [aPlace objectForKey:@"category"];
         adress = [aPlace objectForKey:@"adress"];
-        imageFile = aPlace[@"imageFile"];
+        PFQuery *queryImg = [PFQuery queryWithClassName:@"Pics"];
+        [query orderByDescending:@"name"];
+        PFObject *aImage = [queryImg getFirstObject];
+        imageFile = aImage[@"imageFile"];
+        [imageFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
+            if (!data) {
+                return NSLog(@"%@", error);
+            }
+            // Do something with the image
+            imageView.image = [UIImage imageWithData:data];
+        }];
+     
     }
     
     if ([segueTag isEqualToString:@"clickedObject"]) {
@@ -124,8 +143,13 @@ NSString *objectIDFromTableView;
         name = [object objectForKey:@"name"];
         category = [object objectForKey:@"category"];
         adress = [object objectForKey:@"adress"];
-        imageFile = object[@"imageFile"];
+        [self methodAWithCompletion:^(BOOL finished) {
+            if(finished){
+                NSLog(@"success");
+            }
+        }];
     }
+    
     if([segueTag isEqualToString:@"clickedPin"]){
         PFQuery *query = [PFQuery queryWithClassName:@"Place"];
         [query whereKey:@"objectId" equalTo:self.objectID];
@@ -133,17 +157,196 @@ NSString *objectIDFromTableView;
         name = [object objectForKey:@"name"];
         category = [object objectForKey:@"category"];
         adress = [object objectForKey:@"adress"];
-        imageFile = object[@"imageFile"];
+        /*PFQuery *queryImg = [PFQuery queryWithClassName:@"Pics"];
+        [query orderByDescending:@"name"];
+        PFObject *aImage = [queryImg getFirstObject];
+        imageFile = aImage[@"imageFile"];*/
+        [self methodAWithCompletion:^(BOOL finished) {
+            if(finished){
+                NSLog(@"success");
+            }
+        }];
     }
 }
 
+//*********************************************************************************
+//
+// Load Images from one Place in Array
+//
+//**********************************************************************************/
+
+- (void)downloadAllImages{
+    [self methodAWithCompletion:^(BOOL success) {
+        // check if thing worked.
+    }];
+}
+
+- (void)methodAWithCompletion:(void (^) (BOOL success))completion
+{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, kNilOptions), ^{
+        
+        arrayAllImages = [[NSMutableArray alloc]init];
+        PFQuery *query = [PFQuery queryWithClassName:@"Pics"];
+        [query whereKey:@"name" equalTo:name];
+        [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+            if (!error) {
+                for (PFObject *object in objects) {
+                    [arrayAllImages addObject:object];
+                }
+                allImages = arrayAllImages;
+                imageFile = allImages[0][@"imageFile"];
+                 [imageFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
+                 if (!data) {
+                 return NSLog(@"%@", error);
+                 }
+                 // Do something with the image
+                 imageView.image = [UIImage imageWithData:data];
+                 }];
+                
+                
+            }
+            NSLog(@"Successfully retrieved %lu images.", (unsigned long)allImages.count);
+        }];
+    });
+    completion(YES);
+    
+}
+
+//*********************************************************************************
+//
+// show other images from one place
+//
+//**********************************************************************************/
+
+-(void) pressRightForNextImage{
+    NSLog(@"right");
+}
+
+-(void) pressLeftForPreviousImage{
+    NSLog(@"left");
+}
+
+
+
 ///*********************************************************************************
+//
+// imagePicker
+//
+//**********************************************************************************/
+
+- (void) initImagePicker{
+    
+    //--- Wenn keine camera vorhanden
+    if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+        
+        UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                              message:@"Device has no camera"
+                                                             delegate:nil
+                                                    cancelButtonTitle:@"OK"
+                                                    otherButtonTitles: nil];
+        [myAlertView show];
+    }
+    
+    //--- Wahl der Source
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Add a photo" message:@"Take a photo or choose from existing" delegate:self cancelButtonTitle:nil otherButtonTitles:@"Choose from photo library", @"Take a photo", nil];
+    alert.tag = 1;
+    [alert show];
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    NSString *title = [alertView buttonTitleAtIndex:buttonIndex];
+    if ([title isEqualToString:@"Take a photo"]){
+        [self takePhoto];
+    } else if ([title isEqualToString:@"Choose from photo library"]){
+        [self selectPhoto];
+    }
+}
+
+- (void)takePhoto{
+    
+    UIImagePickerController *pic = [[UIImagePickerController alloc] init];
+    pic.delegate = self;
+    pic.allowsEditing = YES;
+    pic.sourceType = UIImagePickerControllerSourceTypeCamera;
+    pic.navigationBarHidden = YES;
+    [self presentViewController:pic animated:YES completion:^{ _imageChosen = YES; }];
+    NSLog(@"Bild durch camera");
+}
+
+
+- (IBAction)selectPhoto{
+    
+    UIImagePickerController *pic = [[UIImagePickerController alloc] init];
+    pic.delegate = self;
+    pic.allowsEditing = YES;
+    pic.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    pic.navigationBarHidden = YES;
+    [self presentViewController:pic animated:YES completion:^{ _imageChosen = YES; }];
+    NSLog(@"Bild durch Library");
+}
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)pic {
+    [pic dismissViewControllerAnimated:YES completion:^{
+        [self resetView];
+        [self performSegueWithIdentifier:@"BuildDetailViewToMapView" sender:self];
+    }];
+}
+
+- (void) resetView{
+    _imageChosen = NO;
+}
+
+- (void)imagePickerController:(UIImagePickerController *)pic didFinishPickingImage:(UIImage *)image editingInfo:(NSDictionary *)editingInfo{
+    pickedImage = image;
+    _imageChosen = YES;
+    nextImage = [[UIButton alloc] init];
+    UIImage *img1 = [UIImage imageNamed:@"Arrow"];
+    [nextImage setImage:img1 forState:UIControlStateNormal];
+    [nextImage setFrame:CGRectMake(85, 430, 0, 0)];
+    [nextImage addTarget:self action:@selector(newMethod:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:nextImage];
+    //self->takenImage = image;
+    [pic dismissViewControllerAnimated:NO completion:nil];
+    [self saveImageToParse];
+}
+
+
+///*********************************************************************************
+//
+// save pickedImage to Parse
+//
+//**********************************************************************************/
+
+-(void)saveImageToParse{
+    PFObject *object = [PFObject objectWithClassName:@"Pics"];
+    NSData *imageData = UIImageJPEGRepresentation(pickedImage, 0.8);
+    NSString *filename = [NSString stringWithFormat:@"test.png"];
+    PFFile *imageFile = [PFFile fileWithName:filename data:imageData];
+    [object setObject:imageFile forKey:@"imageFile"];
+    [object setObject:name forKey:@"name"];
+    
+    
+    [object saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        //[hud hide:YES];
+        
+        if (!error) {
+            
+        } else {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Upload Failure" message:[error localizedDescription] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+            [alert show];
+        }
+    }];
+}
+
+////*********************************************************************************
 //
 // initDisplay
 //
 //**********************************************************************************/
 
 - (void)initDisplay{
+    
+    
     UINavigationBar *navBarLocation = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 70)];
     navBarLocation.backgroundColor = [UIColor grayColor];
     UINavigationItem *navItemLocation = [[UINavigationItem alloc] init];
@@ -154,18 +357,17 @@ NSString *objectIDFromTableView;
     [[self view] addSubview: navBarLocation];
     
     imageView = [[UIImageView alloc] initWithFrame:CGRectMake(85, 90, 150, 150)];
-    [imageFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
-        if (!data) {
-            return NSLog(@"%@", error);
-        }
-        // Do something with the image
-        imageView.image = [UIImage imageWithData:data];
-    }];
     [[self view] addSubview: imageView];
     
     [[UIApplication sharedApplication] setStatusBarHidden:YES];
     
-    UILabel *locationLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 265, self.view.frame.size.width, 40)];
+    UIButton *addImage = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [addImage addTarget:self action:@selector(initImagePicker) forControlEvents:UIControlEventTouchUpInside];
+    [addImage setTitle:@"Add Image +" forState:UIControlStateNormal];
+    addImage.frame = CGRectMake(80.0, 240.0, 160.0, 40.0);
+    [self.view addSubview:addImage];
+    
+    UILabel *locationLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 285, self.view.frame.size.width, 40)];
     locationLabel.text = [@"     " stringByAppendingString: name];
     locationLabel.font = [UIFont systemFontOfSize:15];
     locationLabel.layer.borderColor = [UIColor grayColor].CGColor;
@@ -173,7 +375,7 @@ NSString *objectIDFromTableView;
     [self.view addSubview:locationLabel];
     
     
-    UILabel *locAdress = [[UILabel alloc] initWithFrame:CGRectMake(20, 325, 280, 40)];
+    UILabel *locAdress = [[UILabel alloc] initWithFrame:CGRectMake(20, 345, 280, 40)];
     locAdress.text = adress;
     //locAdress.lineBreakMode = UILineBreakModeWordWrap;
     locAdress.numberOfLines = 2;
@@ -182,10 +384,25 @@ NSString *objectIDFromTableView;
     
     
     UIButton *locationButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    locationButton.frame = CGRectMake(125, 395, buttonsize1, buttonsize1);
+    locationButton.frame = CGRectMake(125, 410, buttonsize1, buttonsize1);
     locationButton.clipsToBounds = YES;
     locationButton.layer.cornerRadius = buttonsize1/2.0f;
     locationButton.layer.borderWidth=buttonBorderwidth1;
+    
+    if ([segueTag isEqualToString:@"clickedObject"]) {
+    
+        button_Right = [UIButton buttonWithType:UIButtonTypeCustom];
+        button_Right.frame = CGRectMake(250, 157, 25, 25);
+        [button_Right setImage:[UIImage imageNamed:@"Arrow"] forState:UIControlStateNormal];
+        [button_Right addTarget: self action: @selector(pressRightForNextImage) forControlEvents: UIControlEventTouchUpInside];
+        [self.view addSubview:button_Right];
+        
+        button_Left = [UIButton buttonWithType:UIButtonTypeCustom];
+        button_Left.frame = CGRectMake(40, 145, 50, 50);
+        [button_Left setImage:[UIImage imageNamed:@"ArrowLeft"] forState:UIControlStateNormal];
+        [button_Left addTarget: self action: @selector(pressLeftForPreviousImage) forControlEvents: UIControlEventTouchUpInside];
+        [self.view addSubview:button_Left];
+    }
     
     if([category isEqual: @"shopping"]){
         
@@ -296,4 +513,7 @@ NSString *objectIDFromTableView;
         [self.view addSubview:locationLabel];
     }
 }
+
+
+
 @end
