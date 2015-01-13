@@ -184,17 +184,18 @@ PFObject *aImage;
             if(!error){
                 test = results;
             }
-            aImage = test[0];
+            //aImage = test[0];
+            imageFile = test[0][@"imageFile"];
+            [imageFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
+                if (!data) {
+                    return NSLog(@"%@", error);
+                }
+                // Do something with the image
+                imageView.image = [UIImage imageWithData:data];
+            }];
             NSLog(@"Successttttttttttttfully retrieved %lu images.", (unsigned long)test.count);
         }];
-        imageFile = aImage[@"imageFile"];
-        [imageFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
-            if (!data) {
-                return NSLog(@"%@", error);
-            }
-            // Do something with the image
-            imageView.image = [UIImage imageWithData:data];
-        }];
+        
     });
     completion(YES);
     
@@ -256,6 +257,7 @@ PFObject *aImage;
 
 -(void) pressRightForNextImage{
     NSLog(@"right");
+    NSLog(@"Successfully retrieved %lu images.", (unsigned long)allImages.count);
 }
 
 -(void) pressLeftForPreviousImage{
