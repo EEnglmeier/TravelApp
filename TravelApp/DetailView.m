@@ -73,7 +73,11 @@ NSString *objectIDFromTableView;
 
 -(void)done{
     NSLog(@"Done Button is clicked");
-    [self backToMap];
+    if ([segueTag isEqualToString:@"buildDetailView"]) {
+        [self backToMap];
+    } else {
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }
     
 }
 

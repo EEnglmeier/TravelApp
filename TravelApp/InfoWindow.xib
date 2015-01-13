@@ -48,6 +48,6 @@
     </objects>
     <resources>
         <image name="Arrow" width="50" height="50"/>
-        <image name="InfoWindow" width="300" height="100"/>
+        <image name="InfoWindow" width="150" height="50"/>
     </resources>
 </document>
