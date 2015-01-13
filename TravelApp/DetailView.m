@@ -26,7 +26,7 @@ typedef void(^methodAWithCompletion)(BOOL);
 //
 //**********************************************************************************/
 
-@synthesize objectID, segueTag, name, category, adress, imageFile, allImages, test;
+@synthesize objectID, segueTag, name, category, adress, imageFile, allImages;
 int buttonsize1 = 60;
 int aPlaceLabelY = 460;
 float buttonBorderwidth1 = 1.7f;
@@ -42,7 +42,6 @@ UIImage *pickedImage;
 bool *finished;
 NSMutableArray *arrayAllImages;
 UIButton *button_Right, *button_Left;
-PFObject *aImage;
 
 
 ///*********************************************************************************
@@ -122,17 +121,18 @@ PFObject *aImage;
         name = [aPlace objectForKey:@"name"];
         category = [aPlace objectForKey:@"category"];
         adress = [aPlace objectForKey:@"adress"];
-        [self getImageWithCompletion:^(BOOL finished) {
-            if(finished){
-                NSLog(@"success");
+        PFQuery *queryImg = [PFQuery queryWithClassName:@"Pics"];
+        [queryImg orderByDescending:@"placeName"];
+        PFObject *aImage = [queryImg getFirstObject];
+        imageFile = aImage[@"imageFile"];
+        [imageFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
+            if (!data) {
+                return NSLog(@"%@", error);
             }
+            // Do something with the image
+            imageView.image = [UIImage imageWithData:data];
         }];
         
-    
-        //PFQuery *queryImg = [PFQuery queryWithClassName:@"Pics"];
-        //[query orderByDescending:@"name"];
-        //[query whereKey:@"name" equalTo:[PFObject objectWithoutDataWithClassName:@"Pics" objectId:name]];
-        //PFObject *aImage = [pictures getFirstObject];
     }
     
     if ([segueTag isEqualToString:@"clickedObject"]) {
@@ -158,55 +158,16 @@ PFObject *aImage;
         category = [object objectForKey:@"category"];
         adress = [object objectForKey:@"adress"];
         /*PFQuery *queryImg = [PFQuery queryWithClassName:@"Pics"];
-        [query orderByDescending:@"name"];
-        PFObject *aImage = [queryImg getFirstObject];
-        imageFile = aImage[@"imageFile"];*/
+         [query orderByDescending:@"placeName"];
+         PFObject *aImage = [queryImg getFirstObject];
+         imageFile = aImage[@"imageFile"];*/
         [self methodAWithCompletion:^(BOOL finished) {
             if(finished){
                 NSLog(@"success");
             }
         }];
-        [self getOneImage];
     }
 }
-
-- (void)getImageWithCompletion:(void (^) (BOOL success))completion
-{
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, kNilOptions), ^{
-        
-        PFQuery *innerQuery = [PFQuery queryWithClassName:@"Place"];
-        [innerQuery whereKeyExists:@"name"];
-        PFQuery *query22 = [PFQuery queryWithClassName:@"Pics"];
-        [query22 whereKey:@"placeName" matchesKey:@"name" inQuery:innerQuery];
-        
-        [query22 findObjectsInBackgroundWithBlock:^(NSArray *results, NSError *error) {
-            //  will contain users with a hometown team with a winning record
-            if(!error){
-                test = results;
-            }
-            //aImage = test[0];
-            imageFile = test[0][@"imageFile"];
-            [imageFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
-                if (!data) {
-                    return NSLog(@"%@", error);
-                }
-                // Do something with the image
-                imageView.image = [UIImage imageWithData:data];
-            }];
-            NSLog(@"Successttttttttttttfully retrieved %lu images.", (unsigned long)test.count);
-        }];
-        
-    });
-    completion(YES);
-    
-}
-
-- (void)getOneImage{
-    [self getImageWithCompletion:^(BOOL success) {
-        // check if thing worked.
-    }];
-}
-
 
 //*********************************************************************************
 //
@@ -216,6 +177,7 @@ PFObject *aImage;
 
 - (void)downloadAllImages{
     [self methodAWithCompletion:^(BOOL success) {
+        // check if thing worked.
     }];
 }
 
@@ -225,22 +187,23 @@ PFObject *aImage;
         
         arrayAllImages = [[NSMutableArray alloc]init];
         PFQuery *query = [PFQuery queryWithClassName:@"Pics"];
-        [query whereKey:@"name" equalTo:name];
+        [query whereKey:@"placeName" equalTo:name];
         [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
             if (!error) {
-                
                 for (PFObject *object in objects) {
                     [arrayAllImages addObject:object];
                 }
                 allImages = arrayAllImages;
                 imageFile = allImages[0][@"imageFile"];
-                 [imageFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
-                 if (!data) {
-                 return NSLog(@"%@", error);
-                 }
-                 // Do something with the image
-                 imageView.image = [UIImage imageWithData:data];
-                 }];
+                [imageFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
+                    if (!data) {
+                        return NSLog(@"%@", error);
+                    }
+                    // Do something with the image
+                    imageView.image = [UIImage imageWithData:data];
+                }];
+                
+                
             }
             NSLog(@"Successfully retrieved %lu images.", (unsigned long)allImages.count);
         }];
@@ -257,7 +220,6 @@ PFObject *aImage;
 
 -(void) pressRightForNextImage{
     NSLog(@"right");
-    NSLog(@"Successfully retrieved %lu images.", (unsigned long)allImages.count);
 }
 
 -(void) pressLeftForPreviousImage{
@@ -361,7 +323,7 @@ PFObject *aImage;
     NSString *filename = [NSString stringWithFormat:@"test.png"];
     PFFile *imageFile = [PFFile fileWithName:filename data:imageData];
     [object setObject:imageFile forKey:@"imageFile"];
-    [object setObject:name forKey:@"name"];
+    [object setObject:name forKey:@"placeName"];
     
     
     [object saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
@@ -428,7 +390,7 @@ PFObject *aImage;
     locationButton.layer.borderWidth=buttonBorderwidth1;
     
     if ([segueTag isEqualToString:@"clickedObject"]) {
-    
+        
         button_Right = [UIButton buttonWithType:UIButtonTypeCustom];
         button_Right.frame = CGRectMake(250, 157, 25, 25);
         [button_Right setImage:[UIImage imageNamed:@"Arrow"] forState:UIControlStateNormal];
