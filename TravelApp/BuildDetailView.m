@@ -370,7 +370,7 @@ MBProgressHUD *hud;
     PFObject *pics = [PFObject objectWithClassName:@"Pics"];
     
     if ([locationCategory isEqualToString:@""]) {
-        UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Attention:"
+        UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Attention"
                                                           message:@"Please select a category for your location!"
                                                          delegate:nil
                                                 cancelButtonTitle:@"OK"
@@ -379,13 +379,14 @@ MBProgressHUD *hud;
     }
     
     else if ([textField.text isEqualToString:@""]) {
-        UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Attention:"
+        UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Attention"
                                                           message:@"Please type in a name for your location!\nA valid name contains only a-z, A-Z and 0-9_."
                                                          delegate:nil
                                                 cancelButtonTitle:@"OK"
                                                 otherButtonTitles:nil];
         [message show];
     }
+    
     
     
     else if  (![textField.text isEqualToString:@""]) {
@@ -397,6 +398,7 @@ MBProgressHUD *hud;
             [pics setObject:imageFile forKey:@"imageFile"];
             [pics setObject:textField.text forKey:@"placeName"];
             [object setObject:imageFile forKey:@"image"];
+            
             
             // Show progress
             MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
@@ -413,29 +415,44 @@ MBProgressHUD *hud;
             [object setObject:geoPoint forKey:@"geoData"];
             
             [object saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                [hud hide:YES];
+                //[hud hide:YES];
 
                 
-                // Reset Flags
-                [self resetView];
-                [self performSegueWithIdentifier:@"BuildDetailViewToDetailView" sender:self];
-                // Notify table view to reload the recipes from Parse cloud
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshTable" object:self];
-                // Dismiss the controller
-                //[self dismissViewControllerAnimated:YES completion:nil];
-                }];
+                if (!error) {
+                    [pics saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                        [hud hide:YES];
+                    }];
+                    
+                    // Reset Flags
+                    [self resetView];
+                    [self performSegueWithIdentifier:@"BuildDetailViewToDetailView" sender:self];
+                    // Notify table view to reload the recipes from Parse cloud
+                    [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshTable" object:self];
+                    
+                    
+                    // Dismiss the controller
+                    //[self dismissViewControllerAnimated:YES completion:nil];
+                } else {
+                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Upload Failure" message:[error localizedDescription] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                    [alert show];
+                }
+            }];
+        } else {
             
-             } else {
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Invalid or duplicate name" message:@"A valid name contains only a-z, A-Z and 0-9_ and is unique." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-                [alert show];
-            }
+            
+            UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Attention"
+                                                              message:@"Place with name already exists. Choose another one."
+                                                             delegate:nil
+                                                    cancelButtonTitle:@"OK"
+                                                    otherButtonTitles:nil];
+            [message show];
         }
-
+    }
 }
 
 
-- (void)alert:(UIAlertView *)alert clickedButtonAtIndex:(NSInteger)buttonIndex{
-    NSString *title = [alert buttonTitleAtIndex:buttonIndex];
+- (void)message:(UIAlertView *)message clickedButtonAtIndex:(NSInteger)buttonIndex{
+    NSString *title = [message buttonTitleAtIndex:buttonIndex];
     if ([title isEqualToString:@"OK"]) {
         [hud hide:YES];
     }

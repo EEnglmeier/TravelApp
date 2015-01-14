@@ -94,21 +94,6 @@ static int i_prev;
     
 }
 
-/////*********************************************************************************
-////
-//// segues
-////
-////**********************************************************************************/
-//
-//-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
-//    NSLog(@"SEGUE IDENT: %@", segue.identifier);
-//    if ([segue.identifier isEqualToString:@"DetailViewToMapView"]) {
-//        NSLog(@"segue detail view to map view prepared");
-//        [self dismissViewControllerAnimated:YES completion:nil];
-//        [segue.destinationViewController fetchPlaces];
-//        [segue.destinationViewController loadCurrentLocationMarker];
-//    }
-//}
 
 ///*********************************************************************************
 //
@@ -190,6 +175,7 @@ static int i_prev;
         name = [object objectForKey:@"name"];
         category = [object objectForKey:@"category"];
         adress = [object objectForKey:@"adress"];
+        //imageFile = object[@"image"];
         [self methodAWithCompletion:^(BOOL finished) {
             if(finished){
                 NSLog(@"success");
@@ -204,6 +190,7 @@ static int i_prev;
         name = [object objectForKey:@"name"];
         category = [object objectForKey:@"category"];
         adress = [object objectForKey:@"adress"];
+        //imageFile = object[@"image"];
         [self methodAWithCompletion:^(BOOL finished) {
             if(finished){
                 NSLog(@"success");
