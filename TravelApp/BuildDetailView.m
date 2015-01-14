@@ -15,6 +15,7 @@
 #import "MBProgressHUD.h"
 #import "MapViewController.h"
 #import "DetailView.h"
+#import "TravelApp-Swift.h"
 
 @interface BuildDetailView ()
 
@@ -400,64 +401,74 @@ UIImagePickerController *pic;
     }
     
     
-    else {
-        
-        NSData *imageData = UIImageJPEGRepresentation(takenImage, 0.8);
-        NSString *filename = [NSString stringWithFormat:@"%@.png", textField.text];
-        PFFile *imageFile = [PFFile fileWithName:filename data:imageData];
-        [pics setObject:imageFile forKey:@"imageFile"];
-        [pics setObject:textField.text forKey:@"placeName"];
-        [object setObject:imageFile forKey:@"image"];
-        
-        // Show progress
-        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-        hud.mode = MBProgressHUDModeIndeterminate;
-        hud.labelText = @"Uploading";
-        [hud show:YES];
-        
-        [object setObject:textField.text forKey:@"name"];
-        PFGeoPoint *geoPoint = [PFGeoPoint geoPointWithLatitude:_returnLatitude longitude:_returnLongitude];
-        
-        NSLog(@"%f", geoPoint.latitude);
-        [object setObject:locationCategory forKey:@"category"];
-        [object setObject:_address forKey:@"adress"];
-        [object setObject:geoPoint forKey:@"geoData"];
-        
-        [object saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-            //[hud hide:YES];
+    else if  (![textField.text isEqualToString:@""]) {
+        if ([[RouteModel sharedInstance] placeIsUnique:textField.text]){
+            NSLog(@"unique place");
+            NSData *imageData = UIImageJPEGRepresentation(takenImage, 0.8);
+            NSString *filename = [NSString stringWithFormat:@"%@.png", textField.text];
+            PFFile *imageFile = [PFFile fileWithName:filename data:imageData];
+            [pics setObject:imageFile forKey:@"imageFile"];
+            [pics setObject:textField.text forKey:@"placeName"];
+            [object setObject:imageFile forKey:@"image"];
             
-            if (!error) {
-                [pics saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                    [hud hide:YES];
+            // Show progress
+            MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+            hud.mode = MBProgressHUDModeIndeterminate;
+            hud.labelText = @"Uploading";
+            [hud show:YES];
+            
+            [object setObject:textField.text forKey:@"name"];
+            PFGeoPoint *geoPoint = [PFGeoPoint geoPointWithLatitude:_returnLatitude longitude:_returnLongitude];
+            
+            NSLog(@"%f", geoPoint.latitude);
+            [object setObject:locationCategory forKey:@"category"];
+            [object setObject:_address forKey:@"adress"];
+            [object setObject:geoPoint forKey:@"geoData"];
+            
+            [object saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                //[hud hide:YES];
+                
+                if (!error) {
+                    [pics saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                        [hud hide:YES];
+                        
+                        if (!error) {
+                            
+                            
+                            
+                            
+                            // Dismiss the controller
+                            //[self dismissViewControllerAnimated:YES completion:nil];
+                        } else {
+                            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Upload Failure" message:[error localizedDescription] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                            [alert show];
+                        }
+                    }];
                     
-                    if (!error) {
-                        
-                        
-                        
-                        
-                        // Dismiss the controller
-                        //[self dismissViewControllerAnimated:YES completion:nil];
-                    } else {
-                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Upload Failure" message:[error localizedDescription] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-                        [alert show];
-                    }
-                }];
-                
-                // Reset Flags
-                [self resetView];
-                [self performSegueWithIdentifier:@"BuildDetailViewToDetailView" sender:self];
-                // Notify table view to reload the recipes from Parse cloud
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshTable" object:self];
-                
-                
-                // Dismiss the controller
-                //[self dismissViewControllerAnimated:YES completion:nil];
-            } else {
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Upload Failure" message:[error localizedDescription] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-                [alert show];
-            }
-        }];
-
+                    // Reset Flags
+                    [self resetView];
+                    [self performSegueWithIdentifier:@"BuildDetailViewToDetailView" sender:self];
+                    // Notify table view to reload the recipes from Parse cloud
+                    [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshTable" object:self];
+                    
+                    
+                    // Dismiss the controller
+                    //[self dismissViewControllerAnimated:YES completion:nil];
+                } else {
+                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Upload Failure" message:[error localizedDescription] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                    [alert show];
+                }
+            }];
+        } else {
+            
+            
+            UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Attention:"
+                                                              message:@"Place with Name already exists. Choose another one."
+                                                             delegate:nil
+                                                    cancelButtonTitle:@"OK"
+                                                    otherButtonTitles:nil];
+            [message show];
+        }
     }
 }
 

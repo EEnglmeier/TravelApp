@@ -36,6 +36,15 @@ class RouteModel{
         }
     }
     
+    func placeIsUnique(nm : String) -> Bool{
+        for p in allLocs{
+            if (p.name == nm){
+                return false
+            }
+        }
+        return true
+    }
+    
     func getAllRoutesFromParse(){
         for m in allLocs{
             println(m.name)
