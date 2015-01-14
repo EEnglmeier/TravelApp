@@ -353,7 +353,7 @@ static int i_prev;
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     NSString *title = [alertView buttonTitleAtIndex:buttonIndex];
     if ([title isEqualToString:@"Cancel"]) {
-        //--- dismiss
+//        [self dismissViewControllerAnimated:YES completion:nil];
     }
     else if ([title isEqualToString:@"Take a photo"]){
         [self takePhoto];
@@ -388,7 +388,6 @@ static int i_prev;
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)pic {
     [pic dismissViewControllerAnimated:YES completion:^{
         [self resetView];
-        [self performSegueWithIdentifier:@"BuildDetailViewToMapView" sender:self];
     }];
 }
 
@@ -427,8 +426,6 @@ static int i_prev;
     
     
     [object saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-        //[hud hide:YES];
-        
         if (!error) {
             
         } else {
@@ -514,8 +511,9 @@ static int i_prev;
     
     if([category isEqual: @"shopping"]){
         
-        [locationButton setImage:[UIImage imageNamed:@"shopping.jpg"] forState:UIControlStateNormal];
-        locationButton.layer.borderColor = [[UIColor colorWithRed:95/255.f green:180/255.f blue:228/255.f alpha:1.0f] CGColor];
+        [locationButton setImage:[UIImage imageNamed:@"shopping_clicked"] forState:UIControlStateNormal];
+        locationButton.layer.backgroundColor = [[UIColor colorWithRed:95/255.f green:180/255.f blue:229/255.f alpha:1.0f] CGColor];
+        locationButton.layer.borderColor = [[UIColor colorWithRed:95/255.f green:180/255.f blue:229/255.f alpha:1.0f] CGColor];
         [locationButton setImageEdgeInsets:UIEdgeInsetsMake(12, 12, 12, 12)];
         [[self view] addSubview:locationButton];
         UILabel  *locationLabel = [[UILabel alloc] initWithFrame:CGRectMake(125, aPlaceLabelY, 90, 50)];
@@ -526,8 +524,9 @@ static int i_prev;
     
     if([category isEqual: @"activity"]){
         
-        [locationButton setImage:[UIImage imageNamed:@"activity.jpg"] forState:UIControlStateNormal];
-        locationButton.layer.borderColor = [[UIColor colorWithRed:236/255.f green:233/255.f blue:68/255.f alpha:1.0f] CGColor];
+        [locationButton setImage:[UIImage imageNamed:@"activity_clicked"] forState:UIControlStateNormal];
+        locationButton.layer.backgroundColor = [[UIColor colorWithRed:234/255.f green:226/255.f blue:88/255.f alpha:1.0f] CGColor];
+        locationButton.layer.borderColor = [[UIColor colorWithRed:234/255.f green:226/255.f blue:88/255.f alpha:1.0f] CGColor];
         [locationButton setImageEdgeInsets:UIEdgeInsetsMake(11, 11, 11, 11)];
         [[self view] addSubview:locationButton];
         UILabel  *locationLabel = [[UILabel alloc] initWithFrame:CGRectMake(132, aPlaceLabelY, 90, 50)];
@@ -538,8 +537,9 @@ static int i_prev;
     
     if([category isEqual: @"cafe"]){
         
-        [locationButton setImage:[UIImage imageNamed:@"cafe.jpg"] forState:UIControlStateNormal];
-        locationButton.layer.borderColor = [[UIColor colorWithRed:109/255.f green:95/255.f blue:213/255.f alpha:1.0f] CGColor];
+        [locationButton setImage:[UIImage imageNamed:@"cafe_clicked"] forState:UIControlStateNormal];
+        locationButton.layer.backgroundColor = [[UIColor colorWithRed:148/255.f green:100/255.f blue:214/255.f alpha:1.0f] CGColor];
+        locationButton.layer.borderColor = [[UIColor colorWithRed:148/255.f green:100/255.f blue:214/255.f alpha:1.0f] CGColor];
         [locationButton setImageEdgeInsets:UIEdgeInsetsMake(12, 13, 13, 12)];
         [[self view] addSubview:locationButton];
         UILabel  *locationLabel = [[UILabel alloc] initWithFrame:CGRectMake(139, aPlaceLabelY, 90, 50)];
@@ -551,8 +551,9 @@ static int i_prev;
     
     if([category isEqual: @"culture"]){
         
-        [locationButton setImage:[UIImage imageNamed:@"culture.jpg"] forState:UIControlStateNormal];
-        locationButton.layer.borderColor = [[UIColor colorWithRed:244/255.f green:93/255.f blue:191/255.f alpha:1.0f] CGColor];
+        [locationButton setImage:[UIImage imageNamed:@"culture_clicked"] forState:UIControlStateNormal];
+        locationButton.layer.backgroundColor = [[UIColor colorWithRed:230/255.f green:115/255.f blue:191/255.f alpha:1.0f] CGColor];
+        locationButton.layer.borderColor = [[UIColor colorWithRed:230/255.f green:115/255.f blue:191/255.f alpha:1.0f] CGColor];
         [locationButton setImageEdgeInsets:UIEdgeInsetsMake(13, 12, 12, 12)];
         [[self view] addSubview:locationButton];
         UILabel  *locationLabel = [[UILabel alloc] initWithFrame:CGRectMake(132, aPlaceLabelY, 90, 50)];
@@ -563,8 +564,9 @@ static int i_prev;
     
     if([category isEqual: @"food"]){
         
-        [locationButton setImage:[UIImage imageNamed:@"food"] forState:UIControlStateNormal];
-        locationButton.layer.borderColor = [[UIColor colorWithRed:255/255.f green:0/255.f blue:0/255.f alpha:1.0f] CGColor];
+        [locationButton setImage:[UIImage imageNamed:@"food_clicked"] forState:UIControlStateNormal];
+        locationButton.layer.backgroundColor = [[UIColor colorWithRed:255/255.f green:58/255.f blue:48/255.f alpha:1.0f] CGColor];
+        locationButton.layer.borderColor=[[UIColor colorWithRed:255/255.f green:58/255.f blue:48/255.f alpha:1.0f] CGColor];
         [locationButton setImageEdgeInsets:UIEdgeInsetsMake(12, 12, 12, 12)];
         [[self view] addSubview:locationButton];
         UILabel  *locationLabel = [[UILabel alloc] initWithFrame:CGRectMake(140, aPlaceLabelY, 90, 50)];
@@ -588,8 +590,9 @@ static int i_prev;
     
     if([category isEqual: @"icons"]){
         
-        [locationButton setImage:[UIImage imageNamed:@"icons"] forState:UIControlStateNormal];
-        locationButton.layer.borderColor = [[UIColor colorWithRed:255/255.f green:130/255.f blue:0/255.f alpha:1.0f] CGColor];
+        [locationButton setImage:[UIImage imageNamed:@"icons_clicked"] forState:UIControlStateNormal];
+        locationButton.layer.backgroundColor = [[UIColor colorWithRed:249/255.f green:137/255.f blue:18/255.f alpha:1.0f] CGColor];
+        locationButton.layer.borderColor = [[UIColor colorWithRed:249/255.f green:137/255.f blue:18/255.f alpha:1.0f] CGColor];
         [locationButton setImageEdgeInsets:UIEdgeInsetsMake(11, 12, 11, 11)];
         [[self view] addSubview:locationButton];
         UILabel  *locationLabel = [[UILabel alloc] initWithFrame:CGRectMake(137, aPlaceLabelY, 90, 50)];
@@ -600,7 +603,8 @@ static int i_prev;
     
     if([category isEqual: @"nightlife"]){
         
-        [locationButton setImage:[UIImage imageNamed:@"nightlife"] forState:UIControlStateNormal];
+        [locationButton setImage:[UIImage imageNamed:@"nightlife_clicked"] forState:UIControlStateNormal];
+        locationButton.layer.backgroundColor = [[UIColor colorWithRed:85/255.f green:85/255.f blue:85/255.f alpha:1.0f] CGColor];
         locationButton.layer.borderColor = [[UIColor colorWithRed:85/255.f green:85/255.f blue:85/255.f alpha:1.0f] CGColor];
         [locationButton setImageEdgeInsets:UIEdgeInsetsMake(13, 13, 13, 13)];
         [[self view] addSubview:locationButton];
@@ -612,8 +616,9 @@ static int i_prev;
     
     if([category isEqual: @"other"]){
         
-        [locationButton setImage:[UIImage imageNamed:@"other"] forState:UIControlStateNormal];
-        locationButton.layer.borderColor = [[UIColor colorWithRed:0/255.f green:0/255.f blue:0/255.f alpha:1.0f] CGColor];
+        [locationButton setImage:[UIImage imageNamed:@"other_clicked"] forState:UIControlStateNormal];
+        locationButton.layer.backgroundColor = [[UIColor blackColor] CGColor];
+        locationButton.layer.borderColor = [[UIColor blackColor] CGColor];
         [locationButton setImageEdgeInsets:UIEdgeInsetsMake(11, 9, 9, 9)];
         [[self view] addSubview:locationButton];
         UILabel  *locationLabel = [[UILabel alloc] initWithFrame:CGRectMake(137, aPlaceLabelY, 90, 50)];
@@ -622,117 +627,4 @@ static int i_prev;
         [self.view addSubview:locationLabel];
     }
 }
-
-
-//- (void)foodButtonIsClicked{
-//    [buttonFood setImage:[UIImage imageNamed:@"food_clicked"] forState:UIControlStateNormal];
-//    buttonFood.layer.backgroundColor = [[UIColor colorWithRed:255/255.f green:58/255.f blue:48/255.f alpha:1.0f] CGColor];
-//    buttonFood.layer.borderColor=[[UIColor colorWithRed:255/255.f green:58/255.f blue:48/255.f alpha:1.0f] CGColor];
-//    locationCategory = @"food";
-//}
-//
-//- (void)foodButtonIsNotClicked{
-//    [buttonFood setImage:[UIImage imageNamed:@"food"] forState:UIControlStateNormal];
-//    buttonFood.layer.backgroundColor = [[UIColor clearColor] CGColor];
-//    buttonFood.layer.borderColor=[[UIColor colorWithRed:255/255.f green:58/255.f blue:48/255.f alpha:1.0f] CGColor];
-//    locationCategory = @"food";
-//}
-//
-//- (void)cafeButtonIsClicked{
-//    [buttonCafe setImage:[UIImage imageNamed:@"cafe_clicked"] forState:UIControlStateNormal];
-//    buttonCafe.layer.backgroundColor = [[UIColor colorWithRed:148/255.f green:100/255.f blue:214/255.f alpha:1.0f] CGColor];
-//    buttonCafe.layer.borderColor = [[UIColor colorWithRed:148/255.f green:100/255.f blue:214/255.f alpha:1.0f] CGColor];
-//    locationCategory = @"cafe";
-//}
-//
-//- (void)cafeButtonIsNotClicked{
-//    [buttonCafe setImage:[UIImage imageNamed:@"cafe"] forState:UIControlStateNormal];
-//    buttonCafe.layer.backgroundColor = [[UIColor clearColor] CGColor];
-//    buttonCafe.layer.borderColor = [[UIColor colorWithRed:148/255.f green:100/255.f blue:214/255.f alpha:1.0f] CGColor];
-//    locationCategory = @"cafe";
-//}
-//
-//- (void)nightlifeButtonIsClicked{
-//    [buttonNightlife setImage:[UIImage imageNamed:@"nightlife_clicked"] forState:UIControlStateNormal];
-//    buttonNightlife.layer.backgroundColor = [[UIColor colorWithRed:85/255.f green:85/255.f blue:85/255.f alpha:1.0f] CGColor];
-//    buttonNightlife.layer.borderColor = [[UIColor colorWithRed:85/255.f green:85/255.f blue:85/255.f alpha:1.0f] CGColor];
-//    locationCategory = @"nightlife";
-//}
-//- (void)nightlifeButtonIsNotClicked{
-//    [buttonNightlife setImage:[UIImage imageNamed:@"nightlife"] forState:UIControlStateNormal];
-//    buttonNightlife.layer.backgroundColor = [[UIColor clearColor] CGColor];
-//    buttonNightlife.layer.borderColor = [[UIColor colorWithRed:85/255.f green:85/255.f blue:85/255.f alpha:1.0f] CGColor];
-//    locationCategory = @"nightlife";
-//}
-//
-//- (void)shoppingButtonIsClicked{
-//    [buttonShopping setImage:[UIImage imageNamed:@"shopping_clicked"] forState:UIControlStateNormal];
-//    buttonShopping.layer.backgroundColor = [[UIColor colorWithRed:95/255.f green:180/255.f blue:229/255.f alpha:1.0f] CGColor];
-//    buttonShopping.layer.borderColor = [[UIColor colorWithRed:95/255.f green:180/255.f blue:229/255.f alpha:1.0f] CGColor];
-//    locationCategory = @"shopping";
-//}
-//
-//-(void)shoppingButtonIsNotClicked{
-//    [buttonShopping setImage:[UIImage imageNamed:@"shopping"] forState:UIControlStateNormal];
-//    buttonShopping.layer.backgroundColor = [[UIColor clearColor] CGColor];
-//    buttonShopping.layer.borderColor = [[UIColor colorWithRed:95/255.f green:180/255.f blue:229/255.f alpha:1.0f] CGColor];
-//    locationCategory = @"shopping";
-//}
-//
-//- (void)activityButtonIsClicked{
-//    [buttonActivity setImage:[UIImage imageNamed:@"activity_clicked"] forState:UIControlStateNormal];
-//    buttonActivity.layer.backgroundColor = [[UIColor colorWithRed:234/255.f green:226/255.f blue:88/255.f alpha:1.0f] CGColor];
-//    buttonActivity.layer.borderColor = [[UIColor colorWithRed:234/255.f green:226/255.f blue:88/255.f alpha:1.0f] CGColor];
-//    locationCategory = @"activity";
-//}
-//
-//- (void)activityButtonIsNotClicked{
-//    [buttonActivity setImage:[UIImage imageNamed:@"activity"] forState:UIControlStateNormal];
-//    buttonActivity.layer.backgroundColor = [[UIColor clearColor] CGColor];
-//    buttonActivity.layer.borderColor = [[UIColor colorWithRed:234/255.f green:226/255.f blue:88/255.f alpha:1.0f] CGColor];
-//    locationCategory = @"activity";
-//}
-//
-//- (void)iconButtonIsClicked{
-//    [buttonIcons setImage:[UIImage imageNamed:@"icons_clicked"] forState:UIControlStateNormal];
-//    buttonIcons.layer.backgroundColor = [[UIColor colorWithRed:249/255.f green:137/255.f blue:18/255.f alpha:1.0f] CGColor];
-//    buttonIcons.layer.borderColor = [[UIColor colorWithRed:249/255.f green:137/255.f blue:18/255.f alpha:1.0f] CGColor];
-//    locationCategory = @"icons";
-//}
-//
-//- (void)iconButtonIsNotClicked{
-//    [buttonIcons setImage:[UIImage imageNamed:@"icons"] forState:UIControlStateNormal];
-//    buttonIcons.layer.backgroundColor = [[UIColor clearColor] CGColor];
-//    buttonIcons.layer.borderColor = [[UIColor colorWithRed:249/255.f green:137/255.f blue:18/255.f alpha:1.0f] CGColor];
-//    locationCategory = @"icons";
-//}
-//- (void)cultureButtonIsClicked{
-//    [buttonCulture setImage:[UIImage imageNamed:@"culture_clicked"] forState:UIControlStateNormal];
-//    buttonCulture.layer.backgroundColor = [[UIColor colorWithRed:230/255.f green:115/255.f blue:191/255.f alpha:1.0f] CGColor];
-//    buttonCulture.layer.borderColor = [[UIColor colorWithRed:230/255.f green:115/255.f blue:191/255.f alpha:1.0f] CGColor];
-//    locationCategory = @"culture";
-//}
-//- (void)cultureButtonIsNotClicked{
-//    [buttonCulture setImage:[UIImage imageNamed:@"culture"] forState:UIControlStateNormal];
-//    buttonCulture.layer.backgroundColor = [[UIColor clearColor] CGColor];
-//    buttonCulture.layer.borderColor = [[UIColor colorWithRed:230/255.f green:115/255.f blue:191/255.f alpha:1.0f] CGColor];
-//    locationCategory = @"culture";
-//}
-//
-//- (void)otherButtonIsClicked{
-//    [buttonOther setImage:[UIImage imageNamed:@"other_clicked"] forState:UIControlStateNormal];
-//    buttonOther.layer.backgroundColor = [[UIColor blackColor] CGColor];
-//    buttonOther.layer.borderColor = [[UIColor blackColor] CGColor];
-//    locationCategory = @"other";
-//}
-//- (void)otherButtonIsNotClicked{
-//    [buttonOther setImage:[UIImage imageNamed:@"other"] forState:UIControlStateNormal];
-//    buttonOther.layer.backgroundColor = [[UIColor clearColor] CGColor];
-//    buttonOther.layer.borderColor = [[UIColor blackColor] CGColor];
-//    locationCategory = @"other";
-//}
-//
-//
-
-
 @end

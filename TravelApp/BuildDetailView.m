@@ -721,7 +721,6 @@ MBProgressHUD *hud;
     [buttonHotel setImage:[UIImage imageNamed:@"hotel"] forState:UIControlStateNormal];
     buttonHotel.layer.backgroundColor = [[UIColor clearColor] CGColor];
     buttonHotel.layer.borderColor=[[UIColor colorWithRed:27/255.f green:175/255.f blue:126/255.f alpha:1.0f] CGColor];
-    locationCategory = @"hotel";
 }
 
 - (void)foodButtonIsClicked{
@@ -735,7 +734,6 @@ MBProgressHUD *hud;
     [buttonFood setImage:[UIImage imageNamed:@"food"] forState:UIControlStateNormal];
     buttonFood.layer.backgroundColor = [[UIColor clearColor] CGColor];
     buttonFood.layer.borderColor=[[UIColor colorWithRed:255/255.f green:58/255.f blue:48/255.f alpha:1.0f] CGColor];
-    locationCategory = @"food";
 }
 
 - (void)cafeButtonIsClicked{
@@ -749,7 +747,6 @@ MBProgressHUD *hud;
     [buttonCafe setImage:[UIImage imageNamed:@"cafe"] forState:UIControlStateNormal];
     buttonCafe.layer.backgroundColor = [[UIColor clearColor] CGColor];
     buttonCafe.layer.borderColor = [[UIColor colorWithRed:148/255.f green:100/255.f blue:214/255.f alpha:1.0f] CGColor];
-    locationCategory = @"cafe";
 }
 
 - (void)nightlifeButtonIsClicked{
@@ -762,7 +759,6 @@ MBProgressHUD *hud;
     [buttonNightlife setImage:[UIImage imageNamed:@"nightlife"] forState:UIControlStateNormal];
     buttonNightlife.layer.backgroundColor = [[UIColor clearColor] CGColor];
     buttonNightlife.layer.borderColor = [[UIColor colorWithRed:85/255.f green:85/255.f blue:85/255.f alpha:1.0f] CGColor];
-    locationCategory = @"nightlife";
 }
 
 - (void)shoppingButtonIsClicked{
@@ -776,7 +772,6 @@ MBProgressHUD *hud;
     [buttonShopping setImage:[UIImage imageNamed:@"shopping"] forState:UIControlStateNormal];
     buttonShopping.layer.backgroundColor = [[UIColor clearColor] CGColor];
     buttonShopping.layer.borderColor = [[UIColor colorWithRed:95/255.f green:180/255.f blue:229/255.f alpha:1.0f] CGColor];
-    locationCategory = @"shopping";
 }
 
 - (void)activityButtonIsClicked{
@@ -790,7 +785,6 @@ MBProgressHUD *hud;
     [buttonActivity setImage:[UIImage imageNamed:@"activity"] forState:UIControlStateNormal];
     buttonActivity.layer.backgroundColor = [[UIColor clearColor] CGColor];
      buttonActivity.layer.borderColor = [[UIColor colorWithRed:234/255.f green:226/255.f blue:88/255.f alpha:1.0f] CGColor];
-    locationCategory = @"activity";
 }
 
 - (void)iconButtonIsClicked{
@@ -804,7 +798,6 @@ MBProgressHUD *hud;
     [buttonIcons setImage:[UIImage imageNamed:@"icons"] forState:UIControlStateNormal];
     buttonIcons.layer.backgroundColor = [[UIColor clearColor] CGColor];
     buttonIcons.layer.borderColor = [[UIColor colorWithRed:249/255.f green:137/255.f blue:18/255.f alpha:1.0f] CGColor];
-    locationCategory = @"icons";
 }
 - (void)cultureButtonIsClicked{
     [buttonCulture setImage:[UIImage imageNamed:@"culture_clicked"] forState:UIControlStateNormal];
@@ -816,7 +809,6 @@ MBProgressHUD *hud;
     [buttonCulture setImage:[UIImage imageNamed:@"culture"] forState:UIControlStateNormal];
     buttonCulture.layer.backgroundColor = [[UIColor clearColor] CGColor];
     buttonCulture.layer.borderColor = [[UIColor colorWithRed:230/255.f green:115/255.f blue:191/255.f alpha:1.0f] CGColor];
-    locationCategory = @"culture";
 }
 
 - (void)otherButtonIsClicked{
@@ -829,7 +821,6 @@ MBProgressHUD *hud;
     [buttonOther setImage:[UIImage imageNamed:@"other"] forState:UIControlStateNormal];
     buttonOther.layer.backgroundColor = [[UIColor clearColor] CGColor];
     buttonOther.layer.borderColor = [[UIColor blackColor] CGColor];
-    locationCategory = @"other";
 }
 
 @end
