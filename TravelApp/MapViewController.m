@@ -126,7 +126,7 @@ PFGeoPoint *geoPoint;
     [geocoder reverseGeocodeCoordinate:currentLocation completionHandler:^(GMSReverseGeocodeResponse *response, NSError *error) {
         currentLocMarker = [GMSMarker markerWithPosition:currentLocation];
         currentLocMarker.title = @"Current Location";
-        currentLocMarker.snippet = response.firstResult.addressLine1;
+        currentLocMarker.snippet = response.firstResult.thoroughfare;
         currentLocMarker.icon = [UIImage imageNamed:@"current_location"];
         currentLocMarker.map = mapView_;
     }];
@@ -224,10 +224,9 @@ PFGeoPoint *geoPoint;
 
 - (void)initDisplay{
     
-    //--- Abstand von unten und oben, um compassButton und myLocationButton sichtbar zu machen
-    UIEdgeInsets mapInsets = UIEdgeInsetsMake(50.0, 0.0, 50.0, 0.0);
+    //--- Abstand von unten und oben, um compassButton sichtbar zu machen
+    UIEdgeInsets mapInsets = UIEdgeInsetsMake(0.0, 0.0, 100.0, 0.0);
     mapView_.padding = mapInsets;
-    
     
     //--- Bild für locationButton
     UIImage *buttonImage = [UIImage imageNamed:@"locationButton"];
@@ -269,7 +268,7 @@ PFGeoPoint *geoPoint;
         NSLog(@"%@",marker.userData);
         infoWindow.name.text = marker.userData[@"name"];
         infoWindow.address.text = marker.userData[@"adress"];
-        infoWindow.photo.image = [[UIImage alloc] initWithData:[marker.userData[@"imageFile"] getData]];
+        infoWindow.photo.image = [[UIImage alloc] initWithData:[marker.userData[@"image"] getData]];
         infoWindow.category.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@", marker.userData[@"category"]]];
         return infoWindow;
     }
