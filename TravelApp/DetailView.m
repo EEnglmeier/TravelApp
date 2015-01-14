@@ -69,16 +69,10 @@ static int i_prev;
 //**********************************************************************************/
 
 - (void)backToMap{
-    // back to map... (im storyboard heißt der tabbarcontroller "tabbarController"
     UITabBarController* tabController = [[UIStoryboard storyboardWithName:@"Main" bundle:NULL] instantiateViewControllerWithIdentifier:@"tabbarController"];
-    
-    // hier kann man die transition ändern z.B. kCATransitionPush, kCATransitionFromBottom ...
     CATransition* transition = [CATransition animation];
     transition.duration = 0.5;
     transition.type = kCATransitionFromBottom;
-    //transition.type = kCATransitionFade;
-    
-    // present tabController
     [self.view.window.layer addAnimation:transition forKey:kCATransition];
     [self presentViewController:tabController animated:NO completion:nil];
 }
@@ -117,54 +111,15 @@ static int i_prev;
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, kNilOptions), ^{
             PFObject *aImage = [queryImg getFirstObject];
             imageFile = aImage[@"imageFile"];
-            //[[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:2]];
             [imageFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
             [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:2]];
             if (!data) {
-                //[[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:2]];
                 return NSLog(@"%@", error);
             }
             // Do something with the image
             imageView.image = [UIImage imageWithData:data];
             }];
         });
-        
-        
-        
-        
-        /*PFQuery *getPlaces = [PFQuery queryWithClassName:@"Place"];
-        
-        //[getPlaces orderByAscending:@"celebid"];
-        
-        PFQuery *getPics = [PFQuery queryWithClassName:@"Pic"];
-        
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, kNilOptions), ^{
-            [getPics whereKey:@"placeName" matchesKey:@"name" inQuery:getPlaces];
-        [getPics findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-            if (!error) {
-                for (PFObject *object in objects) {
-                    [obj addObject:object];
-                }
-                getImage = obj;
-            }
-            
-            PFObject *aImage = getImage[0];
-            
-            imageFile = aImage[@"imageFile"];
-            [imageFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
-                if (!data) {
-                    return NSLog(@"%@", error);
-                }
-                // Do something with the image
-                imageView.image = [UIImage imageWithData:data];
-            }];
-        }];
-            
-            
-        });*/
-        
-        
-        
     }
     
     if ([segueTag isEqualToString:@"clickedObject"]) {

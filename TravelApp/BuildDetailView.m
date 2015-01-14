@@ -90,22 +90,16 @@ MBProgressHUD *hud;
 //**********************************************************************************/
 
 - (void)backToMap{
-    // back to map... (im storyboard heißt der tabbarcontroller "tabbarController"
     UITabBarController* tabController = [[UIStoryboard storyboardWithName:@"Main" bundle:NULL] instantiateViewControllerWithIdentifier:@"tabbarController"];
-    
-    // hier kann man die transition ändern z.B. kCATransitionPush, kCATransitionFromBottom ...
     CATransition* transition = [CATransition animation];
     transition.duration = 0.5;
     transition.type = kCATransitionFromBottom;
-    //transition.type = kCATransitionFade;
-    
-    // present tabController
     [self.view.window.layer addAnimation:transition forKey:kCATransition];
     [self presentViewController:tabController animated:NO completion:nil];
 }
 
 -(void)cancel{
-    //[self resetView];
+    [self resetView];
     NSLog(@"Cancel Button is clicked");
     [self backToMap];
 }
@@ -401,7 +395,7 @@ MBProgressHUD *hud;
             
             
             // Show progress
-            MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+            hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
             hud.mode = MBProgressHUDModeIndeterminate;
             hud.labelText = @"Uploading";
             [hud show:YES];
@@ -415,12 +409,12 @@ MBProgressHUD *hud;
             [object setObject:geoPoint forKey:@"geoData"];
             
             [object saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                //[hud hide:YES];
+            [hud hide:YES];
 
                 
                 if (!error) {
                     [pics saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                        [hud hide:YES];
+                        //[hud hide:YES];
                     }];
                     
                     // Reset Flags
@@ -429,12 +423,11 @@ MBProgressHUD *hud;
                     // Notify table view to reload the recipes from Parse cloud
                     [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshTable" object:self];
                     
-                    
                     // Dismiss the controller
                     //[self dismissViewControllerAnimated:YES completion:nil];
                 } else {
-                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Upload Failure" message:[error localizedDescription] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-                    [alert show];
+                    UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Invalid name" message:@"A valid file name contains only a-z, A-Z and 0-9_." delegate:self cancelButtonTitle:@"Try again" otherButtonTitles:nil, nil];
+                    [message show];
                 }
             }];
         } else {
@@ -454,6 +447,9 @@ MBProgressHUD *hud;
 - (void)message:(UIAlertView *)message clickedButtonAtIndex:(NSInteger)buttonIndex{
     NSString *title = [message buttonTitleAtIndex:buttonIndex];
     if ([title isEqualToString:@"OK"]) {
+        [hud hide:YES];
+    }
+    if ([title isEqualToString:@"Try again"]) {
         [hud hide:YES];
     }
 }

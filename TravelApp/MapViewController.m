@@ -22,12 +22,6 @@
 
 @implementation MapViewController
 
-///*********************************************************************************
-//
-// variables
-//
-//**********************************************************************************/
-
 
 GMSMapView *mapView_;
 
@@ -84,7 +78,6 @@ PFGeoPoint *geoPoint;
     mapView_.myLocationEnabled = YES;
     [self.locationManager startUpdatingLocation];
 }
-
 
 //--- updated regelmäßig die aktuelle Position
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations{
@@ -257,7 +250,7 @@ PFGeoPoint *geoPoint;
 
 //--- InfoWindow der Pins
 - (UIView *)mapView:(GMSMapView *)mapView markerInfoWindow:(GMSMarker *)marker{
-
+    
     if (marker == currentLocMarker) {
         CustomInfoWindow *infoWindowCurrentLoc = [[[NSBundle mainBundle] loadNibNamed:@"InfoWindowCurrentLoc" owner:self options:nil] objectAtIndex:0];
         infoWindowCurrentLoc.nameCurrentLoc.text = currentLocMarker.title;
@@ -321,6 +314,6 @@ PFGeoPoint *geoPoint;
 - (IBAction)touchDown:(id)sender {
     GMSCameraUpdate *cu = [GMSCameraUpdate setTarget:self.locationManager.location.coordinate zoom:16];
     [mapView_ animateWithCameraUpdate:cu];
-
+    
 }
 @end
