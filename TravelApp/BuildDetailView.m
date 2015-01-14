@@ -415,47 +415,21 @@ MBProgressHUD *hud;
             [object saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                 //[hud hide:YES];
                 
-                if (!error) {
-                    [pics saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                        [hud hide:YES];
-                        
-                        if (!error) {
-                            
-                            
-                            
-                            
-                            // Dismiss the controller
-                            //[self dismissViewControllerAnimated:YES completion:nil];
-                        } else {
-                            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Upload Failure" message:[error localizedDescription] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-                            [alert show];
-                        }
-                    }];
-                    
-                    // Reset Flags
-                    [self resetView];
-                    [self performSegueWithIdentifier:@"BuildDetailViewToDetailView" sender:self];
-                    // Notify table view to reload the recipes from Parse cloud
-                    [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshTable" object:self];
-                    
-                    
-                    // Dismiss the controller
-                    //[self dismissViewControllerAnimated:YES completion:nil];
-                } else {
-                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Upload Failure" message:[error localizedDescription] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-                    [alert show];
-                }
-            }];
-        } else {
-            
-            
-            UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Attention:"
-                                                              message:@"Place with Name already exists. Choose another one."
-                                                             delegate:nil
-                                                    cancelButtonTitle:@"OK"
-                                                    otherButtonTitles:nil];
-            [message show];
-        }
+                // Reset Flags
+                [self resetView];
+                [self performSegueWithIdentifier:@"BuildDetailViewToDetailView" sender:self];
+                // Notify table view to reload the recipes from Parse cloud
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshTable" object:self];
+                
+                
+                // Dismiss the controller
+                //[self dismissViewControllerAnimated:YES completion:nil];
+            } else {
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Invalid name" message:@"A valid name contains only a-z, A-Z and 0-9_." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                [alert show];
+            }
+        };
+
     }
 }
 
