@@ -345,14 +345,17 @@ static int i_prev;
     }
     
     //--- Wahl der Source
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Add a photo" message:@"Take a photo or choose from existing" delegate:self cancelButtonTitle:nil otherButtonTitles:@"Choose from photo library", @"Take a photo", nil];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Add a photo" message:@"Take a photo or choose from existing" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Choose from photo library", @"Take a photo", nil];
     alert.tag = 1;
     [alert show];
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     NSString *title = [alertView buttonTitleAtIndex:buttonIndex];
-    if ([title isEqualToString:@"Take a photo"]){
+    if ([title isEqualToString:@"Cancel"]) {
+//        [self dismissViewControllerAnimated:YES completion:nil];
+    }
+    else if ([title isEqualToString:@"Take a photo"]){
         [self takePhoto];
     } else if ([title isEqualToString:@"Choose from photo library"]){
         [self selectPhoto];
@@ -385,7 +388,6 @@ static int i_prev;
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)pic {
     [pic dismissViewControllerAnimated:YES completion:^{
         [self resetView];
-        [self performSegueWithIdentifier:@"BuildDetailViewToMapView" sender:self];
     }];
 }
 
@@ -418,14 +420,12 @@ static int i_prev;
     PFObject *object = [PFObject objectWithClassName:@"Pics"];
     NSData *imageData = UIImageJPEGRepresentation(pickedImage, 0.8);
     NSString *filename = [NSString stringWithFormat:@"test.png"];
-    PFFile *imageFile = [PFFile fileWithName:filename data:imageData];
+    imageFile = [PFFile fileWithName:filename data:imageData];
     [object setObject:imageFile forKey:@"imageFile"];
     [object setObject:name forKey:@"placeName"];
     
     
     [object saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-        //[hud hide:YES];
-        
         if (!error) {
             
         } else {
@@ -511,8 +511,9 @@ static int i_prev;
     
     if([category isEqual: @"shopping"]){
         
-        [locationButton setImage:[UIImage imageNamed:@"shopping.jpg"] forState:UIControlStateNormal];
-        locationButton.layer.borderColor = [[UIColor colorWithRed:95/255.f green:180/255.f blue:228/255.f alpha:1.0f] CGColor];
+        [locationButton setImage:[UIImage imageNamed:@"shopping_clicked"] forState:UIControlStateNormal];
+        locationButton.layer.backgroundColor = [[UIColor colorWithRed:95/255.f green:180/255.f blue:229/255.f alpha:1.0f] CGColor];
+        locationButton.layer.borderColor = [[UIColor colorWithRed:95/255.f green:180/255.f blue:229/255.f alpha:1.0f] CGColor];
         [locationButton setImageEdgeInsets:UIEdgeInsetsMake(12, 12, 12, 12)];
         [[self view] addSubview:locationButton];
         UILabel  *locationLabel = [[UILabel alloc] initWithFrame:CGRectMake(125, aPlaceLabelY, 90, 50)];
@@ -523,8 +524,9 @@ static int i_prev;
     
     if([category isEqual: @"activity"]){
         
-        [locationButton setImage:[UIImage imageNamed:@"activity.jpg"] forState:UIControlStateNormal];
-        locationButton.layer.borderColor = [[UIColor colorWithRed:236/255.f green:233/255.f blue:68/255.f alpha:1.0f] CGColor];
+        [locationButton setImage:[UIImage imageNamed:@"activity_clicked"] forState:UIControlStateNormal];
+        locationButton.layer.backgroundColor = [[UIColor colorWithRed:234/255.f green:226/255.f blue:88/255.f alpha:1.0f] CGColor];
+        locationButton.layer.borderColor = [[UIColor colorWithRed:234/255.f green:226/255.f blue:88/255.f alpha:1.0f] CGColor];
         [locationButton setImageEdgeInsets:UIEdgeInsetsMake(11, 11, 11, 11)];
         [[self view] addSubview:locationButton];
         UILabel  *locationLabel = [[UILabel alloc] initWithFrame:CGRectMake(132, aPlaceLabelY, 90, 50)];
@@ -535,8 +537,9 @@ static int i_prev;
     
     if([category isEqual: @"cafe"]){
         
-        [locationButton setImage:[UIImage imageNamed:@"cafe.jpg"] forState:UIControlStateNormal];
-        locationButton.layer.borderColor = [[UIColor colorWithRed:109/255.f green:95/255.f blue:213/255.f alpha:1.0f] CGColor];
+        [locationButton setImage:[UIImage imageNamed:@"cafe_clicked"] forState:UIControlStateNormal];
+        locationButton.layer.backgroundColor = [[UIColor colorWithRed:148/255.f green:100/255.f blue:214/255.f alpha:1.0f] CGColor];
+        locationButton.layer.borderColor = [[UIColor colorWithRed:148/255.f green:100/255.f blue:214/255.f alpha:1.0f] CGColor];
         [locationButton setImageEdgeInsets:UIEdgeInsetsMake(12, 13, 13, 12)];
         [[self view] addSubview:locationButton];
         UILabel  *locationLabel = [[UILabel alloc] initWithFrame:CGRectMake(139, aPlaceLabelY, 90, 50)];
@@ -548,8 +551,9 @@ static int i_prev;
     
     if([category isEqual: @"culture"]){
         
-        [locationButton setImage:[UIImage imageNamed:@"culture.jpg"] forState:UIControlStateNormal];
-        locationButton.layer.borderColor = [[UIColor colorWithRed:244/255.f green:93/255.f blue:191/255.f alpha:1.0f] CGColor];
+        [locationButton setImage:[UIImage imageNamed:@"culture_clicked"] forState:UIControlStateNormal];
+        locationButton.layer.backgroundColor = [[UIColor colorWithRed:230/255.f green:115/255.f blue:191/255.f alpha:1.0f] CGColor];
+        locationButton.layer.borderColor = [[UIColor colorWithRed:230/255.f green:115/255.f blue:191/255.f alpha:1.0f] CGColor];
         [locationButton setImageEdgeInsets:UIEdgeInsetsMake(13, 12, 12, 12)];
         [[self view] addSubview:locationButton];
         UILabel  *locationLabel = [[UILabel alloc] initWithFrame:CGRectMake(132, aPlaceLabelY, 90, 50)];
@@ -560,8 +564,9 @@ static int i_prev;
     
     if([category isEqual: @"food"]){
         
-        [locationButton setImage:[UIImage imageNamed:@"food"] forState:UIControlStateNormal];
-        locationButton.layer.borderColor = [[UIColor colorWithRed:255/255.f green:0/255.f blue:0/255.f alpha:1.0f] CGColor];
+        [locationButton setImage:[UIImage imageNamed:@"food_clicked"] forState:UIControlStateNormal];
+        locationButton.layer.backgroundColor = [[UIColor colorWithRed:255/255.f green:58/255.f blue:48/255.f alpha:1.0f] CGColor];
+        locationButton.layer.borderColor=[[UIColor colorWithRed:255/255.f green:58/255.f blue:48/255.f alpha:1.0f] CGColor];
         [locationButton setImageEdgeInsets:UIEdgeInsetsMake(12, 12, 12, 12)];
         [[self view] addSubview:locationButton];
         UILabel  *locationLabel = [[UILabel alloc] initWithFrame:CGRectMake(140, aPlaceLabelY, 90, 50)];
@@ -572,8 +577,9 @@ static int i_prev;
     
     if([category isEqual: @"hotel"]){
         
-        [locationButton setImage:[UIImage imageNamed:@"hotel"] forState:UIControlStateNormal];
-        locationButton.layer.borderColor = [[UIColor colorWithRed:0/255.f green:186/255.f blue:130/255.f alpha:1.0f] CGColor];
+        [locationButton setImage:[UIImage imageNamed:@"hotel_clicked"] forState:UIControlStateNormal];
+        locationButton.layer.backgroundColor = [[UIColor colorWithRed:27/255.f green:175/255.f blue:126/255.f alpha:1.0f] CGColor];
+        locationButton.layer.borderColor=[[UIColor colorWithRed:27/255.f green:175/255.f blue:126/255.f alpha:1.0f] CGColor];
         [locationButton setImageEdgeInsets:UIEdgeInsetsMake(9, 9, 9, 9)];
         [[self view] addSubview:locationButton];
         UILabel  *locationLabel = [[UILabel alloc] initWithFrame:CGRectMake(138, aPlaceLabelY, 90, 50)];
@@ -584,19 +590,21 @@ static int i_prev;
     
     if([category isEqual: @"icons"]){
         
-        [locationButton setImage:[UIImage imageNamed:@"icons"] forState:UIControlStateNormal];
-        locationButton.layer.borderColor = [[UIColor colorWithRed:255/255.f green:130/255.f blue:0/255.f alpha:1.0f] CGColor];
+        [locationButton setImage:[UIImage imageNamed:@"icons_clicked"] forState:UIControlStateNormal];
+        locationButton.layer.backgroundColor = [[UIColor colorWithRed:249/255.f green:137/255.f blue:18/255.f alpha:1.0f] CGColor];
+        locationButton.layer.borderColor = [[UIColor colorWithRed:249/255.f green:137/255.f blue:18/255.f alpha:1.0f] CGColor];
         [locationButton setImageEdgeInsets:UIEdgeInsetsMake(11, 12, 11, 11)];
         [[self view] addSubview:locationButton];
         UILabel  *locationLabel = [[UILabel alloc] initWithFrame:CGRectMake(137, aPlaceLabelY, 90, 50)];
-        locationLabel.text = @"Icons";
+        locationLabel.text = @"Sights";
         locationLabel.font = [UIFont systemFontOfSize:14];
         [self.view addSubview:locationLabel];
     }
     
     if([category isEqual: @"nightlife"]){
         
-        [locationButton setImage:[UIImage imageNamed:@"nightlife"] forState:UIControlStateNormal];
+        [locationButton setImage:[UIImage imageNamed:@"nightlife_clicked"] forState:UIControlStateNormal];
+        locationButton.layer.backgroundColor = [[UIColor colorWithRed:85/255.f green:85/255.f blue:85/255.f alpha:1.0f] CGColor];
         locationButton.layer.borderColor = [[UIColor colorWithRed:85/255.f green:85/255.f blue:85/255.f alpha:1.0f] CGColor];
         [locationButton setImageEdgeInsets:UIEdgeInsetsMake(13, 13, 13, 13)];
         [[self view] addSubview:locationButton];
@@ -608,8 +616,9 @@ static int i_prev;
     
     if([category isEqual: @"other"]){
         
-        [locationButton setImage:[UIImage imageNamed:@"other"] forState:UIControlStateNormal];
-        locationButton.layer.borderColor = [[UIColor colorWithRed:0/255.f green:0/255.f blue:0/255.f alpha:1.0f] CGColor];
+        [locationButton setImage:[UIImage imageNamed:@"other_clicked"] forState:UIControlStateNormal];
+        locationButton.layer.backgroundColor = [[UIColor blackColor] CGColor];
+        locationButton.layer.borderColor = [[UIColor blackColor] CGColor];
         [locationButton setImageEdgeInsets:UIEdgeInsetsMake(11, 9, 9, 9)];
         [[self view] addSubview:locationButton];
         UILabel  *locationLabel = [[UILabel alloc] initWithFrame:CGRectMake(137, aPlaceLabelY, 90, 50)];
@@ -618,7 +627,4 @@ static int i_prev;
         [self.view addSubview:locationLabel];
     }
 }
-
-
-
 @end
