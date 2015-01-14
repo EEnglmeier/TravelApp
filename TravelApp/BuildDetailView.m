@@ -413,25 +413,26 @@ MBProgressHUD *hud;
             [object setObject:geoPoint forKey:@"geoData"];
             
             [object saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                //[hud hide:YES];
+                [hud hide:YES];
+
                 
                 // Reset Flags
                 [self resetView];
                 [self performSegueWithIdentifier:@"BuildDetailViewToDetailView" sender:self];
                 // Notify table view to reload the recipes from Parse cloud
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshTable" object:self];
-                
-                
                 // Dismiss the controller
                 //[self dismissViewControllerAnimated:YES completion:nil];
-            } else {
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Invalid name" message:@"A valid name contains only a-z, A-Z and 0-9_." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                }];
+            
+             } else {
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Invalid or duplicate name" message:@"A valid name contains only a-z, A-Z and 0-9_ and is unique." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                 [alert show];
             }
-        };
+        }
 
-    }
 }
+
 
 - (void)alert:(UIAlertView *)alert clickedButtonAtIndex:(NSInteger)buttonIndex{
     NSString *title = [alert buttonTitleAtIndex:buttonIndex];

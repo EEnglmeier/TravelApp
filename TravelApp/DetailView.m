@@ -204,10 +204,6 @@ static int i_prev;
         name = [object objectForKey:@"name"];
         category = [object objectForKey:@"category"];
         adress = [object objectForKey:@"adress"];
-        /*PFQuery *queryImg = [PFQuery queryWithClassName:@"Pics"];
-         [query orderByDescending:@"placeName"];
-         PFObject *aImage = [queryImg getFirstObject];
-         imageFile = aImage[@"imageFile"];*/
         [self methodAWithCompletion:^(BOOL finished) {
             if(finished){
                 NSLog(@"success");
