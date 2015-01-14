@@ -43,6 +43,8 @@ UIImage *pickedImage;
 bool *finished;
 NSMutableArray *arrayAllImages, *obj;
 UIButton *button_Right, *button_Left;
+int i_next=0;
+static int i_prev;
 
 
 ///*********************************************************************************
@@ -56,6 +58,7 @@ UIButton *button_Right, *button_Left;
     
     [self whichObjectToShow];
     [self initDisplay];
+    i_next = 0;
     
 }
 
@@ -127,15 +130,13 @@ UIButton *button_Right, *button_Left;
         [queryImg whereKey:@"placeName" equalTo:name];
         [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:2]];
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, kNilOptions), ^{
-            [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:2]];
             PFObject *aImage = [queryImg getFirstObject];
-            [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:2]];
             imageFile = aImage[@"imageFile"];
-            [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:2]];
+            //[[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:2]];
             [imageFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
             [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:2]];
             if (!data) {
-                [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:2]];
+                //[[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:2]];
                 return NSLog(@"%@", error);
             }
             // Do something with the image
@@ -240,6 +241,7 @@ UIButton *button_Right, *button_Left;
                     [arrayAllImages addObject:object];
                 }
                 allImages = arrayAllImages;
+                i_prev = allImages.count;
                 imageFile = allImages[0][@"imageFile"];
                 [imageFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
                     if (!data) {
@@ -265,11 +267,60 @@ UIButton *button_Right, *button_Left;
 //**********************************************************************************/
 
 -(void) pressRightForNextImage{
-    NSLog(@"right");
+    
+    if (i_next < (allImages.count-1))
+    {
+        i_next=i_next+1;
+        imageFile = allImages[i_next][@"imageFile"];
+        [imageFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
+            if (!data) {
+                return NSLog(@"%@", error);
+            }
+            // Do something with the image
+            imageView.image = [UIImage imageWithData:data];
+        }];
+        if(i_next == allImages.count-1){
+            button_Right.hidden = YES;
+            button_Left.hidden = NO;
+            i_next = 0;
+        }
+    }
+    else{
+        //
+        NSLog(@" you reach the last items ");
+        
+    }
 }
 
 -(void) pressLeftForPreviousImage{
+    
+    
     NSLog(@"left");
+    
+    if(i_prev >= 1){
+        i_prev = i_prev-1;
+        
+        //NSLog(i);
+        imageFile = allImages[i_prev-1][@"imageFile"];
+        [imageFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
+            if (!data) {
+                return NSLog(@"%@", error);
+            }
+            // Do something with the image
+            imageView.image = [UIImage imageWithData:data];
+        }];
+        if(i_prev == 1){
+            button_Left.hidden = YES;
+            button_Right.hidden = NO;
+            i_prev = allImages.count;
+        }
+    }
+    else
+    {
+        //
+        NSLog(@" you reach the last items ");
+        
+    }
 }
 
 
@@ -437,16 +488,24 @@ UIButton *button_Right, *button_Left;
     
     if ([segueTag isEqualToString:@"clickedObject"]) {
         
+        
+        
         button_Right = [UIButton buttonWithType:UIButtonTypeCustom];
         button_Right.frame = CGRectMake(250, 157, 25, 25);
         [button_Right setImage:[UIImage imageNamed:@"Arrow"] forState:UIControlStateNormal];
         [button_Right addTarget: self action: @selector(pressRightForNextImage) forControlEvents: UIControlEventTouchUpInside];
         [self.view addSubview:button_Right];
+        if (allImages.count-1 == 0) {
+            button_Right.hidden = YES;
+        } else{
+            button_Right.hidden = NO;
+        }
         
         button_Left = [UIButton buttonWithType:UIButtonTypeCustom];
         button_Left.frame = CGRectMake(40, 145, 50, 50);
         [button_Left setImage:[UIImage imageNamed:@"ArrowLeft"] forState:UIControlStateNormal];
         [button_Left addTarget: self action: @selector(pressLeftForPreviousImage) forControlEvents: UIControlEventTouchUpInside];
+        button_Left.hidden =YES;
         [self.view addSubview:button_Left];
     }
     
