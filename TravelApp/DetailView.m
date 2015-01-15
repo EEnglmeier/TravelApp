@@ -172,7 +172,9 @@ static int i_prev;
         
         arrayAllImages = [[NSMutableArray alloc]init];
         PFQuery *query = [PFQuery queryWithClassName:@"Pics"];
+
         [query whereKey:@"placeName" equalTo:name];
+        [query orderByAscending:@"updatedAt"];
         [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
             if (!error) {
                 for (PFObject *object in objects) {
